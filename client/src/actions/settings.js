@@ -1,0 +1,46 @@
+import axios from "axios";
+import { message } from "antd";
+
+export const changePassword = (newPassword) => async (dispatch) => {
+  try {
+    await axios.post("/api/settings/password", {
+      newpass: newPassword,
+    });
+    message.info(`Password changed.`);
+  } catch (error) {
+    message.error(error.response.data);
+  }
+};
+
+export const changeLogo = (url) => async (dispatch) => {
+  await axios.post("/api/settings/logo", {
+    logo_url: url,
+  });
+  message.info(`Logo changed.`);
+};
+
+export const changeCover = (url) => async (dispatch) => {
+  await axios.post("/api/settings/cover", {
+    cover_url: url,
+  });
+  message.info(`Cover changed.`);
+};
+
+export const changePageId = (id) => async (dispatch) => {
+  await axios.post("/api/settings/pageid", {
+    page_id: id,
+  });
+  message.info(`Page id changed.`);
+};
+
+export const changePageToken = (token) => async (dispatch) => {
+  await axios.post("/api/settings/token", {
+    token: token,
+  });
+  message.info(`Page token changed.`);
+};
+
+export const getSettings = () => async (dispatch) => {
+  const settings = await axios.get("/api/settings");
+  dispatch({ type: "GET_SETTINGS", payload: settings.data });
+};
