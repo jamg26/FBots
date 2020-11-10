@@ -55,18 +55,22 @@ const Settings = (props) => {
 
   const changePassword = (e) => {
     props.changePassword(pass);
+    props.getSettings();
   };
 
   const changePageId = (e) => {
     props.changePageId(pageId);
+    props.getSettings();
   };
 
   const changePageToken = (e) => {
     props.changePageToken(pageToken);
+    props.getSettings();
   };
 
   const changePageName = (e) => {
     props.changePageName(pageName);
+    props.getSettings();
   };
 
   const changeLogo = async (image) => {

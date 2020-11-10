@@ -30,7 +30,9 @@ const Home = (props) => {
       <div className="logo" />
       <PageHeader
         className="site-page-header"
-        title="Control Panel"
+        title={`${
+          props.settings?.pageName ? props.settings?.pageName : ""
+        } Control Panel`}
         avatar={{
           shape: "square",
           size: "large",
