@@ -20,6 +20,12 @@ const Home = (props) => {
     props.getSettings();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  useEffect(() => {
+    document.title = props.settings?.pageName
+      ? `${props.settings?.pageName} CPanel`
+      : "CPanel";
+  }, [props.settings]);
+
   const navigate = (value) => {
     const { key } = value;
     setNav(key);
