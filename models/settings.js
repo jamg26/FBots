@@ -15,6 +15,9 @@ const settingsSchema = new Schema(
     token: {
       type: String,
     },
+    pageName: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

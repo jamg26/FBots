@@ -34,6 +34,7 @@ module.exports = function (app) {
   app.post("/api/settings/cover", requireAuth, Settings.changeCover);
   app.post("/api/settings/pageid", requireAuth, Settings.changePageId);
   app.post("/api/settings/token", requireAuth, Settings.changePageToken);
+  app.post("/api/settings/pageName", requireAuth, Settings.changePageName);
   app.get("/api/settings", requireAuth, Settings.getSettings);
   //automated
   app.post("/api/automated", requireAuth, Automated.addAutomated);

@@ -40,6 +40,13 @@ exports.changePageToken = async (req, res, next) => {
   res.send(setting);
 };
 
+exports.changePageName = async (req, res, next) => {
+  const setting = await Settings.findOne({ author: req.user._id });
+  setting.pageName = req.body.pageName;
+  setting.save();
+  res.send(setting);
+};
+
 exports.getSettings = async (req, res, next) => {
   const setting = await Settings.findOne({ author: req.user._id });
   res.send(setting);

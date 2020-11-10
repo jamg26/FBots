@@ -40,6 +40,13 @@ export const changePageToken = (token) => async (dispatch) => {
   message.info(`Page token changed.`);
 };
 
+export const changePageName = (pageName) => async (dispatch) => {
+  await axios.post("/api/settings/pageName", {
+    pageName: pageName,
+  });
+  message.info(`Page name changed.`);
+};
+
 export const getSettings = () => async (dispatch) => {
   const settings = await axios.get("/api/settings");
   dispatch({ type: "GET_SETTINGS", payload: settings.data });
