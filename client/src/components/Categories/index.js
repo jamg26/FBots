@@ -162,16 +162,16 @@ const Categories = (props) => {
         dataSource={props.categories}
         rowKey="_id"
         size="small"
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: (event) => {
-              setVisible(true);
-              form.setFieldsValue(record);
-              setId(record);
-              setImage(record.image_url);
-            }, // click row
-          };
-        }}
+        // onRow={(record, rowIndex) => {
+        //   return {
+        //     onClick: (event) => {
+        //       setVisible(true);
+        //       form.setFieldsValue(record);
+        //       setId(record);
+        //       setImage(record.image_url);
+        //     }, // click row
+        //   };
+        // }}
       />
     </>
   );

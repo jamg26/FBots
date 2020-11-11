@@ -150,15 +150,15 @@ const AutomatedResponses = (props) => {
         dataSource={props.automated}
         rowKey="_id"
         size="small"
-        onRow={(record, rowIndex) => {
-          return {
-            onClick: (event) => {
-              setVisible(true);
-              form.setFieldsValue(record);
-              setId(record);
-            }, // click row
-          };
-        }}
+        // onRow={(record, rowIndex) => {
+        //   return {
+        //     onClick: (event) => {
+        //       setVisible(true);
+        //       form.setFieldsValue(record);
+        //       setId(record);
+        //     }, // click row
+        //   };
+        // }}
       />
     </>
   );
