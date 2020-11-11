@@ -44,7 +44,6 @@ const Signin = (props) => {
                   {
                     required: true,
                     message: "Please input your email!",
-                    type: "email",
                   },
                 ]}
               >
