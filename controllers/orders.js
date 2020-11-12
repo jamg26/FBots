@@ -3,6 +3,7 @@ const Order = mongoose.model("orders");
 const sendMessage = require("../messenger/send_text");
 const sendReceipt = require("../messenger/send_receipt");
 const Settings = mongoose.model("settings");
+const Pages = mongoose.model("pages");
 
 exports.getOrders = async (req, res, next) => {
   //const id = req.user._id;
@@ -71,7 +72,7 @@ exports.searchOrder = async (req, res, next) => {
 
 exports.updateOrder = async (req, res, next) => {
   const { status, order_thread, type } = req.body;
-  const setting = await Settings.findOne({ author: req.user._id });
+  // const setting = await Settings.findOne({ author: req.user._id });
   try {
     const response = await Order.findByIdAndUpdate(req.body._id, req.body);
     res.send(response);
@@ -79,6 +80,7 @@ exports.updateOrder = async (req, res, next) => {
     res.status(400).send(error.message);
   }
 
+  const page = await Pages.findOne({ pageid: req.body.pageid });
   if (type === "status") {
     sendMessage(
       order_thread,
@@ -91,13 +93,13 @@ exports.updateOrder = async (req, res, next) => {
           ? "cancelled"
           : ""
       }`,
-      setting.token
+      page.pagetoken
     );
     if (status === "PAID") {
-      sendReceipt(order_thread, req.body, setting.token);
+      sendReceipt(order_thread, req.body, page.pagetoken);
     }
     if (status === "SHIPPED") {
-      sendMessage(order_thread, `Thank you for your order.`, setting.token);
+      sendMessage(order_thread, `Thank you for your order.`, page.pagetoken);
     }
   }
 

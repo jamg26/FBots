@@ -12,6 +12,7 @@ const orderSchema = new Schema(
     payment_method: String,
     image_url: String,
     reason: String,
+    pageid: String,
     author: {
       type: Schema.Types.ObjectId,
       ref: "user",

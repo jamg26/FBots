@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 
 const pagesSchema = new Schema(
   {
-    page_id: {
+    pageid: {
       type: String,
     },
-    token: {
+    pagetoken: {
       type: String,
     },
     author: {

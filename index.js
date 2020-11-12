@@ -6,7 +6,7 @@ const app = express();
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-//require("./models/pages");
+require("./models/pages");
 require("./models/user");
 require("./models/category");
 require("./models/product");

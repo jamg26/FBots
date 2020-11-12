@@ -43,7 +43,6 @@ module.exports = async (app) => {
           var pageID = entry.id;
           var timeOfEvent = entry.time;
           temp_db.page_id = pageID;
-
           // Iterate over each messaging event
           entry.messaging.forEach(function (event) {
             if (event.message) {
@@ -89,6 +88,7 @@ module.exports = async (app) => {
     //console.log(event);
     markSeen(senderID);
     if (messageText) {
+      console.log(temp_db);
       textHandler(senderID, messageText);
     } else if (messageAttachments) {
       sendTextMessage(senderID, "Message with attachment received");

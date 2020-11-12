@@ -144,7 +144,7 @@ const Settings = (props) => {
                 </Upload>
               </Space>
             </Panel>
-            <Panel header="Facebook Developers Panel" key="1">
+            {/* <Panel header="Facebook Developers Panel" key="1">
               <Space direction="vertical">
                 <Space>
                   <Text>Facebook ID: {props.settings?.page_id}</Text>
@@ -190,7 +190,7 @@ const Settings = (props) => {
                   </Popconfirm>
                 </Space>
               </Space>
-            </Panel>
+            </Panel> */}
             <Panel header="Stripes Panel" key="2">
               <Text>Coming soon...</Text>
             </Panel>
