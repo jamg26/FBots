@@ -1,4 +1,4 @@
-const sendTextMessage = require("./functions/message/send_text");
+//const sendTextMessage = require("./functions/message/send_text");
 const markSeen = require("./actions/markseen");
 const temp_db = require("./temp_db");
 
@@ -91,7 +91,7 @@ module.exports = async (app) => {
       console.log(temp_db);
       textHandler(senderID, messageText);
     } else if (messageAttachments) {
-      sendTextMessage(senderID, "Message with attachment received");
+      //sendTextMessage(senderID, "Message with attachment received");
     }
   }
 
