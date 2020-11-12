@@ -152,6 +152,9 @@ const OrdersComponent = (props) => {
           <Text>
             Order ID: #<Text copyable>{info?._id}</Text>
           </Text>
+          <Text>
+            Page ID: <Text>{info?.pageid}</Text>
+          </Text>
           <Text>Ordered By: {info?.order_by}</Text>
           <Text>Status: {info?.status}</Text>
           <Text>Amount: {info?.price.toFixed(2)}</Text>
