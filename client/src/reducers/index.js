@@ -6,6 +6,7 @@ import automated from "./automated";
 import settings from "./settings";
 import orders from "./orders";
 import users from "./users";
+import pages from "./pages";
 
 export default combineReducers({
   auth,
@@ -15,4 +16,5 @@ export default combineReducers({
   settings,
   orders,
   users,
+  pages,
 });

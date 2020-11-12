@@ -9,11 +9,16 @@ import {
   Upload,
   Typography,
   Collapse,
+  Table,
+  Modal,
+  Form,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import * as settingsActions from "../../actions/settings";
+import * as pageActions from "../../actions/pages";
 import { connect } from "react-redux";
 import { uploader } from "../uploader";
+import IconFont from "../icon";
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -21,17 +26,92 @@ const { Panel } = Collapse;
 const Settings = (props) => {
   const [pass, setPass] = useState(null);
   const [pageName, setPageName] = useState(null);
-  const [pageId, setPageId] = useState(null);
-  const [pageToken, setPageToken] = useState(null);
+  // const [pageId, setPageId] = useState(null);
+  // const [pageToken, setPageToken] = useState(null);
   const [image, setImage] = useState(null);
+  const [visible, setVisible] = useState(false);
+  const [form] = Form.useForm();
+  const [id, setId] = useState(null);
 
   useEffect(() => {
     props.getSettings();
+    props.getPages();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setImage(props.settings);
   }, [props.settings]);
+
+  const columns = [
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Space size="middle">
+          <Button onClick={() => editPage(record)}>
+            <IconFont type="icon-EditDocument" />
+          </Button>
+          <Popconfirm
+            title="You sure you want to delete?"
+            onConfirm={() => deletePage(record)}
+          >
+            <Button>
+              <IconFont type="icon-delete" />
+            </Button>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+    {
+      title: "Page ID",
+      dataIndex: "pageid",
+      key: "pageid",
+      render: (text) => <Text>{text}</Text>,
+    },
+    {
+      title: "Page Name",
+      dataIndex: "pagename",
+      key: "pagename",
+      render: (text) => <Text>{text}</Text>,
+    },
+    {
+      title: "Page Token",
+      dataIndex: "pagetoken",
+      key: "pagetoken",
+      render: (text) => <Text>...{text.slice(-10)}</Text>,
+    },
+  ];
+
+  const handleOk = (e) => {
+    form.submit();
+  };
+
+  const onFinish = async (values) => {
+    if (id) {
+      await props.updatePage(id, values);
+    } else {
+      await props.addPage(values);
+    }
+    props.getPages();
+    setVisible(false);
+    form.resetFields();
+  };
+
+  const handleCancel = (e) => {
+    setVisible(false);
+    // setId(null);
+    form.resetFields();
+  };
+
+  const onFinishFailed = (errorInfo) => {
+    console.log(errorInfo);
+  };
+
+  const addPage = () => {
+    form.resetFields();
+    setVisible(true);
+    setId(null);
+  };
 
   const handleChange = (e) => {
     e.persist();
@@ -43,30 +123,41 @@ const Settings = (props) => {
     setPageName(e.target.value);
   };
 
-  const handleChangeId = (e) => {
-    e.persist();
-    setPageId(e.target.value);
+  const editPage = async (record) => {
+    setVisible(true);
+    form.setFieldsValue(record);
+    setId(record);
   };
 
-  const handleChangeToken = (e) => {
-    e.persist();
-    setPageToken(e.target.value);
+  const deletePage = async (record) => {
+    await props.deletePage(record);
+    props.getPages();
   };
+
+  // const handleChangeId = (e) => {
+  //   e.persist();
+  //   setPageId(e.target.value);
+  // };
+
+  // const handleChangeToken = (e) => {
+  //   e.persist();
+  //   setPageToken(e.target.value);
+  // };
 
   const changePassword = (e) => {
     props.changePassword(pass);
     props.getSettings();
   };
 
-  const changePageId = (e) => {
-    props.changePageId(pageId);
-    props.getSettings();
-  };
+  // const changePageId = (e) => {
+  //   props.changePageId(pageId);
+  //   props.getSettings();
+  // };
 
-  const changePageToken = (e) => {
-    props.changePageToken(pageToken);
-    props.getSettings();
-  };
+  // const changePageToken = (e) => {
+  //   props.changePageToken(pageToken);
+  //   props.getSettings();
+  // };
 
   const changePageName = (e) => {
     props.changePageName(pageName);
@@ -87,6 +178,39 @@ const Settings = (props) => {
 
   return (
     <>
+      <Modal
+        title="Facebook Page Setting"
+        visible={visible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      >
+        <Form
+          name="basic"
+          onFinish={onFinish}
+          form={form}
+          size="large"
+          onFinishFailed={onFinishFailed}
+        >
+          <Form.Item
+            name="pageid"
+            rules={[{ required: true, message: "Please input Page ID!" }]}
+          >
+            <Input placeholder="Page ID" />
+          </Form.Item>
+          <Form.Item
+            name="pagetoken"
+            rules={[{ required: true, message: "Please input Page Token!" }]}
+          >
+            <Input.TextArea rows={4} placeholder="Page Token" />
+          </Form.Item>
+          <Form.Item
+            name="pagename"
+            rules={[{ required: true, message: "Please input Page Name!" }]}
+          >
+            <Input placeholder="Page Name" />
+          </Form.Item>
+        </Form>
+      </Modal>
       <Row>
         <Col xs={24} md={18} lg={12}>
           <Collapse>
@@ -145,56 +269,28 @@ const Settings = (props) => {
               </Space>
             </Panel>
             {/* <Panel header="Facebook Developers Panel" key="1">
-              <Space direction="vertical">
-                <Space>
-                  <Text>Facebook ID: {props.settings?.page_id}</Text>
-                </Space>
-                <Space>
-                  <Text>
-                    Facebook Token: {props.settings?.token?.slice(0, 10)}...
-                    {props.settings?.token?.slice(-10)}
-                  </Text>
-                </Space>
-                <Space>
-                  <Input
-                    // placeholder={
-                    //   props.settings.page_id
-                    //     ? `ID: ${props.settings.page_id}`
-                    //     : "Page ID"
-                    // }
-                    placeholder="Page ID"
-                    onChange={handleChangeId}
-                  />
-                  <Popconfirm
-                    title="You sure you want to change page id?"
-                    onConfirm={changePageId}
-                  >
-                    <Button>Save</Button>
-                  </Popconfirm>
-                </Space>
-                <Space>
-                  <Input
-                    // placeholder={
-                    //   props.settings.token
-                    //     ? `TOKEN: ${props.settings.token}`
-                    //     : "Page Token"
-                    // }
-                    placeholder="Page Token"
-                    onChange={handleChangeToken}
-                  />
-                  <Popconfirm
-                    title="You sure you want to change page token?"
-                    onConfirm={changePageToken}
-                  >
-                    <Button>Save</Button>
-                  </Popconfirm>
-                </Space>
-              </Space>
+             
             </Panel> */}
             <Panel header="Stripes Panel" key="2">
               <Text>Coming soon...</Text>
             </Panel>
           </Collapse>
+        </Col>
+        <Col xs={24} md={24} lg={24}>
+          <Table
+            title={() => (
+              <>
+                <Button onClick={addPage}>
+                  <IconFont type="icon-createnewpost" />
+                </Button>
+              </>
+            )}
+            columns={columns}
+            dataSource={props.pages}
+            rowKey="_id"
+            size="small"
+            style={{ padding: 10 }}
+          />
         </Col>
         {/* <Text>Change Cover</Text>
 
@@ -229,7 +325,18 @@ const Settings = (props) => {
 const mapStateToProps = (state) => {
   return {
     settings: state.settings?.get,
+    pages: state.pages?.get_all,
   };
 };
 
-export default connect(mapStateToProps, settingsActions)(Settings);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getSettings: () => dispatch(settingsActions.getSettings()),
+    getPages: () => dispatch(pageActions.getPages()),
+    addPage: (data) => dispatch(pageActions.addPage(data)),
+    deletePage: (data) => dispatch(pageActions.deletePage(data)),
+    updatePage: (id, data) => dispatch(pageActions.updatePage(id, data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);

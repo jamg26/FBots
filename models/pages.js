@@ -9,6 +9,9 @@ const pagesSchema = new Schema(
     pagetoken: {
       type: String,
     },
+    pagename: {
+      type: String,
+    },
     author: {
       type: Schema.Types.ObjectId,
       ref: "user",

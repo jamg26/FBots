@@ -6,6 +6,7 @@ const Settings = require("./controllers/settings");
 const Automated = require("./controllers/automated");
 const Orders = require("./controllers/orders");
 const Users = require("./controllers/users");
+const Pages = require("./controllers/pages");
 
 const passportService = require("./services/passport");
 const passport = require("passport");
@@ -48,4 +49,9 @@ module.exports = function (app) {
   //users
   app.get("/api/users", requireAuth, Users.getUsers);
   app.delete("/api/users", requireAuth, Users.deleteUser);
+  //pages
+  app.get("/api/pages", requireAuth, Pages.getPages);
+  app.post("/api/pages", requireAuth, Pages.addPage);
+  app.delete("/api/pages", requireAuth, Pages.deletePage);
+  app.put("/api/pages", requireAuth, Pages.updatePage);
 };

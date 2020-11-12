@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const Order = mongoose.model("orders");
 const sendMessage = require("../messenger/send_text");
 const sendReceipt = require("../messenger/send_receipt");
-const Settings = mongoose.model("settings");
 const Pages = mongoose.model("pages");
 
 exports.getOrders = async (req, res, next) => {
