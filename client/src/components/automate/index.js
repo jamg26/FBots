@@ -30,14 +30,14 @@ const AutomatedResponses = (props) => {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Button onClick={() => editAutomated(record)}>
+          <Button size="small" onClick={() => editAutomated(record)}>
             <IconFont type="icon-EditDocument" />
           </Button>
           <Popconfirm
             title="You sure you want to delete?"
             onConfirm={() => deleteAutomated(record)}
           >
-            <Button>
+            <Button size="small">
               <IconFont type="icon-delete" />
             </Button>
           </Popconfirm>

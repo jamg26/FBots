@@ -48,14 +48,14 @@ const Settings = (props) => {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Button onClick={() => editPage(record)}>
+          <Button size="small" onClick={() => editPage(record)}>
             <IconFont type="icon-EditDocument" />
           </Button>
           <Popconfirm
             title="You sure you want to delete?"
             onConfirm={() => deletePage(record)}
           >
-            <Button>
+            <Button size="small">
               <IconFont type="icon-delete" />
             </Button>
           </Popconfirm>
@@ -213,68 +213,70 @@ const Settings = (props) => {
       </Modal>
       <Row>
         <Col xs={24} md={18} lg={12}>
-          <Collapse>
-            <Panel header="Basic" key="0">
-              <Space direction="vertical">
-                <Space>
-                  <Input
-                    placeholder={
-                      props.settings?.pageName
-                        ? props.settings.pageName
-                        : "Page Name"
-                    }
-                    onChange={handleChangePageName}
-                  />
-                  <Popconfirm
-                    title="You sure you want to change Page Name?"
-                    onConfirm={changePageName}
+          <div style={{ padding: 10 }}>
+            <Collapse>
+              <Panel header="Basic" key="0">
+                <Space direction="vertical">
+                  <Space>
+                    <Input
+                      placeholder={
+                        props.settings?.pageName
+                          ? props.settings.pageName
+                          : "Page Name"
+                      }
+                      onChange={handleChangePageName}
+                    />
+                    <Popconfirm
+                      title="You sure you want to change Page Name?"
+                      onConfirm={changePageName}
+                    >
+                      <Button>Save</Button>
+                    </Popconfirm>
+                  </Space>
+                  <Space>
+                    <Input placeholder="New Password" onChange={handleChange} />
+                    <Popconfirm
+                      title="You sure you want to change password?"
+                      onConfirm={changePassword}
+                    >
+                      <Button>Save</Button>
+                    </Popconfirm>
+                  </Space>
+                  <Text>Change Logo (Ratio 1:1)</Text>
+                  <Upload
+                    fileList=""
+                    name="image"
+                    listType="picture-card"
+                    className="avatar-uploader"
+                    showUploadList={false}
+                    beforeUpload={() => false}
+                    onChange={changeLogo}
                   >
-                    <Button>Save</Button>
-                  </Popconfirm>
+                    <div>
+                      {image ? (
+                        <img
+                          src={image.logo_url}
+                          alt="avatar"
+                          style={{ width: "100%" }}
+                        />
+                      ) : (
+                        <>
+                          <PlusOutlined />{" "}
+                          <div style={{ marginTop: 8 }}>Upload</div>
+                        </>
+                      )}
+                    </div>
+                  </Upload>
                 </Space>
-                <Space>
-                  <Input placeholder="New Password" onChange={handleChange} />
-                  <Popconfirm
-                    title="You sure you want to change password?"
-                    onConfirm={changePassword}
-                  >
-                    <Button>Save</Button>
-                  </Popconfirm>
-                </Space>
-                <Text>Change Logo (Ratio 1:1)</Text>
-                <Upload
-                  fileList=""
-                  name="image"
-                  listType="picture-card"
-                  className="avatar-uploader"
-                  showUploadList={false}
-                  beforeUpload={() => false}
-                  onChange={changeLogo}
-                >
-                  <div>
-                    {image ? (
-                      <img
-                        src={image.logo_url}
-                        alt="avatar"
-                        style={{ width: "100%" }}
-                      />
-                    ) : (
-                      <>
-                        <PlusOutlined />{" "}
-                        <div style={{ marginTop: 8 }}>Upload</div>
-                      </>
-                    )}
-                  </div>
-                </Upload>
-              </Space>
-            </Panel>
-            {/* <Panel header="Facebook Developers Panel" key="1">
+              </Panel>
+              {/* <Panel header="Facebook Developers Panel" key="1">
              
             </Panel> */}
-            <Panel header="Stripes Panel" key="2">
-              <Text>Coming soon...</Text>
-            </Panel>
-          </Collapse>
+              <Panel header="Stripes Panel" key="2">
+                <Text>Coming soon...</Text>
+              </Panel>
+            </Collapse>
+          </div>
         </Col>
         <Col xs={24} md={24} lg={24}>
           <Table

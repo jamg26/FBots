@@ -34,14 +34,14 @@ const Categories = (props) => {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Button onClick={() => editCategory(record)}>
+          <Button size="small" onClick={() => editCategory(record)}>
             <IconFont type="icon-EditDocument" />
           </Button>
           <Popconfirm
             title="You sure you want to delete?"
             onConfirm={() => deleteCategory(record)}
           >
-            <Button>
+            <Button size="small">
               <IconFont type="icon-delete" />
             </Button>
           </Popconfirm>
