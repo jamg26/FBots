@@ -338,6 +338,7 @@ const mapDispatchToProps = (dispatch) => {
     addPage: (data) => dispatch(pageActions.addPage(data)),
     deletePage: (data) => dispatch(pageActions.deletePage(data)),
     updatePage: (id, data) => dispatch(pageActions.updatePage(id, data)),
+    changePassword: (pass) => dispatch(settingsActions.changePassword(pass)),
   };
 };
 
