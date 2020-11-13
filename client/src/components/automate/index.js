@@ -45,7 +45,7 @@ const AutomatedResponses = (props) => {
       ),
     },
     {
-      title: "Question",
+      title: "Keyword",
       dataIndex: "question",
       key: "question",
       render: (text) => <Text>{text}</Text>,

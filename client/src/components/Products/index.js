@@ -11,6 +11,7 @@ import {
   InputNumber,
   Popconfirm,
   Upload,
+  Tag,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import * as categoryActions from "../../actions/category";
@@ -63,24 +64,40 @@ const Products = (props) => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      render: (text) => <Text>{text}</Text>,
+      render: (text) => (
+        <Text>
+          {text.slice(0, 30)}
+          {text[31] ? "..." : ""}
+        </Text>
+      ),
     },
     {
       title: "Price",
       dataIndex: "price",
       key: "price",
-      render: (text) => <Text>{text.toFixed(2)}</Text>,
+      render: (text) => <Text code>{text.toFixed(2)}</Text>,
     },
     {
       title: "Category",
       dataIndex: "category",
       key: "category",
+      render: (text) => (
+        <Text>
+          <Tag>{text}</Tag>
+        </Text>
+      ),
     },
     {
       title: "Description",
       dataIndex: "description",
       key: "description",
       responsive: ["md"],
+      render: (text) => (
+        <Text>
+          {text.slice(0, 50)}
+          {text[51] ? "..." : ""}
+        </Text>
+      ),
     },
   ];
 
