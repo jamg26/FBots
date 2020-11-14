@@ -159,8 +159,8 @@ const Settings = (props) => {
   //   props.getSettings();
   // };
 
-  const changePageName = (e) => {
-    props.changePageName(pageName);
+  const changePageName = async (e) => {
+    await props.changePageName(pageName);
     props.getSettings();
   };
 
@@ -339,6 +339,8 @@ const mapDispatchToProps = (dispatch) => {
     deletePage: (data) => dispatch(pageActions.deletePage(data)),
     updatePage: (id, data) => dispatch(pageActions.updatePage(id, data)),
     changePassword: (pass) => dispatch(settingsActions.changePassword(pass)),
+    changePageName: (data) => dispatch(settingsActions.changePageName(data)),
+    changeLogo: (data) => dispatch(settingsActions.changeLogo(data)),
   };
 };
 
