@@ -15,7 +15,7 @@ function App() {
       <Route exact path="/signin" component={Signin} />
       <Route exact path="/signout" component={Signout} />
       <Route path="/admin" component={Users} />
-      <Route path="/stripe/:pageid/:orderid" component={StripeComponent} />
+      <Route path="/stripe/:pageid/:orderid/:pk" component={StripeComponent} />
     </BrowserRouter>
   );
 }

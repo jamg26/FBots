@@ -1,6 +1,8 @@
 const sendMessage = require("../functions/message/send_text");
 const mongoose = require("mongoose");
 const Product = mongoose.model("product");
+const Pages = mongoose.model("pages");
+const Settings = mongoose.model("settings");
 const { db, page_id } = require("../temp_db");
 const temp_db = require("../temp_db");
 const genericProducts = require("../functions/generic_products");
@@ -34,6 +36,9 @@ module.exports = async (senderID, messageText) => {
     const user = await getInfo(senderID);
     const { first_name, last_name, profile_pic } = user.data;
 
+    const page = await Pages.findOne({ pageid: temp_db.page_id });
+    const settings = await Settings.findOne({ author: page.author });
+
     db.orders.some(async (s) => {
       if (s.sender === senderID) {
         const order = await new Order({
@@ -52,9 +57,9 @@ module.exports = async (senderID, messageText) => {
         send(
           `Thank you ${first_name}. Your order has been listed, please wait for our call.`
         );
-        send(`Your order ID is #${order._id}.`);
+        //send(`Your order ID is #${order._id}.`);
         send(
-          `If you wish to pay immediately for faster transaction.\n\nProceed to payment page: ${process.env.BASE_URL}/stripe/${temp_db.page_id}/${order._id}`
+          `If you wish to pay immediately for faster transaction.\n\nProceed to payment page: ${process.env.BASE_URL}/stripe/${temp_db.page_id}/${order._id}/${settings.stripe_public}`
         );
 
         // if (senderID === "3345390415537828") return;

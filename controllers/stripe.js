@@ -10,7 +10,6 @@ exports.createSession = async (req, res, next) => {
   const page = await Page.findOne({ pageid });
   const settings = await Settings.findOne({ author: page.author });
   const stripe = require("stripe")(settings.stripe_secret);
-
   const order = await Order.findById(orderid);
   if (order.status === "NOT_PAID") {
     const session = await stripe.checkout.sessions.create({

@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 
-const stripePromise = loadStripe("pk_test_fOctpRTcO9h31ZexdMNGXwti00gQNOlQaP");
-
 const StripeComponent = (props) => {
+  const stripePromise = loadStripe(props.match.params.pk);
   const [status, setStatus] = useState("Please wait...");
 
   const { pageid, orderid } = props.match.params;
@@ -33,6 +32,7 @@ const StripeComponent = (props) => {
           // using `result.error.message`.
         }
       } catch (error) {
+        console.log(error);
         setStatus(session.status);
       }
     };
