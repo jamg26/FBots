@@ -94,6 +94,7 @@ exports.updateOrder = async (req, res, next) => {
       }`,
       page.pagetoken
     );
+
     if (status === "PAID") {
       sendReceipt(order_thread, req.body, page.pagetoken);
     }

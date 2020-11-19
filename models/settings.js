@@ -18,6 +18,8 @@ const settingsSchema = new Schema(
     pageName: {
       type: String,
     },
+    stripe_public: String,
+    stripe_secret: String,
   },
   { timestamps: true }
 );

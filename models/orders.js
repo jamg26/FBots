@@ -23,6 +23,7 @@ const orderSchema = new Schema(
     },
     address: String,
     contact: String,
+    stripe_session: String,
   },
   { timestamps: true }
 );

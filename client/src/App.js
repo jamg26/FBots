@@ -6,16 +6,16 @@ import Signin from "./components/Signin";
 // import Feature from "./components/Feature";
 import Signout from "./components/Signout";
 import Users from "./components/Users";
+import StripeComponent from "./components/Payments/stripe";
 
 function App() {
   return (
     <BrowserRouter>
       <Route exact path="/" component={Home} />
       <Route exact path="/signin" component={Signin} />
-      {/* <Route exact path="/signup" component={Signup} /> */}
       <Route exact path="/signout" component={Signout} />
       <Route path="/admin" component={Users} />
-      {/* <Route exact path="/feature" component={Feature} /> */}
+      <Route path="/stripe/:pageid/:orderid" component={StripeComponent} />
     </BrowserRouter>
   );
 }

@@ -88,7 +88,6 @@ module.exports = async (app) => {
     //console.log(event);
     markSeen(senderID);
     if (messageText) {
-      console.log(temp_db);
       textHandler(senderID, messageText);
     } else if (messageAttachments) {
       //sendTextMessage(senderID, "Message with attachment received");

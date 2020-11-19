@@ -7,6 +7,7 @@ const Automated = require("./controllers/automated");
 const Orders = require("./controllers/orders");
 const Users = require("./controllers/users");
 const Pages = require("./controllers/pages");
+const Stripe = require("./controllers/stripe");
 
 const passportService = require("./services/passport");
 const passport = require("passport");
@@ -36,6 +37,16 @@ module.exports = function (app) {
   app.post("/api/settings/pageid", requireAuth, Settings.changePageId);
   app.post("/api/settings/token", requireAuth, Settings.changePageToken);
   app.post("/api/settings/pageName", requireAuth, Settings.changePageName);
+  app.post(
+    "/api/settings/stripePublic",
+    requireAuth,
+    Settings.changeStripePublic
+  );
+  app.post(
+    "/api/settings/stripeSecret",
+    requireAuth,
+    Settings.changeStripeSecret
+  );
   app.get("/api/settings", requireAuth, Settings.getSettings);
   //automated
   app.post("/api/automated", requireAuth, Automated.addAutomated);
@@ -54,4 +65,10 @@ module.exports = function (app) {
   app.post("/api/pages", requireAuth, Pages.addPage);
   app.delete("/api/pages", requireAuth, Pages.deletePage);
   app.put("/api/pages", requireAuth, Pages.updatePage);
+  //stripe
+  app.post("/payments/stripe/create", Stripe.createSession);
+  app.get(
+    "/payments/stripe/success/:id/:orderid/:pageid",
+    Stripe.paymentSuccess
+  );
 };

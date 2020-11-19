@@ -26,6 +26,8 @@ const { Panel } = Collapse;
 const Settings = (props) => {
   const [pass, setPass] = useState(null);
   const [pageName, setPageName] = useState(null);
+  const [publicKey, setPublicKey] = useState(null);
+  const [secretKey, setSecretKey] = useState(null);
   // const [pageId, setPageId] = useState(null);
   // const [pageToken, setPageToken] = useState(null);
   const [image, setImage] = useState(null);
@@ -121,6 +123,26 @@ const Settings = (props) => {
   const handleChangePageName = (e) => {
     e.persist();
     setPageName(e.target.value);
+  };
+
+  const handleChangeStripePublicKey = (e) => {
+    e.persist();
+    setPublicKey(e.target.value);
+  };
+
+  const handleChangeStripeSecretKey = (e) => {
+    e.persist();
+    setSecretKey(e.target.value);
+  };
+
+  const changeStripePublicKey = async (e) => {
+    await props.changeStripePublicKey(publicKey);
+    props.getSettings();
+  };
+
+  const changeStripeSecretKey = async (e) => {
+    await props.changeStripeSecretKey(secretKey);
+    props.getSettings();
   };
 
   const editPage = async (record) => {
@@ -273,7 +295,40 @@ const Settings = (props) => {
              
             </Panel> */}
               <Panel header="Stripes Panel" key="2">
-                <Text>Coming soon...</Text>
+                <Space direction="vertical">
+                  <Space>
+                    <Input
+                      placeholder={
+                        props.settings?.stripe_public
+                          ? props.settings.stripe_public
+                          : "Public Key"
+                      }
+                      onChange={handleChangeStripePublicKey}
+                    />
+                    <Popconfirm
+                      title="You sure you want to Public Key?"
+                      onConfirm={changeStripePublicKey}
+                    >
+                      <Button>Save</Button>
+                    </Popconfirm>
+                  </Space>
+                  <Space>
+                    <Input
+                      placeholder={
+                        props.settings?.stripe_secret
+                          ? props.settings.stripe_secret
+                          : "Secret Key"
+                      }
+                      onChange={handleChangeStripeSecretKey}
+                    />
+                    <Popconfirm
+                      title="You sure you want to change Secret Key?"
+                      onConfirm={changeStripeSecretKey}
+                    >
+                      <Button>Save</Button>
+                    </Popconfirm>
+                  </Space>
+                </Space>
               </Panel>
             </Collapse>
           </div>
@@ -341,6 +396,10 @@ const mapDispatchToProps = (dispatch) => {
     changePassword: (pass) => dispatch(settingsActions.changePassword(pass)),
     changePageName: (data) => dispatch(settingsActions.changePageName(data)),
     changeLogo: (data) => dispatch(settingsActions.changeLogo(data)),
+    changeStripeSecretKey: (key) =>
+      dispatch(settingsActions.changeStripeSecretKey(key)),
+    changeStripePublicKey: (key) =>
+      dispatch(settingsActions.changeStripePublicKey(key)),
   };
 };
 

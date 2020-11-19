@@ -47,6 +47,20 @@ exports.changePageName = async (req, res, next) => {
   res.send(setting);
 };
 
+exports.changeStripeSecret = async (req, res, next) => {
+  const setting = await Settings.findOne({ author: req.user._id });
+  setting.stripe_secret = req.body.key;
+  setting.save();
+  res.send(setting);
+};
+
+exports.changeStripePublic = async (req, res, next) => {
+  const setting = await Settings.findOne({ author: req.user._id });
+  setting.stripe_public = req.body.key;
+  setting.save();
+  res.send(setting);
+};
+
 exports.getSettings = async (req, res, next) => {
   const setting = await Settings.findOne({ author: req.user._id });
   res.send(setting);

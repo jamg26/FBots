@@ -53,6 +53,10 @@ module.exports = async (senderID, messageText) => {
           `Thank you ${first_name}. Your order has been listed, please wait for our call.`
         );
         send(`Your order ID is #${order._id}.`);
+        send(
+          `If you wish to pay immediately for faster transaction.\n\nProceed to payment page: ${process.env.BASE_URL}/stripe/${temp_db.page_id}/${order._id}`
+        );
+
         // if (senderID === "3345390415537828") return;
         // sendMessage(
         //   "3345390415537828",

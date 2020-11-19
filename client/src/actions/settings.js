@@ -51,3 +51,17 @@ export const getSettings = () => async (dispatch) => {
   const settings = await axios.get("/api/settings");
   dispatch({ type: "GET_SETTINGS", payload: settings.data });
 };
+
+export const changeStripePublicKey = (key) => async (dispatch) => {
+  await axios.post("/api/settings/stripePublic", {
+    key,
+  });
+  message.info(`Stripe Public Key changed.`);
+};
+
+export const changeStripeSecretKey = (key) => async (dispatch) => {
+  await axios.post("/api/settings/stripeSecret", {
+    key,
+  });
+  message.info(`Stripe Secret Key changed.`);
+};
