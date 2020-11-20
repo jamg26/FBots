@@ -14,6 +14,7 @@ const orderSchema = new Schema(
     image_url: String,
     reason: String,
     pageid: String,
+    page_name: String,
     author: {
       type: Schema.Types.ObjectId,
       ref: "user",

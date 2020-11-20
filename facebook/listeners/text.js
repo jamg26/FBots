@@ -52,6 +52,7 @@ module.exports = async (senderID, messageText) => {
           image_url: profile_pic,
           author: author,
           pageid: temp_db.page_id,
+          page_name: page.pagename,
           shipping_fee: (s.price * 0.07).toFixed(2),
         }).save();
 

@@ -153,7 +153,10 @@ const OrdersComponent = (props) => {
             Order ID: #<Text copyable>{info?._id}</Text>
           </Text>
           <Text>
-            Page ID: <Text>{info?.pageid}</Text>
+            Page ID:{" "}
+            <Text>
+              {info?.pageid} ({info?.page_name})
+            </Text>
           </Text>
           <Text>Ordered By: {info?.order_by}</Text>
           <Text>Status: {info?.status}</Text>
