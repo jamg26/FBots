@@ -13,7 +13,7 @@ module.exports = (recipientId, products) => {
           elements: products.map((product) => {
             return {
               title: `P${product.price} - ${product.name}`,
-              subtitle: product.description.slice(0, 900),
+              subtitle: product.description.slice(0, 995),
               //item_url: "https://www.oculus.com/en-us/rift/",
               image_url: product.image_url
                 ? product.image_url
@@ -27,7 +27,7 @@ module.exports = (recipientId, products) => {
                 {
                   type: "postback",
                   title: "MORE INFO",
-                  payload: `INFO#${product.description.slice(0, 900)}`,
+                  payload: `INFO#${product.description.slice(0, 995)}`,
                 },
               ],
             };
