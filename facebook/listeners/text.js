@@ -35,6 +35,7 @@ module.exports = async (senderID, messageText) => {
   if (db.orders.some((s) => s.sender === senderID)) {
     const user = await getInfo(senderID);
     const { first_name, last_name, profile_pic } = user.data;
+    console.log(user);
 
     const page = await Pages.findOne({ pageid: temp_db.page_id });
     const settings = await Settings.findOne({ author: page.author });
@@ -52,15 +53,18 @@ module.exports = async (senderID, messageText) => {
           image_url: profile_pic,
           author: author,
           pageid: temp_db.page_id,
+          shipping_fee: s.price * 0.07,
         }).save();
 
         send(
           `Thank you ${first_name}. Your order has been listed, please wait for our call.`
         );
         //send(`Your order ID is #${order._id}.`);
-        send(
-          `If you wish to pay immediately for faster transaction.\n\nProceed to payment page: ${process.env.BASE_URL}/stripe/${temp_db.page_id}/${order._id}/${settings.stripe_public}`
-        );
+        if (settings.stripe_public) {
+          send(
+            `If you wish to pay immediately for faster transaction.\n\nProceed to payment page: ${process.env.BASE_URL}/stripe/${temp_db.page_id}/${order._id}/${settings.stripe_public}`
+          );
+        }
 
         // if (senderID === "3345390415537828") return;
         // sendMessage(

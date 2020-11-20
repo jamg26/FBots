@@ -10,6 +10,7 @@ const orderSchema = new Schema(
     product_description: String,
     product_image: String,
     payment_method: String,
+    shipping_fee: Number,
     image_url: String,
     reason: String,
     pageid: String,

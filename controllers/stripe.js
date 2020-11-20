@@ -12,6 +12,7 @@ exports.createSession = async (req, res, next) => {
   const stripe = require("stripe")(settings.stripe_secret);
   const order = await Order.findById(orderid);
   if (order.status === "NOT_PAID") {
+    const TOTAL_AMOUNT = (order.price + order.shipping_fee) * 100;
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       billing_address_collection: "required",
@@ -20,6 +21,7 @@ exports.createSession = async (req, res, next) => {
         metadata: {
           PAGE_ID: pageid,
           ORDER_ID: orderid,
+          SHIPPING_FEE: `PHP ${order.shipping_fee.toFixed(2)}`,
         },
       },
       line_items: [
@@ -29,7 +31,7 @@ exports.createSession = async (req, res, next) => {
             product_data: {
               name: order.product,
             },
-            unit_amount: order.price * 100,
+            unit_amount: TOTAL_AMOUNT,
           },
           quantity: 1,
         },
