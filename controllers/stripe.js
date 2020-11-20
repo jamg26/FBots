@@ -21,7 +21,7 @@ exports.createSession = async (req, res, next) => {
         metadata: {
           PAGE_ID: pageid,
           ORDER_ID: orderid,
-          SHIPPING_FEE: `PHP ${order.shipping_fee}`,
+          SHIPPING_FEE: `PHP ${order.shipping_fee.toFixed(2)}`,
         },
       },
       line_items: [
