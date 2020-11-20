@@ -35,7 +35,6 @@ module.exports = async (senderID, messageText) => {
   if (db.orders.some((s) => s.sender === senderID)) {
     const user = await getInfo(senderID);
     const { first_name, last_name, profile_pic } = user.data;
-    console.log(user);
 
     const page = await Pages.findOne({ pageid: temp_db.page_id });
     const settings = await Settings.findOne({ author: page.author });
@@ -53,7 +52,7 @@ module.exports = async (senderID, messageText) => {
           image_url: profile_pic,
           author: author,
           pageid: temp_db.page_id,
-          shipping_fee: (s.price * 0.07).toFixed(2),
+          shipping_fee: s.price * 0.07,
         }).save();
 
         send(

@@ -12,7 +12,6 @@ exports.createSession = async (req, res, next) => {
   const stripe = require("stripe")(settings.stripe_secret);
   const order = await Order.findById(orderid);
   if (order.status === "NOT_PAID") {
-    console.log(order);
     const TOTAL_AMOUNT = Math.round((order.price + order.shipping_fee) * 100);
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
