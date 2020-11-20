@@ -1,7 +1,6 @@
 const callSendAPI = require("./call_send_api");
 
 module.exports = (recipientId, data, token) => {
-  console.log(data);
   var messageData = {
     recipient: {
       id: recipientId,
