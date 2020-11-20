@@ -1,6 +1,7 @@
 const callSendAPI = require("./call_send_api");
 
 module.exports = (recipientId, data, token) => {
+  console.log(data);
   var messageData = {
     recipient: {
       id: recipientId,
@@ -26,9 +27,9 @@ module.exports = (recipientId, data, token) => {
           // },
           summary: {
             subtotal: data.price,
-            //shipping_cost: 0,
+            shipping_cost: data.shipping_fee,
             //total_tax: 0,
-            total_cost: data.price,
+            total_cost: data.price + data.shipping_fee,
           },
           //   adjustments: [
           //     {
