@@ -25,10 +25,10 @@ const columns = [
     ),
   },
   {
-    title: "Order ID",
-    dataIndex: "_id",
-    key: "_id",
-    render: (text) => <Text>#{text}</Text>,
+    title: "Page",
+    dataIndex: "page_name",
+    key: "page_name",
+    render: (text) => <Text>{text}</Text>,
   },
   {
     title: "Amount",
@@ -53,7 +53,11 @@ const columns = [
     title: "Shipping Address",
     dataIndex: "address",
     key: "address",
-    render: (text, record) => <Text>{text}</Text>,
+    render: (text, record) => (
+      <Text type={text ? "default" : "secondary"}>
+        {text ? text : "Please fill shipping address."}
+      </Text>
+    ),
     responsive: ["md"],
   },
 ];
