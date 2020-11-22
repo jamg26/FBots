@@ -21,7 +21,6 @@ module.exports = (to, orderDetails) => {
       Shipping Fee: ${shipping_fee.toFixed(2)}<br>
       Product: ${product}<br>
       Contact: ${contact}<br>
-      Date: ${createdAt.toLocaleString()}
       `;
 
   smtp(to, `Order 🛍️ (${page_name})`, htmlBody);
