@@ -65,12 +65,15 @@ exports.searchOrder = async (req, res, next) => {
   //const id = req.user._id;
   try {
     if (req.body.id) {
-      const response = await Order.findById(req.body.id).cache({
+      const response = await Order.findOne({
+        _id: req.body.id,
+        author: req.user._id,
+      }).cache({
         key: req.user._id,
       });
       res.send(response);
     } else {
-      const response = await Order.find().cache({
+      const response = await Order.find({ author: req.user._id }).cache({
         key: req.user._id,
       });
       res.send(response);

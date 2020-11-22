@@ -34,7 +34,7 @@ const columns = [
     title: "Amount",
     dataIndex: "price",
     key: "price",
-    render: (text) => <Text code>{text.toFixed(2)}</Text>,
+    render: (text) => <Text code>{text?.toFixed(2)}</Text>,
   },
   {
     title: "Date",
