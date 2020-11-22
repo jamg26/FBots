@@ -5,7 +5,7 @@ const morgan = require("morgan");
 const app = express();
 const mongoose = require("mongoose");
 require("dotenv").config();
-
+require("./services/cache");
 require("./models/pages");
 require("./models/user");
 require("./models/category");
@@ -23,7 +23,7 @@ mongoose.connect(process.env.MONGO_URI, {
 });
 
 // App Setup
-app.use(morgan("combined"));
+app.use(morgan("tiny"));
 app.use(bodyParser.json({ type: "*/*" }));
 router(app);
 require("./facebook")(app);

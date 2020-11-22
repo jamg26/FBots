@@ -161,7 +161,7 @@ const OrdersComponent = (props) => {
           <Text>Ordered By: {info?.order_by}</Text>
           <Text>Status: {info?.status}</Text>
           <Text>Amount: {info?.price.toFixed(2)}</Text>
-          <Text>Shipping Fee: {info?.shipping_fee.toFixed(2)}</Text>
+          <Text>Shipping Fee: {info?.shipping_fee?.toFixed(2)}</Text>
           <Text>Product: {info?.product}</Text>
           <img
             src={info?.product_image}

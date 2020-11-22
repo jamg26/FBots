@@ -7,11 +7,15 @@ const Pages = mongoose.model("pages");
 exports.getOrders = async (req, res, next) => {
   //const id = req.user._id;
   try {
-    const response = await Order.find({ author: req.user._id });
+    const response = await Order.find({ author: req.user._id }).cache({
+      key: req.user._id,
+    });
+
     const total = await Order.aggregate([
       { $match: { author: mongoose.Types.ObjectId(req.user._id) } },
       { $group: { _id: null, sum: { $sum: "$price" } } },
     ]);
+
     const paid = await Order.aggregate([
       {
         $match: {
@@ -21,6 +25,7 @@ exports.getOrders = async (req, res, next) => {
       },
       { $group: { _id: null, sum: { $sum: "$price" } } },
     ]);
+
     const cancelled = await Order.aggregate([
       {
         $match: {
@@ -30,6 +35,7 @@ exports.getOrders = async (req, res, next) => {
       },
       { $group: { _id: null, sum: { $sum: "$price" } } },
     ]);
+
     const shipped = await Order.aggregate([
       {
         $match: {
@@ -48,6 +54,7 @@ exports.getOrders = async (req, res, next) => {
     };
 
     res.send({ stats: orders, data: response });
+    next();
   } catch (error) {
     console.log(error.message);
     res.send(error.message);
@@ -58,10 +65,14 @@ exports.searchOrder = async (req, res, next) => {
   //const id = req.user._id;
   try {
     if (req.body.id) {
-      const response = await Order.findById(req.body.id);
+      const response = await Order.findById(req.body.id).cache({
+        key: req.user._id,
+      });
       res.send(response);
     } else {
-      const response = await Order.find();
+      const response = await Order.find().cache({
+        key: req.user._id,
+      });
       res.send(response);
     }
   } catch (error) {
@@ -75,6 +86,7 @@ exports.updateOrder = async (req, res, next) => {
   try {
     const response = await Order.findByIdAndUpdate(req.body._id, req.body);
     res.send(response);
+    next();
   } catch (error) {
     res.status(400).send(error.message);
   }
@@ -102,6 +114,4 @@ exports.updateOrder = async (req, res, next) => {
       sendMessage(order_thread, `Thank you for your order.`, page.pagetoken);
     }
   }
-
-  next();
 };

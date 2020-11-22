@@ -1,0 +1,46 @@
+module.exports = function (app, requireAuth, Settings, cleanCache) {
+  app.post(
+    "/api/settings/password",
+    requireAuth,
+    Settings.changePassword,
+    cleanCache
+  );
+  app.post("/api/settings/logo", requireAuth, Settings.changeLogo, cleanCache);
+  app.post(
+    "/api/settings/cover",
+    requireAuth,
+    Settings.changeCover,
+    cleanCache
+  );
+  app.post(
+    "/api/settings/pageid",
+    requireAuth,
+    Settings.changePageId,
+    cleanCache
+  );
+  app.post(
+    "/api/settings/token",
+    requireAuth,
+    Settings.changePageToken,
+    cleanCache
+  );
+  app.post(
+    "/api/settings/pageName",
+    requireAuth,
+    Settings.changePageName,
+    cleanCache
+  );
+  app.post(
+    "/api/settings/stripePublic",
+    requireAuth,
+    Settings.changeStripePublic,
+    cleanCache
+  );
+  app.post(
+    "/api/settings/stripeSecret",
+    requireAuth,
+    Settings.changeStripeSecret,
+    cleanCache
+  );
+  app.get("/api/settings", requireAuth, Settings.getSettings);
+};

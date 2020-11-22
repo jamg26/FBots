@@ -9,6 +9,7 @@ exports.changePassword = async (req, res, next) => {
   user.password = req.body.newpass;
   user.save();
   res.send(user);
+  next();
 };
 
 exports.changeLogo = async (req, res, next) => {
@@ -17,6 +18,7 @@ exports.changeLogo = async (req, res, next) => {
   setting.logo_url = req.body.logo_url;
   setting.save();
   res.send(setting);
+  next();
 };
 
 exports.changeCover = async (req, res, next) => {
@@ -24,6 +26,7 @@ exports.changeCover = async (req, res, next) => {
   setting.cover_url = req.body.cover_url;
   setting.save();
   res.send(setting);
+  next();
 };
 
 exports.changePageId = async (req, res, next) => {
@@ -31,6 +34,7 @@ exports.changePageId = async (req, res, next) => {
   setting.page_id = req.body.page_id;
   setting.save();
   res.send(setting);
+  next();
 };
 
 exports.changePageToken = async (req, res, next) => {
@@ -38,6 +42,7 @@ exports.changePageToken = async (req, res, next) => {
   setting.token = req.body.token;
   setting.save();
   res.send(setting);
+  next();
 };
 
 exports.changePageName = async (req, res, next) => {
@@ -45,6 +50,7 @@ exports.changePageName = async (req, res, next) => {
   setting.pageName = req.body.pageName;
   setting.save();
   res.send(setting);
+  next();
 };
 
 exports.changeStripeSecret = async (req, res, next) => {
@@ -52,6 +58,7 @@ exports.changeStripeSecret = async (req, res, next) => {
   setting.stripe_secret = req.body.key;
   setting.save();
   res.send(setting);
+  next();
 };
 
 exports.changeStripePublic = async (req, res, next) => {
@@ -59,9 +66,12 @@ exports.changeStripePublic = async (req, res, next) => {
   setting.stripe_public = req.body.key;
   setting.save();
   res.send(setting);
+  next();
 };
 
 exports.getSettings = async (req, res, next) => {
-  const setting = await Settings.findOne({ author: req.user._id });
+  const setting = await Settings.findOne({ author: req.user._id }).cache({
+    key: req.user._id,
+  });
   res.send(setting);
 };

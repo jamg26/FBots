@@ -9,7 +9,7 @@ export const getOrders = () => async (dispatch) => {
 
 export const searchOrder = (id) => async (dispatch) => {
   let ID = id;
-  if (id.includes("#")) ID = ID.replace("#", "");
+  if (id?.includes("#")) ID = ID.replace("#", "");
   const response = await axios.post("/api/orders/search", { id: ID });
   if (id) {
     return dispatch({
@@ -17,7 +17,7 @@ export const searchOrder = (id) => async (dispatch) => {
       payload: response.data ? [response.data] : null,
     });
   }
-  dispatch({ type: "GET_ORDERS", payload: response.data.data.reverse() });
+  dispatch({ type: "GET_ORDERS", payload: response.data.reverse() });
 };
 
 export const updateOrder = (record, data) => async (dispatch) => {
