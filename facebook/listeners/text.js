@@ -10,6 +10,7 @@ const Automated = require("../../models/automated");
 const Order = require("../../models/orders");
 const getInfo = require("../functions/get_info");
 const getAuthor = require("../functions/page_author");
+const smtpOrder = require("../../services/mailer/order");
 
 module.exports = async (senderID, messageText) => {
   const author = await getAuthor();
@@ -66,7 +67,7 @@ module.exports = async (senderID, messageText) => {
             `If you wish to pay immediately for faster transaction.\n\nProceed to payment page: ${process.env.BASE_URL}/stripe/${temp_db.page_id}/${order._id}/${settings.stripe_public}`
           );
         }
-
+        if (settings.emails) smtpOrder(settings.emails, order);
         // if (senderID === "3345390415537828") return;
         // sendMessage(
         //   "3345390415537828",

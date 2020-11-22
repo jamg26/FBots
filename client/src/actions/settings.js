@@ -65,3 +65,10 @@ export const changeStripeSecretKey = (key) => async (dispatch) => {
   });
   message.info(`Stripe Secret Key changed.`);
 };
+
+export const changeEmails = (emails) => async (dispatch) => {
+  await axios.post("/api/settings/emails", {
+    emails,
+  });
+  message.info(`Notification email changed.`);
+};

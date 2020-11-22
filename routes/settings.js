@@ -42,5 +42,11 @@ module.exports = function (app, requireAuth, Settings, cleanCache) {
     Settings.changeStripeSecret,
     cleanCache
   );
+  app.post(
+    "/api/settings/emails",
+    requireAuth,
+    Settings.changeEmails,
+    cleanCache
+  );
   app.get("/api/settings", requireAuth, Settings.getSettings);
 };

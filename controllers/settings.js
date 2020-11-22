@@ -69,6 +69,14 @@ exports.changeStripePublic = async (req, res, next) => {
   next();
 };
 
+exports.changeEmails = async (req, res, next) => {
+  const setting = await Settings.findOne({ author: req.user._id });
+  setting.emails = req.body.emails;
+  setting.save();
+  res.send(setting);
+  next();
+};
+
 exports.getSettings = async (req, res, next) => {
   const setting = await Settings.findOne({ author: req.user._id }).cache({
     key: req.user._id,

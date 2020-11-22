@@ -12,6 +12,7 @@ import {
   Table,
   Modal,
   Form,
+  Divider,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import * as settingsActions from "../../actions/settings";
@@ -28,6 +29,7 @@ const Settings = (props) => {
   const [pageName, setPageName] = useState(null);
   const [publicKey, setPublicKey] = useState(null);
   const [secretKey, setSecretKey] = useState(null);
+  const [emails, setEmails] = useState(null);
   // const [pageId, setPageId] = useState(null);
   // const [pageToken, setPageToken] = useState(null);
   const [image, setImage] = useState(null);
@@ -145,6 +147,16 @@ const Settings = (props) => {
     props.getSettings();
   };
 
+  const handleChangeEmails = (e) => {
+    e.persist();
+    setEmails(e.target.value);
+  };
+
+  const changeEmails = async (e) => {
+    await props.changeEmails(emails);
+    props.getSettings();
+  };
+
   const editPage = async (record) => {
     setVisible(true);
     form.setFieldsValue(record);
@@ -238,32 +250,60 @@ const Settings = (props) => {
           <div style={{ padding: 10 }}>
             <Collapse>
               <Panel header="Basic" key="0">
-                <Space direction="vertical">
-                  <Space>
-                    <Input
-                      placeholder={
-                        props.settings?.pageName
-                          ? props.settings.pageName
-                          : "Page Name"
-                      }
-                      onChange={handleChangePageName}
-                    />
-                    <Popconfirm
-                      title="You sure you want to change Page Name?"
-                      onConfirm={changePageName}
-                    >
-                      <Button>Save</Button>
-                    </Popconfirm>
-                  </Space>
-                  <Space>
-                    <Input placeholder="New Password" onChange={handleChange} />
-                    <Popconfirm
-                      title="You sure you want to change password?"
-                      onConfirm={changePassword}
-                    >
-                      <Button>Save</Button>
-                    </Popconfirm>
-                  </Space>
+                <Space direction="vertical" style={{ width: "100%" }}>
+                  <Text>Page Name</Text>
+                  <Input
+                    placeholder={
+                      props.settings?.pageName
+                        ? props.settings.pageName
+                        : "Page Name"
+                    }
+                    onChange={handleChangePageName}
+                  />
+                  <Popconfirm
+                    title="You sure you want to change Page Name?"
+                    onConfirm={changePageName}
+                  >
+                    <Button>Save</Button>
+                  </Popconfirm>
+                </Space>
+
+                <Divider />
+
+                <Space direction="vertical" style={{ width: "100%" }}>
+                  <Text>Password</Text>
+                  <Input placeholder="New Password" onChange={handleChange} />
+                  <Popconfirm
+                    title="You sure you want to change password?"
+                    onConfirm={changePassword}
+                  >
+                    <Button>Save</Button>
+                  </Popconfirm>
+                </Space>
+
+                <Divider />
+
+                <Space direction="vertical" style={{ width: "100%" }}>
+                  <Text>Notification emails are separated by comma (,)</Text>
+                  <Input.TextArea
+                    placeholder="Notification Emails"
+                    onChange={handleChangeEmails}
+                    rows={4}
+                    defaultValue={
+                      props.settings?.emails ? props.settings.emails : null
+                    }
+                  />
+                  <Popconfirm
+                    title="You sure you want to change?"
+                    onConfirm={changeEmails}
+                  >
+                    <Button>Save</Button>
+                  </Popconfirm>
+                </Space>
+
+                <Divider />
+
+                <Space direction="vertical" style={{ width: "100%" }}>
                   <Text>Change Logo (Ratio 1:1)</Text>
                   <Upload
                     fileList=""
@@ -295,39 +335,42 @@ const Settings = (props) => {
              
             </Panel> */}
               <Panel header="Stripes Panel" key="2">
-                <Space direction="vertical">
-                  <Space>
-                    <Input
-                      placeholder={
-                        props.settings?.stripe_public
-                          ? props.settings.stripe_public
-                          : "Public Key"
-                      }
-                      onChange={handleChangeStripePublicKey}
-                    />
-                    <Popconfirm
-                      title="You sure you want to Public Key?"
-                      onConfirm={changeStripePublicKey}
-                    >
-                      <Button>Save</Button>
-                    </Popconfirm>
-                  </Space>
-                  <Space>
-                    <Input
-                      placeholder={
-                        props.settings?.stripe_secret
-                          ? props.settings.stripe_secret
-                          : "Secret Key"
-                      }
-                      onChange={handleChangeStripeSecretKey}
-                    />
-                    <Popconfirm
-                      title="You sure you want to change Secret Key?"
-                      onConfirm={changeStripeSecretKey}
-                    >
-                      <Button>Save</Button>
-                    </Popconfirm>
-                  </Space>
+                <Space direction="vertical" style={{ width: "100%" }}>
+                  <Text>Stripe Public Key</Text>
+                  <Input
+                    placeholder={
+                      props.settings?.stripe_public
+                        ? props.settings.stripe_public
+                        : "Public Key"
+                    }
+                    onChange={handleChangeStripePublicKey}
+                  />
+                  <Popconfirm
+                    title="You sure you want to Public Key?"
+                    onConfirm={changeStripePublicKey}
+                  >
+                    <Button>Save</Button>
+                  </Popconfirm>
+                </Space>
+
+                <Divider />
+
+                <Space direction="vertical" style={{ width: "100%" }}>
+                  <Text>Stripe Secret Key</Text>
+                  <Input
+                    placeholder={
+                      props.settings?.stripe_secret
+                        ? props.settings.stripe_secret
+                        : "Secret Key"
+                    }
+                    onChange={handleChangeStripeSecretKey}
+                  />
+                  <Popconfirm
+                    title="You sure you want to change Secret Key?"
+                    onConfirm={changeStripeSecretKey}
+                  >
+                    <Button>Save</Button>
+                  </Popconfirm>
                 </Space>
               </Panel>
             </Collapse>
@@ -400,6 +443,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(settingsActions.changeStripeSecretKey(key)),
     changeStripePublicKey: (key) =>
       dispatch(settingsActions.changeStripePublicKey(key)),
+    changeEmails: (emails) => dispatch(settingsActions.changeEmails(emails)),
   };
 };
 
