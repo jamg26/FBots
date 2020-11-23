@@ -76,12 +76,14 @@ const Settings = (props) => {
       title: "Page Name",
       dataIndex: "pagename",
       key: "pagename",
+      responsive: ["md"],
       render: (text) => <Text>{text}</Text>,
     },
     {
       title: "Page Token",
       dataIndex: "pagetoken",
       key: "pagetoken",
+      responsive: ["md"],
       render: (text) => <Text>...{text.slice(-10)}</Text>,
     },
   ];

@@ -81,6 +81,7 @@ const Products = (props) => {
       title: "Category",
       dataIndex: "category",
       key: "category",
+      responsive: ["md"],
       render: (text) => (
         <Text>
           <Tag>{text}</Tag>

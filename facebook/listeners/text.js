@@ -42,7 +42,7 @@ module.exports = async (senderID, messageText) => {
 
     db.orders.some(async (s) => {
       if (s.sender === senderID) {
-        const shippingFee = s.price * 0.07 >= 243 ? s.price * 0.07 : 243;
+        const shippingFee = s.price * 0.07 >= 120 ? s.price * 0.07 : 120;
         const order = await new Order({
           order_by: `${first_name} ${last_name}`,
           order_thread: senderID,

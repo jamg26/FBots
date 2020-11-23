@@ -7,9 +7,7 @@ const Pages = mongoose.model("pages");
 exports.getOrders = async (req, res, next) => {
   //const id = req.user._id;
   try {
-    const response = await Order.find({ author: req.user._id }).cache({
-      key: req.user._id,
-    });
+    const response = await Order.find({ author: req.user._id });
 
     const total = await Order.aggregate([
       { $match: { author: mongoose.Types.ObjectId(req.user._id) } },

@@ -60,7 +60,7 @@ exports.paymentSuccess = async (req, res, next) => {
       const order = await Order.findById(req.params.orderid);
       const page = await Page.findOne({ pageid: req.params.pageid });
       if (order.stripe_session === req.params.id) {
-        if (order.status !== "PAID") {
+        if (order.status !== "PAID" && order.status !== "SHIPPED") {
           order.status = "PAID";
           await order.save();
           res.send(
