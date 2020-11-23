@@ -14,6 +14,8 @@ const smtpOrder = require("../../services/mailer/order");
 
 module.exports = async (senderID, messageText) => {
   const author = await getAuthor();
+  const user = await getInfo(senderID);
+  const { first_name, last_name, profile_pic } = user.data;
   function send(msg) {
     sendMessage(senderID, msg);
   }
@@ -34,9 +36,6 @@ module.exports = async (senderID, messageText) => {
   }
 
   if (db.orders.some((s) => s.sender === senderID)) {
-    const user = await getInfo(senderID);
-    const { first_name, last_name, profile_pic } = user.data;
-
     const page = await Pages.findOne({ pageid: temp_db.page_id });
     const settings = await Settings.findOne({ author: page.author });
 
@@ -82,10 +81,16 @@ module.exports = async (senderID, messageText) => {
       .filter((o) => o);
   }
 
-  const question = await Automated.find({
+  const response = await Automated.find({
     $text: { $search: messageText },
     author: author,
   });
-  if (question.length !== 0)
-    send(question[Math.floor(Math.random() * question.length)].response);
+  if (response.length !== 0) {
+    let resp = response[Math.floor(Math.random() * response.length)].response;
+    if (resp.includes("{first_name}"))
+      resp = resp.replace("{first_name}", first_name);
+    if (resp.includes("{last_name}"))
+      resp = resp.replace("{last_name}", last_name);
+    send(resp);
+  }
 };
