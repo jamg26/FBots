@@ -22,7 +22,6 @@ exports.deleteUser = async (req, res, next) => {
 };
 
 exports.getCurrentUser = async (req, res, next) => {
-  const user = req.user;
-  delete user["password"];
-  res.send(user);
+  let user = req.user;
+  res.send({ email: user.email });
 };
