@@ -38,7 +38,7 @@ exports.createSession = async (req, res, next) => {
       ],
       mode: "payment",
       success_url: `${process.env.BASE_URL}/payments/stripe/success/{CHECKOUT_SESSION_ID}/${orderid}/${pageid}`,
-      cancel_url: "https://haarlem-oil.com/",
+      cancel_url: "https://facebook.com/",
     });
     order.stripe_session = session.id;
     await order.save();

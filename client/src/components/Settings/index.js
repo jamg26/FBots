@@ -172,30 +172,10 @@ const Settings = (props) => {
     props.getPages();
   };
 
-  // const handleChangeId = (e) => {
-  //   e.persist();
-  //   setPageId(e.target.value);
-  // };
-
-  // const handleChangeToken = (e) => {
-  //   e.persist();
-  //   setPageToken(e.target.value);
-  // };
-
   const changePassword = (e) => {
     props.changePassword(pass);
     props.getSettings();
   };
-
-  // const changePageId = (e) => {
-  //   props.changePageId(pageId);
-  //   props.getSettings();
-  // };
-
-  // const changePageToken = (e) => {
-  //   props.changePageToken(pageToken);
-  //   props.getSettings();
-  // };
 
   const changePageName = async (e) => {
     await props.changePageName(pageName);
