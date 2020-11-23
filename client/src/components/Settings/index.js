@@ -17,6 +17,7 @@ import {
 import { PlusOutlined } from "@ant-design/icons";
 import * as settingsActions from "../../actions/settings";
 import * as pageActions from "../../actions/pages";
+import * as userActions from "../../actions/user";
 import { connect } from "react-redux";
 import { uploader } from "../uploader";
 import IconFont from "../icon";
@@ -40,6 +41,7 @@ const Settings = (props) => {
   useEffect(() => {
     props.getSettings();
     props.getPages();
+    props.getCurrentUser();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -60,7 +62,7 @@ const Settings = (props) => {
             onConfirm={() => deletePage(record)}
           >
             <Button size="small">
-              <IconFont type="icon-delete" />
+              <IconFont type="icon-delete1" />
             </Button>
           </Popconfirm>
         </Space>
@@ -273,6 +275,9 @@ const Settings = (props) => {
                 <Divider />
 
                 <Space direction="vertical" style={{ width: "100%" }}>
+                  <Text>Email</Text>
+                  <Text strong>{props.profile?.email}</Text>
+
                   <Text>Password</Text>
                   <Input placeholder="New Password" onChange={handleChange} />
                   <Popconfirm
@@ -383,7 +388,7 @@ const Settings = (props) => {
             title={() => (
               <>
                 <Button onClick={addPage}>
-                  <IconFont type="icon-createnewpost" />
+                  <IconFont type="icon-add" />
                 </Button>
               </>
             )}
@@ -428,6 +433,7 @@ const mapStateToProps = (state) => {
   return {
     settings: state.settings?.get,
     pages: state.pages?.get_all,
+    profile: state.users?.get,
   };
 };
 
@@ -446,6 +452,7 @@ const mapDispatchToProps = (dispatch) => {
     changeStripePublicKey: (key) =>
       dispatch(settingsActions.changeStripePublicKey(key)),
     changeEmails: (emails) => dispatch(settingsActions.changeEmails(emails)),
+    getCurrentUser: () => dispatch(userActions.getCurrentUser()),
   };
 };
 

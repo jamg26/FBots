@@ -42,7 +42,7 @@ const Categories = (props) => {
             onConfirm={() => deleteCategory(record)}
           >
             <Button size="small">
-              <IconFont type="icon-delete" />
+              <IconFont type="icon-delete1" />
             </Button>
           </Popconfirm>
         </Space>
@@ -155,7 +155,7 @@ const Categories = (props) => {
       <Table
         title={() => (
           <Button onClick={addCategory}>
-            <IconFont type="icon-createnewpost" />
+            <IconFont type="icon-add" />
           </Button>
         )}
         columns={columns}

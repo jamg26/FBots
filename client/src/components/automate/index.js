@@ -38,7 +38,7 @@ const AutomatedResponses = (props) => {
             onConfirm={() => deleteAutomated(record)}
           >
             <Button size="small">
-              <IconFont type="icon-delete" />
+              <IconFont type="icon-delete1" />
             </Button>
           </Popconfirm>
         </Space>
@@ -143,7 +143,7 @@ const AutomatedResponses = (props) => {
       <Table
         title={() => (
           <Button onClick={addAutomate}>
-            <IconFont type="icon-createnewpost" />
+            <IconFont type="icon-add" />
           </Button>
         )}
         columns={columns}

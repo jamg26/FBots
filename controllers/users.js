@@ -20,3 +20,9 @@ exports.deleteUser = async (req, res, next) => {
     res.send(error.message);
   }
 };
+
+exports.getCurrentUser = async (req, res, next) => {
+  const user = req.user;
+  delete user["password"];
+  res.send(user);
+};

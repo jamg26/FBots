@@ -6,6 +6,11 @@ export const getUsers = () => async (dispatch) => {
   dispatch({ type: "GET_USERS", payload: response.data });
 };
 
+export const getCurrentUser = () => async (dispatch) => {
+  const response = await axios.get("/api/current_user");
+  dispatch({ type: "GET_USERS_CURRENT", payload: response.data });
+};
+
 export const signup = (formProps) => async (dispatch) => {
   try {
     await axios.post("/api/signup", formProps);

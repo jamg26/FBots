@@ -54,7 +54,7 @@ const Products = (props) => {
             onConfirm={() => deleteProduct(record)}
           >
             <Button size="small">
-              <IconFont type="icon-delete" />
+              <IconFont type="icon-delete1" />
             </Button>
           </Popconfirm>
         </Space>
@@ -153,7 +153,7 @@ const Products = (props) => {
   return (
     <>
       <Modal
-        title="Add Product"
+        title="Product"
         visible={visible}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -176,15 +176,6 @@ const Products = (props) => {
           </Form.Item>
 
           <Form.Item
-            name="description"
-            rules={[
-              { required: true, message: "Please input your description!" },
-            ]}
-          >
-            <Input.TextArea placeholder="Product Description" rows={4} />
-          </Form.Item>
-
-          <Form.Item
             name="price"
             rules={[{ required: true, message: "Please input price!" }]}
           >
@@ -201,6 +192,15 @@ const Products = (props) => {
                 );
               })}
             </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="description"
+            rules={[
+              { required: true, message: "Please input your description!" },
+            ]}
+          >
+            <Input.TextArea placeholder="Product Description" rows={4} />
           </Form.Item>
 
           <Form.Item name="image_url">
@@ -229,7 +229,7 @@ const Products = (props) => {
       <Table
         title={() => (
           <Button onClick={addProductButton}>
-            <IconFont type="icon-createnewpost" />
+            <IconFont type="icon-add" />
           </Button>
         )}
         columns={columns}
@@ -237,16 +237,6 @@ const Products = (props) => {
         rowKey="_id"
         scroll={{ x: "100%" }}
         size="small"
-        // onRow={(record, rowIndex) => {
-        //   return {
-        //     onClick: (event) => {
-        //       setVisible(true);
-        //       form.setFieldsValue(record);
-        //       setId(record);
-        //       setImage(record.image_url);
-        //     }, // click row
-        //   };
-        // }}
       />
     </>
   );

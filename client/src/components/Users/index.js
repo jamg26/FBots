@@ -34,7 +34,7 @@ const UsersComponent = (props) => {
             onConfirm={() => deleteUser(record)}
           >
             <Button>
-              <IconFont type="icon-delete" />
+              <IconFont type="icon-delete1" />
             </Button>
           </Popconfirm>
         </Space>
@@ -116,7 +116,7 @@ const UsersComponent = (props) => {
       <Table
         title={() => (
           <Button onClick={addUser}>
-            <IconFont type="icon-createnewpost" />
+            <IconFont type="icon-add" />
           </Button>
         )}
         columns={columns}
