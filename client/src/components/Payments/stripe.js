@@ -37,7 +37,7 @@ const StripeComponent = (props) => {
       }
     };
     createSession();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return <>{status}</>;
 };
