@@ -18,11 +18,11 @@ export const signin = (formProps, callback) => async (dispatch) => {
     dispatch({ type: "AUTH_USER", payload: response.data.token });
     localStorage.setItem("token", response.data.token);
     message.info(`Signed in.`);
-    callback();
   } catch (error) {
     dispatch({ type: "AUTH_ERROR", payload: "Invalid login credentials" });
     message.error(`Invalid email/password.`);
   }
+  callback();
 };
 
 export const signout = () => {

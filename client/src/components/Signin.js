@@ -10,10 +10,10 @@ const { Text } = Typography;
 
 const Signin = (props) => {
   const [ip, setIP] = React.useState(null);
+  const [btnState, setBtnState] = React.useState(false);
 
   useEffect(() => {
     //props.getSettings();
-
     text("https://www.cloudflare.com/cdn-cgi/trace").then((data) => {
       let ipRegex = /[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}/;
       let ip = data.match(ipRegex)[0];
@@ -21,9 +21,15 @@ const Signin = (props) => {
     });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const onFinish = (values) => {
-    props.signin(values, () => {
-      props.history.push("/");
+  useEffect(() => {
+    if (props.auth) props.history.push("/");
+  });
+
+  const onFinish = async (values) => {
+    setBtnState(true);
+    await props.signin(values, () => {
+      //props.history.push("/");
+      setBtnState(false);
     });
   };
 
@@ -91,7 +97,12 @@ const Signin = (props) => {
               </Form.Item>
 
               <Form.Item>
-                <Button type="ghost" block htmlType="submit">
+                <Button
+                  type="ghost"
+                  block
+                  htmlType="submit"
+                  disabled={btnState}
+                >
                   Submit
                 </Button>
               </Form.Item>
@@ -107,6 +118,7 @@ const mapStateToProps = (state) => {
   return {
     errorMessage: state.auth.errorMessage,
     settings: state.settings.get,
+    auth: state.auth.authenticated,
   };
 };
 
