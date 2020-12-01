@@ -59,7 +59,7 @@ const Signin = (props) => {
             title=" "
             cover={
               <img
-                src="https://ecommerce26.s3-ap-southeast-1.amazonaws.com/fb_cpanel_bot/w2jUb3Gf2wn5NpPsfybi33.png"
+                src="https://ecommerce26.s3-ap-southeast-1.amazonaws.com/fb_cpanel_bot/buWbVWxrhgkmMt6XmQDL5a.png"
                 alt="cover"
               />
             }
