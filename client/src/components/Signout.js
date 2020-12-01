@@ -4,6 +4,7 @@ import * as actions from "../actions";
 
 const Signout = (props) => {
   useEffect(() => {
+    document.title = "FBOTS";
     props.signout();
     props.history.push("/signin");
   }, [props]);

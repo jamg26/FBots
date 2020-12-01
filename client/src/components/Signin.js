@@ -5,6 +5,7 @@ import * as settingsActions from "../actions/settings";
 import { Form, Input, Button, Row, Col, Card, Typography } from "antd";
 import { UserOutlined, KeyOutlined } from "@ant-design/icons";
 import bg from "./signin_background.jpg";
+import cover from "./cover.png";
 
 const { Text } = Typography;
 
@@ -57,12 +58,7 @@ const Signin = (props) => {
             bordered
             size="small"
             title=" "
-            cover={
-              <img
-                src="https://ecommerce26.s3-ap-southeast-1.amazonaws.com/fb_cpanel_bot/buWbVWxrhgkmMt6XmQDL5a.png"
-                alt="cover"
-              />
-            }
+            cover={<img src={cover} alt="cover" />}
             actions={[<Text>Your ip is {ip}</Text>]}
           >
             <Form

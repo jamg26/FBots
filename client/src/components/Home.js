@@ -22,8 +22,8 @@ const Home = (props) => {
 
   useEffect(() => {
     document.title = props.settings?.pageName
-      ? `${props.settings?.pageName} CPanel`
-      : "CPanel";
+      ? `${props.settings?.pageName} Control Panel`
+      : "FBOTS";
   }, [props.settings]);
 
   const navigate = (value) => {
