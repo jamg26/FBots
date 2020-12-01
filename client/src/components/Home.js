@@ -97,7 +97,7 @@ const Home = (props) => {
             </Menu.Item>
           </Menu>
         </Sider>
-        <Layout style={{ padding: "0 24px 24px" }}>
+        <Layout style={{ padding: "0 10px 10px" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
             <Breadcrumb.Item>{nav}</Breadcrumb.Item>
