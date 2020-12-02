@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import requireAuth from "./requireAuth";
-import { Layout, Menu, Breadcrumb, PageHeader, Button } from "antd";
+import { Layout, Menu, Breadcrumb, PageHeader, Button, Typography } from "antd";
 import Products from "./Products/";
 import Categories from "./Categories/";
 import Settings from "./Settings/";
@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import * as settingsActions from "../actions/settings";
 
 const { Content, Sider } = Layout;
+const { Text } = Typography;
 
 const Home = (props) => {
   const [nav, setNav] = useState("products");
@@ -36,9 +37,12 @@ const Home = (props) => {
       <div className="logo" />
       <PageHeader
         className="site-page-header"
-        title={`${
-          props.settings?.pageName ? props.settings?.pageName : ""
-        } Control Panel`}
+        title={
+          <Text style={{ color: "rgb(238, 14, 81)" }}>
+            {props.settings?.pageName ? props.settings?.pageName : ""} Control
+            Panel
+          </Text>
+        }
         avatar={{
           shape: "square",
           size: "large",
@@ -68,15 +72,12 @@ const Home = (props) => {
             defaultSelectedKeys={["products"]}
             onClick={navigate}
           >
-            <Menu.Item
-              key="products"
-              icon={<IconFont type="icon-Products_in_basket" />}
-            >
+            <Menu.Item key="products" icon={<IconFont type="icon-product" />}>
               Products
             </Menu.Item>
             <Menu.Item
               key="categories"
-              icon={<IconFont type="icon-category" />}
+              icon={<IconFont type="icon-category-item-select" />}
             >
               Categories
             </Menu.Item>

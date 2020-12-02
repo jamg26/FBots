@@ -54,7 +54,7 @@ const Products = (props) => {
             onConfirm={() => deleteProduct(record)}
           >
             <Button size="small">
-              <IconFont type="icon-delete1" />
+              <IconFont type="icon-delete_database" />
             </Button>
           </Popconfirm>
         </Space>
@@ -95,8 +95,8 @@ const Products = (props) => {
       responsive: ["md"],
       render: (text) => (
         <Text>
-          {text.slice(0, 50)}
-          {text[51] ? "..." : ""}
+          {text.slice(0, 40)}
+          {text[41] ? "..." : ""}
         </Text>
       ),
     },
@@ -229,7 +229,7 @@ const Products = (props) => {
       <Table
         title={() => (
           <Button onClick={addProductButton}>
-            <IconFont type="icon-add" />
+            <IconFont type="icon-add_database" />
           </Button>
         )}
         columns={columns}

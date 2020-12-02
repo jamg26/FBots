@@ -62,7 +62,7 @@ const Settings = (props) => {
             onConfirm={() => deletePage(record)}
           >
             <Button size="small">
-              <IconFont type="icon-delete1" />
+              <IconFont type="icon-delete_database" />
             </Button>
           </Popconfirm>
         </Space>
@@ -368,7 +368,7 @@ const Settings = (props) => {
             title={() => (
               <>
                 <Button onClick={addPage}>
-                  <IconFont type="icon-add" />
+                  <IconFont type="icon-add_database" />
                 </Button>
               </>
             )}
