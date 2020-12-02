@@ -66,8 +66,8 @@ const Products = (props) => {
       key: "name",
       render: (text) => (
         <Text>
-          {text.slice(0, 30)}
-          {text[31] ? "..." : ""}
+          {text.slice(0, 20)}
+          {text[21] ? "..." : ""}
         </Text>
       ),
     },
@@ -95,8 +95,8 @@ const Products = (props) => {
       responsive: ["md"],
       render: (text) => (
         <Text>
-          {text.slice(0, 40)}
-          {text[41] ? "..." : ""}
+          {text.slice(0, 50)}
+          {text[51] ? "..." : ""}
         </Text>
       ),
     },
