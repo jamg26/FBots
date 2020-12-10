@@ -26,9 +26,9 @@ module.exports = (recipientId, data, token) => {
           // },
           summary: {
             subtotal: data.price,
-            shipping_cost: data.shipping_fee,
+            //shipping_cost: data.shipping_fee,
             //total_tax: 0,
-            total_cost: data.price + data.shipping_fee,
+            total_cost: data.price,
           },
           //   adjustments: [
           //     {
