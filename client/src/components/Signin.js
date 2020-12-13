@@ -48,6 +48,7 @@ const Signin = (props) => {
         backgroundImage: `url(${bg})`,
         backgroundSize: "cover",
         minHeight: "100%",
+        minWidth: "100%",
         position: "fixed",
         top: 0,
       }}
