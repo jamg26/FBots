@@ -10,6 +10,7 @@ import Orders from "./Orders/";
 import IconFont from "./icon";
 import { connect } from "react-redux";
 import * as settingsActions from "../actions/settings";
+import Logo from "./logo.png"
 
 const { Content, Sider } = Layout;
 const { Text } = Typography;
@@ -47,7 +48,7 @@ const Home = (props) => {
           shape: "square",
           size: "large",
           alt: "logo",
-          src: props.settings?.logo_url,
+          src: props.settings?.logo_url ? props.settings.logo_url : Logo,
         }}
         extra={[
           <Button
