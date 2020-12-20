@@ -17,6 +17,7 @@ import {
 import { connect } from "react-redux";
 import * as orderActions from "../../actions/order";
 import columns from "./columns";
+import PrintOrder from "./printOrders";
 
 const { Text } = Typography;
 const { TabPane } = Tabs;
@@ -185,6 +186,7 @@ const OrdersComponent = (props) => {
                     allowClear
                   />
                   <Button onClick={searchOrder}>Search</Button>
+                  <PrintOrder orders={props.orders} stats={props.stats} />
                 </Space>
               </>
             )}
@@ -205,20 +207,31 @@ const OrdersComponent = (props) => {
         <TabPane tab="Reports" key="2">
           <Card>
             <Row>
-              <Col md={3}>
-                <Statistic title="Total Orders" value={props.stats?.total} />
+              <Col lg={4}>
+                <Card>
+                  <Statistic title="Total Orders" value={props.stats?.total} />
+                </Card>
               </Col>
-              <Col md={3}>
-                <Statistic title="Total Paid" value={props.stats?.paid} />
+              <Col lg={4}>
+                <Card>
+                  <Statistic title="Total Paid" value={props.stats?.paid} />
+                </Card>
               </Col>
-              <Col md={3}>
-                <Statistic
-                  title="Total Cancelled"
-                  value={props.stats?.cancelled}
-                />
+              <Col lg={4}>
+                <Card>
+                  <Statistic
+                    title="Total Cancelled"
+                    value={props.stats?.cancelled}
+                  />
+                </Card>
               </Col>
-              <Col md={3}>
-                <Statistic title="Total Shipped" value={props.stats?.shipped} />
+              <Col lg={4}>
+                <Card>
+                  <Statistic
+                    title="Total Shipped"
+                    value={props.stats?.shipped}
+                  />
+                </Card>
               </Col>
             </Row>
           </Card>
