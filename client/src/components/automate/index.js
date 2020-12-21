@@ -96,7 +96,7 @@ const AutomatedResponses = (props) => {
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log(errorInfo);
+    //console.log(errorInfo);
   };
 
   const handleCancel = (e) => {
@@ -128,9 +128,9 @@ const AutomatedResponses = (props) => {
         >
           <Form.Item
             name="question"
-            rules={[{ required: true, message: "Please input your question!" }]}
+            rules={[{ required: true, message: "Please input your keyword!" }]}
           >
-            <Input placeholder="Question" />
+            <Input placeholder="Keyword" />
           </Form.Item>
           <Form.Item
             name="response"
@@ -150,15 +150,6 @@ const AutomatedResponses = (props) => {
         dataSource={props.automated}
         rowKey="_id"
         size="small"
-        // onRow={(record, rowIndex) => {
-        //   return {
-        //     onClick: (event) => {
-        //       setVisible(true);
-        //       form.setFieldsValue(record);
-        //       setId(record);
-        //     }, // click row
-        //   };
-        // }}
       />
     </>
   );

@@ -232,16 +232,13 @@ const Settings = (props) => {
       <Row>
         <Col xs={24} md={18} lg={12}>
           <div style={{ padding: 10 }}>
-            <Collapse>
+            <Collapse defaultActiveKey={["0"]}>
               <Panel header="Basic" key="0">
                 <Space direction="vertical" style={{ width: "100%" }}>
                   <Text>Page Name</Text>
                   <Input
-                    placeholder={
-                      props.settings?.pageName
-                        ? props.settings.pageName
-                        : "Page Name"
-                    }
+                    placeholder="Page Name"
+                    defaultValue={props.settings?.pageName}
                     onChange={handleChangePageName}
                   />
                   <Popconfirm

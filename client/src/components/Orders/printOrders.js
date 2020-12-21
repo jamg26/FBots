@@ -7,47 +7,54 @@ const PrintOrder = (props) => {
   const [data, setData] = React.useState(null);
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
+  const orderStatusColor = (status) => {
+    return status === "PAID" || status === "SHIPPED"
+      ? "#0ba12a"
+      : status === "NOT_PAID"
+      ? "#2a2a2a"
+      : status === "CANCELLED"
+      ? "#910909"
+      : "#000000";
+  };
+
   React.useEffect(() => {
     let orders = props.orders?.map((order) => {
       return [
-        order.status
-          ? {
-              text: `${order.status}`,
-              fontSize: 8,
-              alignment: "center",
-            }
-          : "-",
-        order.page_name
-          ? {
-              text: `${order.page_name}`,
-              fontSize: 8,
-            }
-          : "-",
-        order.price
-          ? {
-              text: `PHP ${order.price.toFixed(2)}`,
-              fontSize: 8,
-              alignment: "right",
-            }
-          : "-",
+        {
+          text: `${order.status}`,
+          fontSize: 8,
+          alignment: "center",
+          color: orderStatusColor(order.status),
+        },
+        {
+          text: order.page_name,
+          fontSize: 8,
+          bold: true,
+        },
+        {
+          text: `PHP ${order.price.toFixed(2)}`,
+          fontSize: 8,
+          alignment: "right",
+        },
         {
           text: `${new Date(order.createdAt).toLocaleString("en-US", {
             hour12: true,
           })}`,
           fontSize: 8,
+          alignment: "right",
+          italics: true,
+          color: "#2a2a2a",
         },
-        order.address
-          ? {
-              text: `${order.address}`,
-              fontSize: 8,
-            }
-          : "-",
+        {
+          text: order.address,
+          fontSize: 8,
+        },
       ];
     });
     orders && orders.unshift(["Status", "Page", "Amount", "Date", "Address"]);
     orders &&
       orders.push([
-        "TOTAL",
+        "",
         "",
         {
           text: `PHP ${props.stats?.total}`,
@@ -65,38 +72,42 @@ const PrintOrder = (props) => {
     var dd = {
       content: [
         {
-          text: `FBOTS FOR MESSENGER`,
-          style: "header",
-          alignment: "center",
+          text: [
+            {
+              text: "FBOTS FOR MESSENGER",
+              color: "#ee0e51",
+              fontSize: 20,
+              bold: true,
+            },
+          ],
         },
         {
-          text: `ORDER LIST`,
-          style: "header",
-          alignment: "center",
-        },
-        {
-          text: `as of ${new Date().toLocaleString("en-US", {
+          text: `Generated Date: ${new Date().toLocaleString("en-US", {
             hour12: true,
-          })}`,
-          alignment: "center",
+          })}\n\n\n`,
+          fontSize: 8,
         },
         {
           table: {
-            widths: [100, "*", "*", "*", "*"],
+            widths: [50, "*", "*", 100, 150],
             body: data,
-            //[
-            //   ["", ""],
-            //   ["", ""],
-            //   [
-            //     "Total Expenses:",
-            //     {
-            //       text: `PHP 1000`,
-            //       alignment: "right",
-            //     },
-            //   ],
-            //],
           },
-          // layout: "lightHorizontalLines",
+          layout: {
+            hLineWidth: function (i, node) {
+              return i === 0 || i === node.table.body.length ? 2 : 1;
+            },
+            vLineWidth: function (i, node) {
+              return i === 0 || i === node.table.widths.length ? 2 : 1;
+            },
+            hLineColor: function (i, node) {
+              return i === 0 || i === node.table.body.length ? "black" : "gray";
+            },
+            vLineColor: function (i, node) {
+              return i === 0 || i === node.table.widths.length
+                ? "black"
+                : "gray";
+            },
+          },
         },
       ],
       styles: {

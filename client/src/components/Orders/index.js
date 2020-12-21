@@ -100,6 +100,9 @@ const OrdersComponent = (props) => {
           form={form}
           size="large"
           onFinishFailed={onFinishFailed}
+          initialValues={{
+            address: id?.address,
+          }}
         >
           <Form.Item name="address">
             <Input.TextArea rows={4} placeholder="Enter shipping address" />

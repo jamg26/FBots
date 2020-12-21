@@ -10,13 +10,13 @@ import Orders from "./Orders/";
 import IconFont from "./icon";
 import { connect } from "react-redux";
 import * as settingsActions from "../actions/settings";
-import Logo from "./logo.png"
+import Logo from "./logo.png";
 
 const { Content, Sider } = Layout;
 const { Text } = Typography;
 
 const Home = (props) => {
-  const [nav, setNav] = useState("products");
+  const [nav, setNav] = useState("settings");
 
   useEffect(() => {
     props.getSettings();
@@ -68,9 +68,9 @@ const Home = (props) => {
           breakpoint="md"
         >
           <Menu
-            defaultOpenKeys={["sub1"]}
+            defaultOpenKeys={["settings"]}
             style={{ height: "100%", borderRight: 0 }}
-            defaultSelectedKeys={["products"]}
+            defaultSelectedKeys={["settings"]}
             onClick={navigate}
           >
             <Menu.Item key="products" icon={<IconFont type="icon-product" />}>
