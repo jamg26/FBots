@@ -16,7 +16,7 @@ const { Content, Sider } = Layout;
 const { Text } = Typography;
 
 const Home = (props) => {
-  const [nav, setNav] = useState("settings");
+  const [nav, setNav] = useState("products");
 
   useEffect(() => {
     props.getSettings();
@@ -65,12 +65,12 @@ const Home = (props) => {
           width={200}
           className="site-layout-background"
           //collapsible
-          breakpoint="md"
+          breakpoint="lg"
         >
           <Menu
-            defaultOpenKeys={["settings"]}
+            defaultOpenKeys={["products"]}
             style={{ height: "100%", borderRight: 0 }}
-            defaultSelectedKeys={["settings"]}
+            defaultSelectedKeys={["products"]}
             onClick={navigate}
           >
             <Menu.Item key="products" icon={<IconFont type="icon-product" />}>

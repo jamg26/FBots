@@ -13,6 +13,7 @@ import {
   Modal,
   Form,
   Divider,
+  Card,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import * as settingsActions from "../../actions/settings";
@@ -38,15 +39,25 @@ const Settings = (props) => {
   const [form] = Form.useForm();
   const [id, setId] = useState(null);
 
+  //width
+  const [width, setWidth] = useState(window.innerWidth);
+  const [height, setHeight] = useState(window.innerHeight);
+
   useEffect(() => {
     props.getSettings();
     props.getPages();
     props.getCurrentUser();
+    window.addEventListener("resize", updateDimensions);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setImage(props.settings);
   }, [props.settings]);
+
+  const updateDimensions = () => {
+    setWidth(window.innerWidth);
+    setHeight(window.innerHeight);
+  };
 
   const columns = [
     {
@@ -230,17 +241,19 @@ const Settings = (props) => {
         </Form>
       </Modal>
       <Row>
-        <Col xs={24} md={18} lg={12}>
+        <Col xs={24} md={24} lg={12}>
           <div style={{ padding: 10 }}>
             <Collapse defaultActiveKey={["0"]}>
               <Panel header="Basic" key="0">
                 <Space direction="vertical" style={{ width: "100%" }}>
                   <Text>Page Name</Text>
+
                   <Input
                     placeholder="Page Name"
                     defaultValue={props.settings?.pageName}
                     onChange={handleChangePageName}
                   />
+
                   <Popconfirm
                     title="You sure you want to change Page Name?"
                     onConfirm={changePageName}
@@ -269,6 +282,7 @@ const Settings = (props) => {
 
                 <Space direction="vertical" style={{ width: "100%" }}>
                   <Text>Notification emails are separated by comma (,)</Text>
+
                   <Input.TextArea
                     placeholder="Notification Emails"
                     onChange={handleChangeEmails}
@@ -277,6 +291,7 @@ const Settings = (props) => {
                       props.settings?.emails ? props.settings.emails : null
                     }
                   />
+
                   <Popconfirm
                     title="You sure you want to change?"
                     onConfirm={changeEmails}
@@ -360,7 +375,23 @@ const Settings = (props) => {
             </Collapse>
           </div>
         </Col>
-        <Col xs={24} md={24} lg={24}>
+
+        {width > 991 ? (
+          <Col md={18} lg={12}>
+            <Card>
+              <Space direction="vertical">
+                <Text type="danger">DANGER ZONE!</Text>
+                <Text>
+                  Do not change any of the configurations unless you know what
+                  you're doing. Misconfiguration might cause Messenger Bot
+                  malfunctioning.
+                </Text>
+              </Space>
+            </Card>
+          </Col>
+        ) : null}
+
+        <Col md={24} lg={24} xs={0}>
           <Table
             title={() => (
               <>
