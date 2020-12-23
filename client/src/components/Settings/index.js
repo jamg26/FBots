@@ -22,6 +22,7 @@ import * as userActions from "../../actions/user";
 import { connect } from "react-redux";
 import { uploader } from "../uploader";
 import IconFont from "../icon";
+import FacebookButton from "./fb";
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -394,11 +395,12 @@ const Settings = (props) => {
         <Col md={24} lg={24} xs={0}>
           <Table
             title={() => (
-              <>
+              <Space>
                 <Button onClick={addPage}>
                   <IconFont type="icon-add_database" />
                 </Button>
-              </>
+                <FacebookButton />
+              </Space>
             )}
             columns={columns}
             dataSource={props.pages}
