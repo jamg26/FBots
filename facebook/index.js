@@ -43,6 +43,7 @@ module.exports = async (app) => {
           var pageID = entry.id;
           var timeOfEvent = entry.time;
           temp_db.page_id = pageID;
+          console.log(pageID);
           // Iterate over each messaging event
           entry.messaging.forEach(function (event) {
             if (event.message) {

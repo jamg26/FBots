@@ -7,6 +7,7 @@ const { db } = require("../temp_db");
 const getInfo = require("../functions/get_info");
 const { getCategories, getProducts } = require("../controllers");
 const getAuthor = require("../functions/page_author");
+const persistentMenu = require("../functions/persistent_menu");
 
 module.exports = async (senderID, payload) => {
   const categories = await getCategories();
@@ -20,6 +21,10 @@ module.exports = async (senderID, payload) => {
 
   if (payload === "Show Menu") {
     sendHome(senderID);
+  }
+
+  if (payload === "GET_STARTED_PAYLOAD") {
+    persistentMenu(senderID);
   }
 
   if (payload === "Search Product") {

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Pages = mongoose.model("pages");
+const getStartedButton = require("../facebook/functions/get_started_button");
 
 exports.getPages = async (req, res, next) => {
   const response = await Pages.find({ author: req.user._id }).cache({
@@ -9,11 +10,14 @@ exports.getPages = async (req, res, next) => {
 };
 
 exports.addPage = async (req, res, next) => {
+  const { pagetoken } = req.body;
+
   try {
     const response = await new Pages({
       ...req.body,
       author: req.user._id,
     }).save();
+    getStartedButton(pagetoken);
     res.send(response);
     next();
   } catch (error) {
