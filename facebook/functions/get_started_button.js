@@ -16,6 +16,7 @@ module.exports = (token) => {
   axios(config)
     .then(function (response) {
       //console.log(JSON.stringify(response.data));
+      console.log("GET_STARTED_BUTTON:", token);
     })
     .catch(function (error) {
       console.log(error);
