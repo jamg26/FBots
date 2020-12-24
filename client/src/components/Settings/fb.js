@@ -1,47 +1,23 @@
 import React from "react";
-import * as Facebook from "fb-sdk-wrapper";
 import { Button } from "antd";
 
 const FacebookButton = (props) => {
-  const load = async () => {
-    await Facebook.load();
-    await Facebook.init({
-      appId: "3462085153912509",
-    });
-    Facebook.getLoginStatus().then((response) => {
-      if (response.status === "connected") {
-        // logged in
-        // console.log(1, response);
-      } else {
-        // not logged in
-        //console.log(0, response);
-      }
-    });
-  };
-
-  React.useEffect(() => {
-    load();
-  }, []);
-
   const login = () => {
-    Facebook.login({
-      scope: "public_profile,email,pages_messaging",
-      return_scopes: true,
-    }).then((response) => {
-      if (response.status === "connected") {
-        //console.log(response);
-        // logged in
-      } else {
-        // not logged in
+    window.FB.login(
+      function (response) {
+        if (response.authResponse) {
+          console.log(response);
+          // window.FB.api("/me", function (response) {
+          //   console.log(response);
+          // });
+        } else {
+          console.log("User cancelled login or did not fully authorize.");
+        }
+      },
+      {
+        scope: "public_profile,email,pages_messaging",
       }
-    });
-  };
-
-  const logout = () => {
-    Facebook.logout().then((response) => {
-      console.log("logged out");
-      // logged out
-    });
+    );
   };
 
   return (

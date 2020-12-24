@@ -392,7 +392,7 @@ const Settings = (props) => {
           </Col>
         ) : null}
 
-        <Col md={24} lg={24} xs={0}>
+        <Col md={24} lg={24} xs={24}>
           <Table
             title={() => (
               <Space>
