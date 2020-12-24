@@ -14,8 +14,25 @@ const smtpOrder = require("../../services/mailer/order");
 
 module.exports = async (senderID, messageText) => {
   const author = await getAuthor();
-  const user = await getInfo(senderID);
-  const { first_name, last_name, profile_pic } = user.data;
+  let first_name = "",
+    last_name = "",
+    profile_pic = "";
+
+  try {
+    const user = await getInfo(senderID);
+    first_name = user.data.first_name;
+    last_name = user.data.last_name;
+    profile_pic = user.data.profile_pic;
+  } catch (error) {
+    //console.log(error.message);
+  }
+
+  // try {
+  //   const { first_name, last_name, profile_pic } = user.data;
+  // } catch (error) {
+  //   console.log(error.message);
+  // }
+
   function send(msg) {
     sendMessage(senderID, msg);
   }
@@ -85,6 +102,7 @@ module.exports = async (senderID, messageText) => {
     $text: { $search: messageText },
     author: author,
   });
+
   if (response.length !== 0) {
     let resp = response[Math.floor(Math.random() * response.length)].response;
     if (resp.includes("{first_name}"))
