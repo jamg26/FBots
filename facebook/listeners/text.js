@@ -10,6 +10,7 @@ const Automated = require("../../models/automated");
 const Order = require("../../models/orders");
 const getInfo = require("../functions/get_info");
 const getAuthor = require("../functions/page_author");
+const getToken = require("../functions/page_token");
 const smtpOrder = require("../../services/mailer/order");
 
 module.exports = async (senderID, messageText) => {
@@ -96,6 +97,12 @@ module.exports = async (senderID, messageText) => {
     db.orders = db.orders
       .map((d, i) => (d.sender !== senderID ? d : null))
       .filter((o) => o);
+  }
+
+  if (messageText === "DELETE PERSISTENT_MENU") {
+    const token = await getToken();
+    require("../functions/persistent_menu_delete")(senderID, token);
+    send(`Persistent menu from ${senderID} is deleted.`);
   }
 
   const response = await Automated.find({
