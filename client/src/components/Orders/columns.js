@@ -34,12 +34,18 @@ const columns = [
     title: "Amount",
     dataIndex: "price",
     key: "price",
-    render: (text) => <Text code>{text?.toFixed(2)}</Text>,
+    align: "right",
+    render: (text) => (
+      <Text code type="danger">
+        {text?.toFixed(2)}
+      </Text>
+    ),
   },
   {
     title: "Date",
     dataIndex: "createdAt",
     key: "createdAt",
+    align: "right",
     render: (text) => (
       <Text>
         {new Date(text).toLocaleString("en-US", {

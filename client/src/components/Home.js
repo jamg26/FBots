@@ -38,6 +38,7 @@ const Home = (props) => {
       <div className="logo" />
       <PageHeader
         className="site-page-header"
+        style={{ backgroundColor: "rgb(255, 230, 233)" }}
         title={
           <Text style={{ color: "rgb(238, 14, 81)" }}>
             {props.settings?.pageName ? props.settings?.pageName : ""} Control

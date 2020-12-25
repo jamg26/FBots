@@ -14,6 +14,7 @@ import {
   Form,
   Divider,
   Card,
+  Tooltip,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import * as settingsActions from "../../actions/settings";
@@ -69,6 +70,7 @@ const Settings = (props) => {
           <Button size="small" onClick={() => editPage(record)}>
             <IconFont type="icon-EditDocument" />
           </Button>
+
           <Popconfirm
             title="You sure you want to delete?"
             onConfirm={() => deletePage(record)}
@@ -84,7 +86,7 @@ const Settings = (props) => {
       title: "Page ID",
       dataIndex: "pageid",
       key: "pageid",
-      render: (text) => <Text>{text}</Text>,
+      render: (text) => <Text copyable>{text}</Text>,
     },
     {
       title: "Page Name",
@@ -98,7 +100,11 @@ const Settings = (props) => {
       dataIndex: "pagetoken",
       key: "pagetoken",
       responsive: ["md"],
-      render: (text) => <Text>...{text.slice(-10)}</Text>,
+      render: (text) => (
+        <Tooltip title={text}>
+          <Text>...{text.slice(-10)}</Text>
+        </Tooltip>
+      ),
     },
   ];
 
@@ -223,6 +229,12 @@ const Settings = (props) => {
           onFinishFailed={onFinishFailed}
         >
           <Form.Item
+            name="pagename"
+            rules={[{ required: true, message: "Please input Page Name!" }]}
+          >
+            <Input placeholder="Page Name" />
+          </Form.Item>
+          <Form.Item
             name="pageid"
             rules={[{ required: true, message: "Please input Page ID!" }]}
           >
@@ -233,12 +245,6 @@ const Settings = (props) => {
             rules={[{ required: true, message: "Please input Page Token!" }]}
           >
             <Input.TextArea rows={4} placeholder="Page Token" />
-          </Form.Item>
-          <Form.Item
-            name="pagename"
-            rules={[{ required: true, message: "Please input Page Name!" }]}
-          >
-            <Input placeholder="Page Name" />
           </Form.Item>
         </Form>
       </Modal>
@@ -400,6 +406,7 @@ const Settings = (props) => {
                 <Button onClick={addPage}>
                   <IconFont type="icon-add_database" />
                 </Button>
+
                 <FacebookButton
                   addPage={props.addPage}
                   getPages={props.getPages}

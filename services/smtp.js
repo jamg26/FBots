@@ -15,7 +15,7 @@ module.exports = async function main(to, subject, htmlBody) {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: '"eCommerce Bot 🛒" <ecommercebotph@gmail.com>', // sender address
+    from: '"FBots 🛒" <ecommercebotph@gmail.com>', // sender address
     to: to, // list of receivers
     subject: subject, // Subject line
     // text: "Hello world?", // plain text body
