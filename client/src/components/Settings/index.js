@@ -203,7 +203,11 @@ const Settings = (props) => {
 
   const changeLogo = async (image) => {
     const url = await uploader(image.file);
-    await props.changeLogo(url.location);
+    const imgKit = url.location.replace(
+      "https://ecommerce26.s3-ap-southeast-1.amazonaws.com/fb_cpanel_bot/",
+      "https://ik.imagekit.io/jamg/"
+    );
+    await props.changeLogo(`${imgKit}?tr=w-100,h-100`);
     props.getSettings();
   };
 
