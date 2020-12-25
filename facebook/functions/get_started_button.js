@@ -38,12 +38,12 @@ module.exports = (token) => {
       console.log("GET_STARTED_BUTTON:", token);
     })
     .catch(function (error) {
-      console.log(error);
+      //console.log(error);
     });
 
   axios(config2)
     .then(function (response) {})
     .catch(function (error) {
-      console.log(error);
+      //console.log(error);
     });
 };

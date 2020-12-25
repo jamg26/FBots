@@ -8,6 +8,7 @@ const orderRoutes = require("./routes/orders");
 const usersRoutes = require("./routes/users");
 const pagesRoutes = require("./routes/pages");
 const stripeRoutes = require("./routes/stripe");
+const facebookRoutes = require("./routes/facebook");
 
 //controllers
 const Authentication = require("./controllers/authentication");
@@ -19,6 +20,7 @@ const Orders = require("./controllers/orders");
 const Users = require("./controllers/users");
 const Pages = require("./controllers/pages");
 const Stripe = require("./controllers/stripe");
+const Facebook = require("./controllers/facebook");
 
 const passportService = require("./services/passport");
 const passport = require("passport");
@@ -39,4 +41,5 @@ module.exports = function (app) {
   usersRoutes(app, requireAuth, Users);
   pagesRoutes(app, requireAuth, Pages, cleanCache);
   stripeRoutes(app, Stripe);
+  facebookRoutes(app, Facebook);
 };

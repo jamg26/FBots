@@ -10,7 +10,14 @@ exports.getPages = async (req, res, next) => {
 };
 
 exports.addPage = async (req, res, next) => {
-  const { pagetoken } = req.body;
+  const { pagetoken, pageid } = req.body;
+
+  const exist = await Pages.find({ pageid });
+  if (exist.length > 0) {
+    return res
+      .status(400)
+      .send("The selected page is already linked on this or other account.");
+  }
 
   try {
     const response = await new Pages({

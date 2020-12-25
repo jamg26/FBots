@@ -1,38 +1,118 @@
 import React from "react";
-import { Button } from "antd";
+import { Button, Modal, Table, Space, Typography } from "antd";
 import axios from "axios";
+import { connect } from "react-redux";
+import * as fbActions from "../../actions/facebook";
+
+const { Text } = Typography;
 
 const FacebookButton = (props) => {
-  const login = () => {
-    window.FB.login(
-      function (response) {
-        if (response.authResponse) {
-          console.log(response.authResponse);
-          console.log(response.authResponse.accessToken);
-          console.log(response.authResponse.userID);
-          axios
-            .get(
-              `https://graph.facebook.com/${response.authResponse.userID}/accounts?access_token=${response.authResponse.accessToken}`
-            )
-            .then((data) => {
-              console.log(data.data);
-            });
+  const [fbCreds, setFbCreds] = React.useState(null);
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
 
-          // window.FB.api("/me", function (response) {
-          //   console.log(response);
-          // });
-        } else {
-          console.log("User cancelled login or did not fully authorize.");
-        }
-      },
-      {
-        scope: "public_profile,email,pages_messaging,pages_show_list",
+  React.useEffect(() => {
+    window.FB.getLoginStatus(function (response) {
+      if (response.authResponse) {
+        setFbCreds(response);
       }
-    );
+    });
+  }, []);
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const columns = [
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Space size="middle">
+          <Button
+            size="small"
+            onClick={async () => {
+              await props.addPage({
+                pagetoken: record.access_token,
+                pageid: record.id,
+                pagename: record.name,
+              });
+              props.getPages();
+            }}
+          >
+            ADD
+          </Button>
+        </Space>
+      ),
+    },
+    {
+      title: "Page ID",
+      dataIndex: "id",
+      key: "id",
+      render: (text) => <Text>{text}</Text>,
+    },
+    {
+      title: "Page Name",
+      dataIndex: "name",
+      key: "name",
+      responsive: ["md"],
+      render: (text) => <Text>{text}</Text>,
+    },
+    {
+      title: "Page Token",
+      dataIndex: "access_token",
+      key: "access_token",
+      responsive: ["md"],
+      render: (text) => <Text>...{text.slice(-10)}</Text>,
+    },
+  ];
+
+  const login = () => {
+    if (!fbCreds) {
+      window.FB.login(
+        function (response) {
+          if (response.authResponse) {
+            if (!props.fb_page_tokens.length) setFbCreds(response);
+            props.getFbTokens(response);
+            setIsModalVisible(true);
+          } else {
+            console.log("User cancelled login or did not fully authorize.");
+          }
+        },
+        {
+          scope: "public_profile,email,pages_messaging,pages_show_list",
+        }
+      );
+    } else {
+      if (fbCreds.authResponse) {
+        if (!props.fb_page_tokens.length) props.getFbTokens(fbCreds);
+        setIsModalVisible(true);
+      } else {
+        console.log("User cancelled login or did not fully authorize.");
+      }
+    }
   };
 
   return (
     <>
+      <Modal
+        title="Authorized Pages"
+        visible={isModalVisible}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        width={700}
+      >
+        <Table
+          columns={columns}
+          dataSource={props.fb_page_tokens}
+          rowKey="id"
+          size="small"
+          style={{ padding: 10 }}
+        />
+      </Modal>
       <Button onClick={login} type="primary">
         Authorize Facebook
       </Button>
@@ -40,4 +120,10 @@ const FacebookButton = (props) => {
   );
 };
 
-export default FacebookButton;
+const mapStateToProps = (state) => {
+  return {
+    fb_page_tokens: state.facebook?.fb_page_tokens,
+  };
+};
+
+export default connect(mapStateToProps, fbActions)(FacebookButton);

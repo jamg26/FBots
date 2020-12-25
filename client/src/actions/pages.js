@@ -10,8 +10,12 @@ export const getPages = () => async (dispatch) => {
 };
 
 export const addPage = (formProps) => async (dispatch) => {
-  await axios.post("/api/pages", formProps);
-  message.info(`Page added.`);
+  try {
+    await axios.post("/api/pages", formProps);
+    message.info(`Page added.`);
+  } catch (error) {
+    message.info(error.response.data);
+  }
 };
 
 export const deletePage = (formProps) => async (dispatch) => {

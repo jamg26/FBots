@@ -7,6 +7,7 @@ import settings from "./settings";
 import orders from "./orders";
 import users from "./users";
 import pages from "./pages";
+import facebook from "./facebook";
 
 export default combineReducers({
   auth,
@@ -17,4 +18,5 @@ export default combineReducers({
   orders,
   users,
   pages,
+  facebook,
 });

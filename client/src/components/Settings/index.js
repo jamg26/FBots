@@ -107,6 +107,7 @@ const Settings = (props) => {
   };
 
   const onFinish = async (values) => {
+    console.log(values);
     if (id) {
       await props.updatePage(id, values);
     } else {
@@ -399,7 +400,10 @@ const Settings = (props) => {
                 <Button onClick={addPage}>
                   <IconFont type="icon-add_database" />
                 </Button>
-                <FacebookButton />
+                <FacebookButton
+                  addPage={props.addPage}
+                  getPages={props.getPages}
+                />
               </Space>
             )}
             columns={columns}
