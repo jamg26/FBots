@@ -184,7 +184,7 @@ const OrdersComponent = (props) => {
               <>
                 <Space>
                   <Input
-                    placeholder="Search ID"
+                    placeholder="Search"
                     onChange={(e) => setSearch(e.target.value)}
                     allowClear
                   />

@@ -14,7 +14,7 @@ export const searchOrder = (id) => async (dispatch) => {
   if (id) {
     return dispatch({
       type: "GET_ORDERS",
-      payload: response.data ? [response.data] : null,
+      payload: response.data ? response.data.reverse() : null,
     });
   }
   dispatch({ type: "GET_ORDERS", payload: response.data.reverse() });

@@ -63,21 +63,35 @@ exports.searchOrder = async (req, res, next) => {
   //const id = req.user._id;
   try {
     if (req.body.id) {
-      const response = await Order.findOne({
+      const response = await Order.find({
         _id: req.body.id,
         author: req.user._id,
       }).cache({
         key: req.user._id,
       });
+      console.log("=>>", response);
       res.send(response);
     } else {
       const response = await Order.find({ author: req.user._id }).cache({
         key: req.user._id,
       });
+      console.log("=>>", response);
       res.send(response);
     }
   } catch (error) {
-    res.send(null);
+    const response = await Order.find({
+      page_name: req.body.id,
+      author: req.user._id,
+    })
+      .collation({
+        locale: "en",
+        strength: 2,
+      })
+      .cache({
+        key: req.user._id,
+      });
+    console.log(response);
+    res.send(response);
   }
 };
 
