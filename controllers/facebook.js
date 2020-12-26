@@ -2,7 +2,6 @@ const axios = require("axios");
 const subscribe = require("../facebook/functions/subscribe_to_apps");
 
 exports.getFbTokens = async (req, res, next) => {
-  console.log("trigger");
   const { accessToken, userID } = req.body.authResponse;
   try {
     const data = await axios.get(

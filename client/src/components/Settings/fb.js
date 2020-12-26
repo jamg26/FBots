@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, Modal, Table, Space, Typography } from "antd";
-import axios from "axios";
+import { Button, Modal, Table, Space, Typography, Tooltip } from "antd";
 import { connect } from "react-redux";
 import * as fbActions from "../../actions/facebook";
 
@@ -52,13 +51,13 @@ const FacebookButton = (props) => {
       title: "Page ID",
       dataIndex: "id",
       key: "id",
+      responsive: ["md"],
       render: (text) => <Text>{text}</Text>,
     },
     {
       title: "Page Name",
       dataIndex: "name",
       key: "name",
-      responsive: ["md"],
       render: (text) => <Text>{text}</Text>,
     },
     {
@@ -66,7 +65,11 @@ const FacebookButton = (props) => {
       dataIndex: "access_token",
       key: "access_token",
       responsive: ["md"],
-      render: (text) => <Text>...{text.slice(-10)}</Text>,
+      render: (text) => (
+        <Tooltip title={text}>
+          <Text>...{text.slice(-10)}</Text>
+        </Tooltip>
+      ),
     },
   ];
 
