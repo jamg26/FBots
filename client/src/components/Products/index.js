@@ -112,13 +112,13 @@ const Products = (props) => {
   };
 
   const onFinish = async (values) => {
+    setVisible(false);
     if (id) {
       await props.editProduct(id, values);
     } else {
       await props.addProduct(values);
     }
     props.getProducts();
-    setVisible(false);
     form.resetFields();
   };
 

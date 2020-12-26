@@ -74,25 +74,14 @@ const AutomatedResponses = (props) => {
   };
 
   const onFinish = async (values) => {
+    setVisible(false);
     if (id) {
       await props.updateAutomated(id, values);
     } else {
       await props.addAutomated(values);
     }
     props.getAutomated();
-    setVisible(false);
     form.resetFields();
-
-    // Modal.confirm({
-    //   title: id ? "Do you want to update?" : "Do you want to add?",
-    //   async onOk() {
-    //     //console.log("OK");
-
-    //   },
-    //   onCancel() {
-    //     //console.log("Cancel");
-    //   },
-    // });
   };
 
   const onFinishFailed = (errorInfo) => {

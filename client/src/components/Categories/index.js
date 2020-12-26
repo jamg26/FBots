@@ -73,13 +73,13 @@ const Categories = (props) => {
   };
 
   const onFinish = async (values) => {
+    setVisible(false);
     if (id) {
       await props.updateCategory(id, values);
     } else {
       await props.addCategory(values);
     }
     props.getCategory();
-    setVisible(false);
     form.resetFields();
   };
 

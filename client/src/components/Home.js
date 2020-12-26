@@ -11,6 +11,7 @@ import IconFont from "./icon";
 import { connect } from "react-redux";
 import * as settingsActions from "../actions/settings";
 import Logo from "./logo.png";
+import Signout from "./Signout";
 
 const { Content, Sider } = Layout;
 const { Text } = Typography;
@@ -38,9 +39,16 @@ const Home = (props) => {
       <div className="logo" />
       <PageHeader
         className="site-page-header"
-        style={{ backgroundColor: "rgb(255, 230, 233)" }}
+        // style={{
+        //   backgroundColor: "rgb(22,27,34)",
+        //  // "rgb(255, 230, 233)"
+        // }}
         title={
-          <Text style={{ color: "rgb(238, 14, 81)" }}>
+          <Text
+            style={{
+              color: "rgb(238, 14, 81)",
+            }}
+          >
             {props.settings?.pageName ? props.settings?.pageName : ""} Control
             Panel
           </Text>
@@ -48,18 +56,19 @@ const Home = (props) => {
         avatar={{
           shape: "square",
           size: "large",
+          style: { pointerEvents: "none" },
           alt: "logo",
           src: props.settings?.logo_url ? props.settings.logo_url : Logo,
         }}
-        extra={[
-          <Button
-            key="signout"
-            danger
-            onClick={() => props.history.push("/signout")}
-          >
-            Sign Out
-          </Button>,
-        ]}
+        // extra={[
+        //   <Button
+        //     key="signout"
+        //     type="primary"
+        //     onClick={() => props.history.push("/signout")}
+        //   >
+        //     Sign Out
+        //   </Button>,
+        // ]}
       />
       <Layout>
         <Sider
@@ -98,6 +107,10 @@ const Home = (props) => {
             <Menu.Item key="settings" icon={<IconFont type="icon-settings" />}>
               Settings
             </Menu.Item>
+
+            <Menu.Item key="sign_out" icon={<IconFont type="icon-sign_out" />}>
+              Sign Out
+            </Menu.Item>
           </Menu>
         </Sider>
         <Layout style={{ padding: "0 10px 10px" }}>
@@ -125,6 +138,8 @@ const Home = (props) => {
               <Orders />
             ) : nav === "users" ? (
               <Users />
+            ) : nav === "sign_out" ? (
+              <Signout />
             ) : null}
           </Content>
         </Layout>

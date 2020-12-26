@@ -113,14 +113,13 @@ const Settings = (props) => {
   };
 
   const onFinish = async (values) => {
-    console.log(values);
+    setVisible(false);
     if (id) {
       await props.updatePage(id, values);
     } else {
       await props.addPage(values);
     }
     props.getPages();
-    setVisible(false);
     form.resetFields();
   };
 
