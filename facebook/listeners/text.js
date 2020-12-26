@@ -12,6 +12,7 @@ const getInfo = require("../functions/get_info");
 const getAuthor = require("../functions/page_author");
 const getToken = require("../functions/page_token");
 const smtpOrder = require("../../services/mailer/order");
+const sendHome = require("../functions/generic_home");
 
 module.exports = async (senderID, messageText) => {
   const author = await getAuthor();
@@ -103,6 +104,10 @@ module.exports = async (senderID, messageText) => {
     const token = await getToken();
     require("../functions/persistent_menu_delete")(senderID, token);
     send(`Persistent menu from ${senderID} is deleted.`);
+  }
+
+  if (messageText === "menu" || messageText === "show menu") {
+    sendHome(senderID);
   }
 
   const response = await Automated.find({

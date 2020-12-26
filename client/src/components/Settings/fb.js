@@ -6,16 +6,16 @@ import * as fbActions from "../../actions/facebook";
 const { Text } = Typography;
 
 const FacebookButton = (props) => {
-  const [fbCreds, setFbCreds] = React.useState(null);
+  // const [fbCreds, setFbCreds] = React.useState(null);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
 
-  React.useEffect(() => {
-    window.FB.getLoginStatus(function (response) {
-      if (response.authResponse) {
-        setFbCreds(response);
-      }
-    });
-  }, []);
+  // React.useEffect(() => {
+  //   window.FB.getLoginStatus(function (response) {
+  //     if (response.authResponse) {
+  //       setFbCreds(response);
+  //     }
+  //   });
+  // }, []);
 
   const handleOk = () => {
     setIsModalVisible(false);
@@ -74,29 +74,21 @@ const FacebookButton = (props) => {
   ];
 
   const login = () => {
-    if (!fbCreds) {
-      window.FB.login(
-        function (response) {
-          if (response.authResponse) {
-            if (!props.fb_page_tokens.length) setFbCreds(response);
-            props.getFbTokens(response);
-            setIsModalVisible(true);
-          } else {
-            console.log("User cancelled login or did not fully authorize.");
-          }
-        },
-        {
-          scope: "public_profile,email,pages_messaging,pages_show_list",
+    window.FB.login(
+      function (response) {
+        if (response.authResponse) {
+          //if (!props.fb_page_tokens.length) setFbCreds(response);
+          props.getFbTokens(response);
+          setIsModalVisible(true);
+        } else {
+          console.log("User cancelled login or did not fully authorize.");
         }
-      );
-    } else {
-      if (fbCreds.authResponse) {
-        if (!props.fb_page_tokens.length) props.getFbTokens(fbCreds);
-        setIsModalVisible(true);
-      } else {
-        console.log("User cancelled login or did not fully authorize.");
+      },
+      {
+        scope: "public_profile,email,pages_messaging,pages_show_list",
+        auth_type: "reauthenticate",
       }
-    }
+    );
   };
 
   return (
