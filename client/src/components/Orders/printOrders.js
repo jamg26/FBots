@@ -18,7 +18,9 @@ const PrintOrder = (props) => {
   };
 
   React.useEffect(() => {
+    let total = 0;
     let orders = props.orders?.map((order) => {
+      total += order.price;
       return [
         {
           text: `${order.status}`,
@@ -57,7 +59,7 @@ const PrintOrder = (props) => {
         "",
         "",
         {
-          text: `PHP ${props.stats?.total}`,
+          text: `PHP ${total.toFixed(2)}`,
           fontSize: 8,
           alignment: "right",
           bold: true,

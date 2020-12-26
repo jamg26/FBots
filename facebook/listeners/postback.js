@@ -65,10 +65,10 @@ module.exports = async (senderID, payload) => {
           author: author,
         });
         if (products.length !== 0) return sendProducts(senderID, products);
-        send(`Sorry no item on this category.`);
+        send(`Sorry no item in this category.`);
       }
     });
   } catch (error) {
-    send(`Sorry no item on this category.`);
+    send(`Sorry no item in this category.`);
   }
 };

@@ -210,6 +210,10 @@ const Settings = (props) => {
     props.getSettings();
   };
 
+  const textInputWidth = () => {
+    return width > 991 ? "50%" : "100%";
+  };
+
   // const changeCover = async (image) => {
   //   const url = await uploader(image.file);
   //   await props.changeCover(url.location);
@@ -252,143 +256,168 @@ const Settings = (props) => {
         </Form>
       </Modal>
       <Row>
-        <Col xs={24} md={24} lg={12}>
-          <div style={{ padding: 10 }}>
-            <Collapse defaultActiveKey={["0"]}>
-              <Panel header="Basic" key="0">
-                <Space direction="vertical" style={{ width: "100%" }}>
-                  <Text>Page Name</Text>
+        <Col xs={24} md={24} lg={15}>
+          {/* <div style={{ padding: 10 }}> */}
+          <Collapse defaultActiveKey={["0", "1", "2"]}>
+            <Panel header="Basic" key="0">
+              <Space direction="vertical" style={{ width: "100%" }}>
+                <Text>Page Name</Text>
 
-                  <Input
-                    placeholder="Page Name"
-                    defaultValue={props.settings?.pageName}
-                    onChange={handleChangePageName}
-                  />
+                <Input
+                  placeholder="Page Name"
+                  defaultValue={props.settings?.pageName}
+                  onChange={handleChangePageName}
+                  style={{ width: textInputWidth() }}
+                />
 
-                  <Popconfirm
-                    title="You sure you want to change Page Name?"
-                    onConfirm={changePageName}
-                  >
-                    <Button>Save</Button>
-                  </Popconfirm>
-                </Space>
+                <Popconfirm
+                  title="You sure you want to change Page Name?"
+                  onConfirm={changePageName}
+                >
+                  <Button>Save</Button>
+                </Popconfirm>
+              </Space>
 
-                <Divider />
+              <Divider />
 
-                <Space direction="vertical" style={{ width: "100%" }}>
-                  <Text>Email</Text>
-                  <Text strong>{props.profile?.email}</Text>
+              <Space direction="vertical" style={{ width: "100%" }}>
+                <Text>Email</Text>
+                <Text strong>{props.profile?.email}</Text>
 
-                  <Text>Password</Text>
-                  <Input placeholder="New Password" onChange={handleChange} />
-                  <Popconfirm
-                    title="You sure you want to change password?"
-                    onConfirm={changePassword}
-                  >
-                    <Button>Save</Button>
-                  </Popconfirm>
-                </Space>
+                <Text>Password</Text>
+                <Input
+                  placeholder="New Password"
+                  onChange={handleChange}
+                  style={{ width: textInputWidth() }}
+                />
+                <Popconfirm
+                  title="You sure you want to change password?"
+                  onConfirm={changePassword}
+                >
+                  <Button>Save</Button>
+                </Popconfirm>
+              </Space>
 
-                <Divider />
+              <Divider />
 
-                <Space direction="vertical" style={{ width: "100%" }}>
-                  <Text>Notification emails are separated by comma (,)</Text>
+              <Space direction="vertical" style={{ width: "100%" }}>
+                <Text>Notification emails are separated by comma (,)</Text>
 
-                  <Input.TextArea
-                    placeholder="Notification Emails"
-                    onChange={handleChangeEmails}
-                    rows={4}
-                    defaultValue={
-                      props.settings?.emails ? props.settings.emails : null
-                    }
-                  />
+                <Input.TextArea
+                  placeholder="Notification Emails"
+                  onChange={handleChangeEmails}
+                  rows={4}
+                  defaultValue={
+                    props.settings?.emails ? props.settings.emails : null
+                  }
+                  style={{ width: textInputWidth() }}
+                />
 
-                  <Popconfirm
-                    title="You sure you want to change?"
-                    onConfirm={changeEmails}
-                  >
-                    <Button>Save</Button>
-                  </Popconfirm>
-                </Space>
+                <Popconfirm
+                  title="You sure you want to change?"
+                  onConfirm={changeEmails}
+                >
+                  <Button>Save</Button>
+                </Popconfirm>
+              </Space>
 
-                <Divider />
+              <Divider />
 
-                <Space direction="vertical" style={{ width: "100%" }}>
-                  <Text>Change Logo (Ratio 1:1)</Text>
-                  <Upload
-                    fileList=""
-                    name="image"
-                    listType="picture-card"
-                    className="avatar-uploader"
-                    showUploadList={false}
-                    beforeUpload={() => false}
-                    onChange={changeLogo}
-                  >
-                    <div>
-                      {image ? (
-                        <img
-                          src={image.logo_url}
-                          alt="avatar"
-                          style={{ width: "100%" }}
-                        />
-                      ) : (
-                        <>
-                          <PlusOutlined />{" "}
-                          <div style={{ marginTop: 8 }}>Upload</div>
-                        </>
-                      )}
-                    </div>
-                  </Upload>
-                </Space>
-              </Panel>
-              {/* <Panel header="Facebook Developers Panel" key="1">
-             
-            </Panel> */}
-              <Panel header="Stripes Panel" key="2">
-                <Space direction="vertical" style={{ width: "100%" }}>
-                  <Text>Stripe Public Key</Text>
-                  <Input
-                    placeholder={
-                      props.settings?.stripe_public
-                        ? props.settings.stripe_public
-                        : "Public Key"
-                    }
-                    onChange={handleChangeStripePublicKey}
-                  />
-                  <Popconfirm
-                    title="You sure you want to Public Key?"
-                    onConfirm={changeStripePublicKey}
-                  >
-                    <Button>Save</Button>
-                  </Popconfirm>
-                </Space>
+              <Space direction="vertical" style={{ width: "100%" }}>
+                <Text>Change Logo (Ratio 1:1)</Text>
+                <Upload
+                  fileList=""
+                  name="image"
+                  listType="picture-card"
+                  className="avatar-uploader"
+                  showUploadList={false}
+                  beforeUpload={() => false}
+                  onChange={changeLogo}
+                >
+                  <div>
+                    {image ? (
+                      <img
+                        src={image.logo_url}
+                        alt="avatar"
+                        style={{ width: "100%" }}
+                      />
+                    ) : (
+                      <>
+                        <PlusOutlined />{" "}
+                        <div style={{ marginTop: 8 }}>Upload</div>
+                      </>
+                    )}
+                  </div>
+                </Upload>
+              </Space>
+            </Panel>
+            <Panel header="Facebook Panel" key="1">
+              <FacebookButton
+                addPage={props.addPage}
+                getPages={props.getPages}
+              />
+              <Table
+                title={() => (
+                  <Space>
+                    <Button onClick={addPage}>
+                      <IconFont type="icon-add_database" />
+                    </Button>
+                  </Space>
+                )}
+                columns={columns}
+                dataSource={props.pages}
+                rowKey="_id"
+                size="small"
+                style={{ padding: 10 }}
+              />
+            </Panel>
+            <Panel header="Stripes Panel" key="2">
+              <Space direction="vertical" style={{ width: "100%" }}>
+                <Text>Stripe Public Key</Text>
+                <Input
+                  placeholder={
+                    props.settings?.stripe_public
+                      ? props.settings.stripe_public
+                      : "Public Key"
+                  }
+                  onChange={handleChangeStripePublicKey}
+                  style={{ width: textInputWidth() }}
+                />
+                <Popconfirm
+                  title="You sure you want to Public Key?"
+                  onConfirm={changeStripePublicKey}
+                >
+                  <Button>Save</Button>
+                </Popconfirm>
+              </Space>
 
-                <Divider />
+              <Divider />
 
-                <Space direction="vertical" style={{ width: "100%" }}>
-                  <Text>Stripe Secret Key</Text>
-                  <Input
-                    placeholder={
-                      props.settings?.stripe_secret
-                        ? props.settings.stripe_secret
-                        : "Secret Key"
-                    }
-                    onChange={handleChangeStripeSecretKey}
-                  />
-                  <Popconfirm
-                    title="You sure you want to change Secret Key?"
-                    onConfirm={changeStripeSecretKey}
-                  >
-                    <Button>Save</Button>
-                  </Popconfirm>
-                </Space>
-              </Panel>
-            </Collapse>
-          </div>
+              <Space direction="vertical" style={{ width: "100%" }}>
+                <Text>Stripe Secret Key</Text>
+                <Input
+                  placeholder={
+                    props.settings?.stripe_secret
+                      ? props.settings.stripe_secret
+                      : "Secret Key"
+                  }
+                  onChange={handleChangeStripeSecretKey}
+                  style={{ width: textInputWidth() }}
+                />
+                <Popconfirm
+                  title="You sure you want to change Secret Key?"
+                  onConfirm={changeStripeSecretKey}
+                >
+                  <Button>Save</Button>
+                </Popconfirm>
+              </Space>
+            </Panel>
+          </Collapse>
+          {/* </div> */}
         </Col>
 
         {width > 991 ? (
-          <Col md={18} lg={12}>
+          <Col md={18} lg={9}>
             <Card>
               <Space direction="vertical">
                 <Text type="danger">DANGER ZONE!</Text>
@@ -402,27 +431,6 @@ const Settings = (props) => {
           </Col>
         ) : null}
 
-        <Col md={24} lg={24} xs={24}>
-          <Table
-            title={() => (
-              <Space>
-                <Button onClick={addPage}>
-                  <IconFont type="icon-add_database" />
-                </Button>
-
-                <FacebookButton
-                  addPage={props.addPage}
-                  getPages={props.getPages}
-                />
-              </Space>
-            )}
-            columns={columns}
-            dataSource={props.pages}
-            rowKey="_id"
-            size="small"
-            style={{ padding: 10 }}
-          />
-        </Col>
         {/* <Text>Change Cover</Text>
 
             <Upload
