@@ -18,7 +18,6 @@ module.exports = (to, orderDetails) => {
       Page ID: ${pageid} (${page_name})<br>
       Ordered By: ${order_by}<br>
       Amount: ${price.toFixed(2)}<br>
-      Shipping Fee: ${shipping_fee.toFixed(2)}<br>
       Product: ${product}<br>
       Contact: ${contact}<br>
       `;
