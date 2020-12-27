@@ -6,7 +6,7 @@ module.exports = (token) => {
     greeting: [
       {
         locale: "default",
-        text: "Hello {{user_first_name}}!",
+        text: `Hello {{user_first_name}}!`,
       },
     ],
   });

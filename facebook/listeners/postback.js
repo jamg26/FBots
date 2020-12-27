@@ -23,6 +23,7 @@ module.exports = async (senderID, payload) => {
 
   if (payload === "GET_STARTED_PAYLOAD") {
     persistentMenu(senderID);
+    sendHome(senderID);
   }
 
   if (payload === "Search Product") {
