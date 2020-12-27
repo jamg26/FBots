@@ -25,6 +25,11 @@ export const updateOrder = (record, data) => async (dispatch) => {
   message.info("Updated.");
 };
 
+export const removeOrder = (record) => async (dispatch) => {
+  await axios.delete("/api/orders", { data: record });
+  message.info("Removed.");
+};
+
 // export const updateAutomated = (record, formProps) => async (dispatch) => {
 //   await axios.put("/api/automated", {
 //     ...record,

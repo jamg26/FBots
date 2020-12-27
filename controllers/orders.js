@@ -7,10 +7,18 @@ const Pages = mongoose.model("pages");
 exports.getOrders = async (req, res, next) => {
   //const id = req.user._id;
   try {
-    const response = await Order.find({ author: req.user._id });
+    const response = await Order.find({
+      author: req.user._id,
+      removed: { $ne: true },
+    });
 
     const total = await Order.aggregate([
-      { $match: { author: mongoose.Types.ObjectId(req.user._id) } },
+      {
+        $match: {
+          author: mongoose.Types.ObjectId(req.user._id),
+          removed: { $ne: true },
+        },
+      },
       { $group: { _id: null, sum: { $sum: "$price" } } },
     ]);
 
@@ -18,6 +26,7 @@ exports.getOrders = async (req, res, next) => {
       {
         $match: {
           author: mongoose.Types.ObjectId(req.user._id),
+          removed: { $ne: true },
           $and: [{ $or: [{ status: "PAID" }, { status: "SHIPPED" }] }],
         },
       },
@@ -28,6 +37,7 @@ exports.getOrders = async (req, res, next) => {
       {
         $match: {
           author: mongoose.Types.ObjectId(req.user._id),
+          removed: { $ne: true },
           status: "CANCELLED",
         },
       },
@@ -38,6 +48,7 @@ exports.getOrders = async (req, res, next) => {
       {
         $match: {
           author: mongoose.Types.ObjectId(req.user._id),
+          removed: { $ne: true },
           status: "SHIPPED",
         },
       },
@@ -129,4 +140,12 @@ exports.updateOrder = async (req, res, next) => {
       sendMessage(order_thread, `Thank you for your order.`, page.pagetoken);
     }
   }
+};
+
+exports.removeOrder = async (req, res, next) => {
+  const { _id } = req.body;
+  const order = await Order.findById(_id);
+  order.removed = true;
+  await order.save();
+  res.send(order);
 };

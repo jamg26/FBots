@@ -16,8 +16,8 @@ import {
 } from "antd";
 import { connect } from "react-redux";
 import * as orderActions from "../../actions/order";
-import columns from "./columns";
 import PrintOrder from "./printOrders";
+import IconFont from "../icon";
 
 const { Text } = Typography;
 const { TabPane } = Tabs;
@@ -69,22 +69,117 @@ const OrdersComponent = (props) => {
     setVisible(true);
   };
 
-  const markAsPaid = (data) => {
-    props.updateOrder(data, { status: "PAID", type: "status" });
+  const markAsPaid = async (data) => {
+    await props.updateOrder(data, { status: "PAID", type: "status" });
     reRender();
   };
-  const markAsCancelled = (data) => {
-    props.updateOrder(data, { status: "CANCELLED", type: "status" });
+  const markAsCancelled = async (data) => {
+    await props.updateOrder(data, { status: "CANCELLED", type: "status" });
     reRender();
   };
-  const markAsShipped = (data) => {
-    props.updateOrder(data, { status: "SHIPPED", type: "status" });
+  const markAsShipped = async (data) => {
+    await props.updateOrder(data, { status: "SHIPPED", type: "status" });
     reRender();
   };
 
   const searchOrder = async (e) => {
     props.searchOrder(search);
   };
+
+  const removeOrder = async (record) => {
+    await props.removeOrder(record);
+    props.getOrders();
+  };
+
+  const columns = [
+    {
+      title: "Action",
+      key: "action",
+      render: (text, record) => (
+        <Space size="middle">
+          <Button
+            size="small"
+            onClick={() => {
+              setInfoVisible(true);
+              setInfo(record);
+            }}
+          >
+            <IconFont type="icon-icon-test" />
+          </Button>
+          <Popconfirm
+            title="You sure you want to delete?"
+            onConfirm={() => removeOrder(record)}
+          >
+            <Button size="small">
+              <IconFont type="icon-delete_database" />
+            </Button>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (text) => (
+        <Text
+          type={
+            text === "NOT_PAID"
+              ? "secondary"
+              : text === "PAID" || text === "SHIPPED"
+              ? "success"
+              : text === "CANCELLED"
+              ? "danger"
+              : ""
+          }
+        >
+          {text}
+        </Text>
+      ),
+    },
+    {
+      title: "Page",
+      dataIndex: "page_name",
+      key: "page_name",
+      render: (text) => <Text>{text}</Text>,
+    },
+    {
+      title: "Amount",
+      dataIndex: "price",
+      key: "price",
+      align: "right",
+      render: (text) => (
+        <Text code type="danger">
+          {text?.toFixed(2)}
+        </Text>
+      ),
+    },
+    {
+      title: "Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      align: "right",
+      render: (text) => (
+        <Text>
+          {new Date(text).toLocaleString("en-US", {
+            hour12: true,
+          })}
+        </Text>
+      ),
+      responsive: ["md"],
+    },
+    {
+      title: "Shipping Address",
+      dataIndex: "address",
+      key: "address",
+      render: (text, record) => (
+        <Text type={text ? "default" : "secondary"}>
+          {text ? text : "Please fill shipping address."}
+        </Text>
+      ),
+      responsive: ["md"],
+    },
+  ];
 
   return (
     <>
@@ -197,14 +292,15 @@ const OrdersComponent = (props) => {
             dataSource={props.orders}
             rowKey="_id"
             size="small"
-            onRow={(record, rowIndex) => {
-              return {
-                onClick: (event) => {
-                  setInfoVisible(true);
-                  setInfo(record);
-                }, // click row
-              };
-            }}
+            // onRow={(record, rowIndex) => {
+            //   return {
+            //     onClick: (event) => {
+            //       setInfoVisible(true);
+            //       setInfo(record);
+            //     }, // click row
+
+            //   };
+            // }}
           />
         </TabPane>
         <TabPane tab="Reports" key="2">

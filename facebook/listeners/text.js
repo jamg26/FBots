@@ -16,24 +16,8 @@ const sendHome = require("../functions/generic_home");
 
 module.exports = async (senderID, messageText) => {
   const author = await getAuthor();
-  let first_name = "",
-    last_name = "",
-    profile_pic = "";
-
-  try {
-    const user = await getInfo(senderID);
-    first_name = user.data.first_name;
-    last_name = user.data.last_name;
-    profile_pic = user.data.profile_pic;
-  } catch (error) {
-    //console.log(error.message);
-  }
-
-  // try {
-  //   const { first_name, last_name, profile_pic } = user.data;
-  // } catch (error) {
-  //   console.log(error.message);
-  // }
+  const user = await getInfo(senderID);
+  const { first_name, last_name, profile_pic } = user.data;
 
   function send(msg) {
     sendMessage(senderID, msg);
