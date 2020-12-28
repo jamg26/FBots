@@ -107,7 +107,7 @@ const OrdersComponent = (props) => {
             <IconFont type="icon-icon-test" />
           </Button>
           <Popconfirm
-            title="You sure you want to delete?"
+            title="You sure you want to remove?"
             onConfirm={() => removeOrder(record)}
           >
             <Button size="small">
