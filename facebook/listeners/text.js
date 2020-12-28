@@ -43,7 +43,7 @@ module.exports = async (senderID, messageText) => {
     const page = await Pages.findOne({ pageid: temp_db.page_id });
     const settings = await Settings.findOne({ author: page.author });
 
-    const order = db.orders.some(async (s) => {
+    db.orders.some(async (s) => {
       if (s.sender === senderID) {
         const shippingFee = s.price * 0.07 >= 120 ? s.price * 0.07 : 120;
         const order = await new Order({
@@ -72,17 +72,12 @@ module.exports = async (senderID, messageText) => {
         }
         if (settings.emails) smtpOrder(settings.emails, order);
       }
-    });
 
-    Promise.all(order)
-      .then((data) => {
-        console.log(data);
-        // removing in array of orders
-        db.orders = db.orders
-          .map((d, i) => (d.sender !== senderID ? d : null))
-          .filter((o) => o);
-      })
-      .catch((err) => {});
+      // removing in array of orders
+      db.orders = db.orders
+        .map((d, i) => (d.sender !== senderID ? d : null))
+        .filter((o) => o);
+    });
   }
 
   if (messageText === "DELETE PERSISTENT_MENU") {

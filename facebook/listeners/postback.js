@@ -48,7 +48,9 @@ module.exports = async (senderID, payload) => {
       image_url: image_url,
     });
 
-    send(`Please send your phone so we can contact you.`);
+    send(
+      `You are about to order ${productName}.\nPlease send your phone so we can contact you.`
+    );
   }
 
   if (payload.includes("INFO")) {
