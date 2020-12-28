@@ -86,8 +86,8 @@ module.exports = async (senderID, messageText) => {
 
   if (messageText === "DELETE PERSISTENT_MENU") {
     const token = await getToken();
-    require("../functions/persistent_menu_delete")(senderID, token);
-    send(`Persistent menu from ${senderID} is deleted.`);
+    require("../functions/persistent_menu_delete")(token);
+    send(`Persistent menu is deleted.`);
   }
 
   if (messageText === "menu" || messageText === "show menu") {

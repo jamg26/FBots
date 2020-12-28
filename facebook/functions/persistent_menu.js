@@ -1,11 +1,7 @@
 var axios = require("axios");
-const token = require("./page_token");
 
-module.exports = async (psid) => {
-  const accessToken = await token();
-
+module.exports = async (token) => {
   var data = JSON.stringify({
-    psid: psid,
     persistent_menu: [
       {
         locale: "default",
@@ -19,7 +15,7 @@ module.exports = async (psid) => {
 
   var config = {
     method: "post",
-    url: `https://graph.facebook.com/v9.0/me/custom_user_settings?access_token=${accessToken}`,
+    url: `https://graph.facebook.com/v9.0/me/messenger_profile?access_token=${token}`,
     headers: {
       "Content-Type": "application/json",
     },
@@ -31,6 +27,6 @@ module.exports = async (psid) => {
       //console.log(JSON.stringify(response.data));
     })
     .catch(function (error) {
-      //console.log(error);
+      console.log(error);
     });
 };

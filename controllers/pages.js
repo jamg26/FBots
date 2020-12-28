@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Pages = mongoose.model("pages");
 const getStartedButton = require("../facebook/functions/get_started_button");
+const persistentMenu = require("../facebook/functions/persistent_menu");
 
 exports.getPages = async (req, res, next) => {
   const response = await Pages.find({ author: req.user._id }).cache({
@@ -25,6 +26,7 @@ exports.addPage = async (req, res, next) => {
       author: req.user._id,
     }).save();
     getStartedButton(pagetoken);
+    persistentMenu(pagetoken);
     res.send(response);
     next();
   } catch (error) {
