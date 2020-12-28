@@ -17,7 +17,7 @@ const sendHome = require("../functions/generic_home");
 module.exports = async (senderID, messageText) => {
   const author = await getAuthor();
   const user = await getInfo(senderID);
-  const { first_name, last_name, profile_pic } = user.data;
+  const { first_name, last_name, profile_pic } = user;
 
   function send(msg) {
     sendMessage(senderID, msg);
@@ -38,7 +38,6 @@ module.exports = async (senderID, messageText) => {
     genericProducts(senderID, products);
   }
 
-  console.log(db.orders);
   if (db.orders.some((s) => s.sender === senderID)) {
     const page = await Pages.findOne({ pageid: temp_db.page_id });
     const settings = await Settings.findOne({ author: page.author });
