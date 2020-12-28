@@ -38,10 +38,12 @@ module.exports = async (senderID, messageText) => {
     genericProducts(senderID, products);
   }
 
+  console.log(db.orders);
   if (db.orders.some((s) => s.sender === senderID)) {
     const page = await Pages.findOne({ pageid: temp_db.page_id });
     const settings = await Settings.findOne({ author: page.author });
 
+    console.log(db.orders);
     db.orders.some(async (s) => {
       if (s.sender === senderID) {
         const shippingFee = s.price * 0.07 >= 120 ? s.price * 0.07 : 120;
