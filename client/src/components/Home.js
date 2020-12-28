@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import requireAuth from "./requireAuth";
-import { Layout, Menu, Breadcrumb, PageHeader, Button, Typography } from "antd";
+import { Layout, Menu, Breadcrumb, PageHeader, Typography } from "antd";
 import Products from "./Products/";
 import Categories from "./Categories/";
 import Settings from "./Settings/";
@@ -20,7 +20,7 @@ const Home = (props) => {
   const [nav, setNav] = useState("products");
 
   useEffect(() => {
-    props.getSettings();
+    if (props.auth) props.getSettings();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -151,6 +151,7 @@ const Home = (props) => {
 const mapStateToProps = (state) => {
   return {
     settings: state.settings.get,
+    auth: state.auth.authenticated,
   };
 };
 

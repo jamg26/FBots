@@ -43,7 +43,7 @@ const Settings = (props) => {
 
   //width
   const [width, setWidth] = useState(window.innerWidth);
-  const [height, setHeight] = useState(window.innerHeight);
+  //const [height, setHeight] = useState(window.innerHeight);
 
   useEffect(() => {
     props.getSettings();
@@ -58,7 +58,7 @@ const Settings = (props) => {
 
   const updateDimensions = () => {
     setWidth(window.innerWidth);
-    setHeight(window.innerHeight);
+    // setHeight(window.innerHeight);
   };
 
   const columns = [

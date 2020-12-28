@@ -30,8 +30,10 @@ const Products = (props) => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    props.getCategories();
-    props.getProducts();
+    if (props.auth) {
+      props.getCategories();
+      props.getProducts();
+    }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onCategoryChange = (value) => {
@@ -262,6 +264,7 @@ const mapStateToProps = (state) => {
   return {
     categories: state.category?.get_all,
     products: state.products?.get_all,
+    auth: state.auth.authenticated,
   };
 };
 
