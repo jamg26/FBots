@@ -41,6 +41,10 @@ module.exports = async (senderID, payload) => {
     const price = payload_data[2];
     const image_url = payload_data[3];
 
+    // removing in array of orders
+    db.orders = db.orders
+      .map((d, i) => (d.sender !== senderID ? d : null))
+      .filter((o) => o);
     db.orders.push({
       sender: senderID,
       product: productName,
@@ -49,7 +53,7 @@ module.exports = async (senderID, payload) => {
     });
 
     send(
-      `You are about to order ${productName}.\nPlease send your phone so we can contact you.`
+      `You are about to order ${productName}.\n\nPlease send your phone so we can contact you.`
     );
   }
 
