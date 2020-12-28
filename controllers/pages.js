@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Pages = mongoose.model("pages");
 const getStartedButton = require("../facebook/functions/get_started_button");
 const persistentMenu = require("../facebook/functions/persistent_menu");
+const removePersistentMenu = require("../facebook/functions/persistent_menu_delete");
 
 exports.getPages = async (req, res, next) => {
   const response = await Pages.find({ author: req.user._id }).cache({
@@ -36,6 +37,8 @@ exports.addPage = async (req, res, next) => {
 
 exports.deletePage = async (req, res, next) => {
   try {
+    const page = await Pages.findById(req.body._id);
+    removePersistentMenu(page.pagetoken);
     const response = await Pages.findByIdAndDelete(req.body._id);
     res.send(response);
     next();
