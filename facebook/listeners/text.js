@@ -39,11 +39,16 @@ module.exports = async (senderID, messageText) => {
   }
 
   if (db.orders.some((s) => s.sender === senderID)) {
+    console.log("====== 0");
     const page = await Pages.findOne({ pageid: temp_db.page_id });
     const settings = await Settings.findOne({ author: page.author });
-
+    console.log(page);
+    console.log(settings);
     db.orders.some(async (s) => {
+      console.log("====== 1");
       if (s.sender === senderID) {
+        console.log("====== 2");
+        console.log(s);
         const shippingFee = s.price * 0.07 >= 120 ? s.price * 0.07 : 120;
         const order = await new Order({
           order_by: `${first_name} ${last_name}`,
@@ -60,6 +65,8 @@ module.exports = async (senderID, messageText) => {
           shipping_fee: shippingFee.toFixed(2),
         }).save();
 
+        console.log("====== 3");
+        console.log(order);
         send(
           `Thank you ${first_name}. Your order has been listed, please wait for our call.`
         );
@@ -70,6 +77,8 @@ module.exports = async (senderID, messageText) => {
           );
         }
         if (settings.emails) smtpOrder(settings.emails, order);
+
+        console.log("====== 4");
       }
 
       // removing in array of orders
