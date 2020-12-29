@@ -6,7 +6,7 @@ module.exports = async (messageData) => {
     const token = await getToken();
     request(
       {
-        uri: "https://graph.facebook.com/v2.6/me/messages",
+        uri: "https://graph.facebook.com/v9.0/me/messages",
         qs: { access_token: token },
         method: "POST",
         json: messageData,
@@ -19,8 +19,7 @@ module.exports = async (messageData) => {
           // console.log("Successfully sent generic message with id %s to recipient %s", messageId, recipientId);
         } else {
           console.error("Unable to send message.");
-          //console.error(response);
-          console.error(error);
+          //console.error(error);
         }
       }
     );

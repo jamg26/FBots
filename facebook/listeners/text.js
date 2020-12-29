@@ -39,15 +39,11 @@ module.exports = async (senderID, messageText) => {
   }
 
   if (db.orders.some((s) => s.sender === senderID)) {
-    //console.log("======TEMP ORDERS", db.orders);
     const page = await Pages.findOne({ pageid: temp_db.page_id });
     const settings = await Settings.findOne({ author: page.author });
-    // console.log("======PAGE && SETTINGS VALUES", page, settings);
+
     db.orders.forEach(async (s) => {
-      // console.log("===>", s);
-      // console.log(senderID, s.sender);
       if (s.sender === senderID) {
-        // console.log("======THE CUSTOMER HAS ORDER IN TEMP_DB", s, senderID);
         const shippingFee = s.price * 0.07 >= 120 ? s.price * 0.07 : 120;
 
         const order = new Order({
@@ -67,19 +63,15 @@ module.exports = async (senderID, messageText) => {
 
         await order.save();
 
-        //console.log("======ORDER HAS BEEN SAVED TO DATABASE", order);
         send(
-          `Thank you ${user.first_name}. Your order has been listed, please wait for our call.`
+          `Thank you! Your order has been listed, please wait for our call.`
         );
-        //send(`Your order ID is #${order._id}.`);
         if (settings.stripe_public) {
           send(
             `If you wish to pay immediately for faster transaction.\n\nProceed to payment page: ${process.env.BASE_URL}/stripe/${temp_db.page_id}/${order._id}/${settings.stripe_public}`
           );
         }
         if (settings.emails) smtpOrder(settings.emails, order);
-
-        //  console.log("======END OF ORDER");
       }
 
       // removing in array of orders
@@ -106,10 +98,8 @@ module.exports = async (senderID, messageText) => {
 
   if (response.length !== 0) {
     let resp = response[Math.floor(Math.random() * response.length)].response;
-    if (resp.includes("{first_name}"))
-      resp = resp.replace("{first_name}", user.first_name);
-    if (resp.includes("{last_name}"))
-      resp = resp.replace("{last_name}", user.last_name);
+    if (resp.includes("{first_name}")) resp = resp.replace("{first_name}", "");
+    if (resp.includes("{last_name}")) resp = resp.replace("{last_name}", "");
     send(resp);
   }
 };

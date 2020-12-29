@@ -8,6 +8,7 @@ import Signout from "./components/Signout";
 import Users from "./components/Users";
 import StripeComponent from "./components/Payments/stripe";
 import "./App.less";
+import FBOauthPage from "./components/Settings/FbOauthPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Route exact path="/signout" component={Signout} />
       <Route path="/admin" component={Users} />
       <Route path="/stripe/:pageid/:orderid/:pk" component={StripeComponent} />
+      <Route path="/oauth/fb" component={FBOauthPage} />
     </BrowserRouter>
   );
 }

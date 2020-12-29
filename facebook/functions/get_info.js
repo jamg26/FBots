@@ -6,19 +6,18 @@ module.exports = async (psid) => {
     const user = await axios.get(
       `https://graph.facebook.com/${psid}?fields=first_name,last_name,profile_pic&access_token=${token}`
     );
-    console.log("GET_INFO:", psid);
+
     return user.data;
+    // return {
+    //   first_name: "",
+    //   last_name: "",
+    //   profile_pic: "",
+    // };
   } catch (error) {
-    console.log(
-      "ERROR_GET_INFO:",
-      psid,
-      token,
-      `https://graph.facebook.com/${psid}?fields=first_name,last_name,profile_pic&access_token=${token}`
-    );
     return {
-      first_name: "-",
-      last_name: "-",
-      profile_pic: "-",
+      first_name: "",
+      last_name: "",
+      profile_pic: "",
     };
   }
 };

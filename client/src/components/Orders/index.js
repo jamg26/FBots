@@ -138,9 +138,9 @@ const OrdersComponent = (props) => {
       ),
     },
     {
-      title: "Customer",
-      dataIndex: "order_by",
-      key: "order_by",
+      title: "Contact",
+      dataIndex: "contact",
+      key: "contact",
       render: (text) => <Text>{text}</Text>,
     },
     {
