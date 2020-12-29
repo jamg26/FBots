@@ -17,7 +17,7 @@ const sendHome = require("../functions/generic_home");
 module.exports = async (senderID, messageText) => {
   const author = await getAuthor();
   const user = await getInfo(senderID);
-  const { first_name, last_name, profile_pic } = user;
+  //const { first_name, last_name, profile_pic } = user;
 
   function send(msg) {
     sendMessage(senderID, msg);
@@ -49,14 +49,14 @@ module.exports = async (senderID, messageText) => {
         const shippingFee = s.price * 0.07 >= 120 ? s.price * 0.07 : 120;
 
         const order = new Order({
-          order_by: `${first_name} ${last_name}`,
+          order_by: `${user.first_name} ${user.last_name}`,
           order_thread: senderID,
           price: s.price,
           product: s.product,
           product_description: s.description,
           product_image: s.image_url,
           contact: messageText,
-          image_url: profile_pic,
+          image_url: user.profile_pic,
           author: author,
           pageid: temp_db.page_id,
           page_name: page.pagename,
@@ -67,7 +67,7 @@ module.exports = async (senderID, messageText) => {
 
         console.log("======ORDER HAS BEEN SAVED TO DATABASE", order);
         send(
-          `Thank you ${first_name}. Your order has been listed, please wait for our call.`
+          `Thank you ${user.first_name}. Your order has been listed, please wait for our call.`
         );
         //send(`Your order ID is #${order._id}.`);
         if (settings.stripe_public) {
@@ -105,9 +105,9 @@ module.exports = async (senderID, messageText) => {
   if (response.length !== 0) {
     let resp = response[Math.floor(Math.random() * response.length)].response;
     if (resp.includes("{first_name}"))
-      resp = resp.replace("{first_name}", first_name);
+      resp = resp.replace("{first_name}", user.first_name);
     if (resp.includes("{last_name}"))
-      resp = resp.replace("{last_name}", last_name);
+      resp = resp.replace("{last_name}", user.last_name);
     send(resp);
   }
 };
