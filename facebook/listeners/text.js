@@ -39,18 +39,16 @@ module.exports = async (senderID, messageText) => {
   }
 
   if (db.orders.some((s) => s.sender === senderID)) {
-    console.log("====== 0");
+    console.log("======TEMP ORDERS", db.orders);
     const page = await Pages.findOne({ pageid: temp_db.page_id });
     const settings = await Settings.findOne({ author: page.author });
-    console.log(page);
-    console.log(settings);
+    console.log("======PAGE && SETTINGS VALUES", page, settings);
     db.orders.some(async (s) => {
-      console.log("====== 1");
       if (s.sender === senderID) {
-        console.log("====== 2");
-        console.log(s);
+        console.log("======THE CUSTOMER HAS ORDER IN TEMP_DB", s, senderID);
         const shippingFee = s.price * 0.07 >= 120 ? s.price * 0.07 : 120;
-        const order = await new Order({
+
+        const order = new Order({
           order_by: `${first_name} ${last_name}`,
           order_thread: senderID,
           price: s.price,
@@ -63,10 +61,11 @@ module.exports = async (senderID, messageText) => {
           pageid: temp_db.page_id,
           page_name: page.pagename,
           shipping_fee: shippingFee.toFixed(2),
-        }).save();
+        });
 
-        console.log("====== 3");
-        console.log(order);
+        await order.save();
+
+        console.log("======ORDER HAS BEEN SAVED TO DATABASE", order);
         send(
           `Thank you ${first_name}. Your order has been listed, please wait for our call.`
         );
@@ -78,7 +77,7 @@ module.exports = async (senderID, messageText) => {
         }
         if (settings.emails) smtpOrder(settings.emails, order);
 
-        console.log("====== 4");
+        console.log("======END OF ORDER");
       }
 
       // removing in array of orders
