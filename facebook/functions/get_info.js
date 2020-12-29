@@ -6,7 +6,6 @@ module.exports = async (psid) => {
     const user = await axios.get(
       `https://graph.facebook.com/${psid}?fields=first_name,last_name,profile_pic&access_token=${token}`
     );
-    console.log(user.data);
     const { first_name, last_name, profile_pic } = user.data;
     return {
       first_name: first_name ? first_name : "-",

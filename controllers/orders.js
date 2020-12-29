@@ -66,12 +66,12 @@ exports.getOrders = async (req, res, next) => {
     next();
   } catch (error) {
     console.log(error.message);
-    res.send(error.message);
+    //res.send(error.message);
   }
 };
 
 exports.searchOrder = async (req, res, next) => {
-  //const id = req.user._id;
+  // SEARCH BY ID
   try {
     if (req.body.id) {
       const response = await Order.find({
@@ -83,6 +83,7 @@ exports.searchOrder = async (req, res, next) => {
       console.log("=>>", response);
       res.send(response);
     } else {
+      // SEARCH IF EMPTY
       const response = await Order.find({ author: req.user._id }).cache({
         key: req.user._id,
       });
@@ -90,6 +91,7 @@ exports.searchOrder = async (req, res, next) => {
       res.send(response);
     }
   } catch (error) {
+    // SEARCH BY PAGE
     const response = await Order.find({
       page_name: req.body.id,
       author: req.user._id,
@@ -101,8 +103,26 @@ exports.searchOrder = async (req, res, next) => {
       .cache({
         key: req.user._id,
       });
-    console.log(response);
-    res.send(response);
+
+    if (response.length) {
+      res.send(response);
+      return;
+    } else {
+      // SEARCH BY CUSTOMER
+      const response = await Order.find({
+        order_by: req.body.id,
+        author: req.user._id,
+      })
+        .collation({
+          locale: "en",
+          strength: 2,
+        })
+        .cache({
+          key: req.user._id,
+        });
+
+      res.send(response);
+    }
   }
 };
 

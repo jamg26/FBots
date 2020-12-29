@@ -138,9 +138,9 @@ const OrdersComponent = (props) => {
       ),
     },
     {
-      title: "Page",
-      dataIndex: "page_name",
-      key: "page_name",
+      title: "Customer",
+      dataIndex: "order_by",
+      key: "order_by",
       render: (text) => <Text>{text}</Text>,
     },
     {
@@ -258,6 +258,12 @@ const OrdersComponent = (props) => {
             </Text>
           </Text>
           <Text>Ordered By: {info?.order_by}</Text>
+          <Text>
+            Ordered Date:{" "}
+            {new Date(info?.createdAt).toLocaleString("en-US", {
+              hour12: true,
+            })}
+          </Text>
           <Text>Status: {info?.status}</Text>
           <Text>Amount: {info?.price.toFixed(2)}</Text>
           {/* <Text>Shipping Fee: {info?.shipping_fee?.toFixed(2)}</Text> */}
