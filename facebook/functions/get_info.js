@@ -1,6 +1,7 @@
 const axios = require("axios");
 const getToken = require("./page_token");
 module.exports = async (psid) => {
+  console.log("GETTING INFO OF:", psid);
   const token = await getToken();
   try {
     const user = await axios.get(
