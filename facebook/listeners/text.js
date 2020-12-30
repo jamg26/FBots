@@ -126,7 +126,7 @@ module.exports = async (senderID, messageText, pageID) => {
     if (resp.includes("{name}")) {
       resp = resp.replace(
         "{name}",
-        user?.first_name
+        user.first_name
           ? `${user.first_name} ${user.last_name}`
           : customer?.name
           ? customer.name
