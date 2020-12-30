@@ -9,7 +9,7 @@ const temp_db = require("../temp_db");
 const genericProducts = require("../functions/generic_products");
 const Automated = require("../../models/automated");
 const Order = require("../../models/orders");
-//const getInfo = require("../functions/get_info");
+const getInfo = require("../functions/get_info");
 const getAuthor = require("../functions/page_author");
 const getToken = require("../functions/page_token");
 const smtpOrder = require("../../services/mailer/order");
@@ -18,8 +18,11 @@ const checkName = require("../functions/check_name");
 
 module.exports = async (senderID, messageText, pageID) => {
   const author = await getAuthor();
-  //const user = await getInfo(senderID);
-  //const { first_name, last_name, profile_pic } = user;
+  const user = await getInfo(senderID);
+  const customer = await Customer.findOne({
+    pageid: pageID,
+    psid: senderID,
+  });
 
   function send(msg) {
     sendMessage(senderID, msg);
@@ -46,15 +49,12 @@ module.exports = async (senderID, messageText, pageID) => {
 
     db.orders.forEach(async (s) => {
       if (s.sender === senderID) {
-        const customer = await Customer.findOne({
-          pageid: pageID,
-          psid: senderID,
-        });
-
         const shippingFee = s.price * 0.07 >= 120 ? s.price * 0.07 : 120;
 
         const order = new Order({
-          order_by: customer.name,
+          order_by: user?.first_name
+            ? `${user.first_name} ${user.last_name}`
+            : customer.name,
           order_thread: senderID,
           price: s.price,
           product: s.product,
@@ -99,7 +99,9 @@ module.exports = async (senderID, messageText, pageID) => {
   }
 
   if (db.fullname.has(senderID)) {
-    if (checkName(messageText)) {
+    const isValidName = await checkName(messageText);
+
+    if (isValidName) {
       db.fullname.delete(senderID);
       const customer = new Customer({
         name: messageText,
@@ -120,8 +122,25 @@ module.exports = async (senderID, messageText, pageID) => {
 
   if (response.length !== 0) {
     let resp = response[Math.floor(Math.random() * response.length)].response;
-    if (resp.includes("{first_name}")) resp = resp.replace("{first_name}", "");
-    if (resp.includes("{last_name}")) resp = resp.replace("{last_name}", "");
+
+    if (resp.includes("{name}")) {
+      resp = resp.replace(
+        "{name}",
+        user?.first_name
+          ? `${user.first_name} ${user.last_name}`
+          : customer?.name
+          ? customer.name
+          : ""
+      );
+    }
+
+    if (resp.includes("{first_name}")) {
+      resp = resp.replace("{first_name}", "");
+    }
+    if (resp.includes("{last_name}")) {
+      resp = resp.replace("{last_name}", "");
+    }
+
     send(resp);
   }
 };

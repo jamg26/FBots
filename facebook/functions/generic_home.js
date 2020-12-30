@@ -4,6 +4,7 @@ const { getProducts, getCategories } = require("../controllers");
 const { db } = require("../temp_db");
 const mongoose = require("mongoose");
 const Customer = mongoose.model("customer");
+const getInfo = require("../functions/get_info");
 
 module.exports = async (recipientId, pageID) => {
   function requestName() {
@@ -48,8 +49,11 @@ module.exports = async (recipientId, pageID) => {
     },
   };
 
-  const customer = await Customer.find({ pageid: pageID });
-  if (!customer.length) return requestName();
+  const user = await getInfo(recipientId);
+  if (!user.first_name) {
+    const customer = await Customer.find({ pageid: pageID });
+    if (!customer.length) return requestName();
+  }
 
   callSendAPI(messageData);
 };

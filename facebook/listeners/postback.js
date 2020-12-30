@@ -4,16 +4,12 @@ const sendProducts = require("../functions/generic_products");
 const mongoose = require("mongoose");
 const Product = mongoose.model("product");
 const { db } = require("../temp_db");
-//const getInfo = require("../functions/get_info");
 const { getCategories, getProducts } = require("../controllers");
 const getAuthor = require("../functions/page_author");
-//const getInfo = require("../functions/get_info_");
-//const genericOauth = require("../functions/generic_login");
 
 module.exports = async (senderID, payload, pageID) => {
   const categories = await getCategories();
   const author = await getAuthor();
-  //const user = await getInfo(senderID);
 
   function send(msg) {
     sendMessage(senderID, msg);
