@@ -6,7 +6,7 @@ exports.getCustomers = async (req, res, next) => {
   try {
     const pages = await Pages.find({ author: req.user._id });
     const query = pages.map((page) => {
-      return { pageid: page.pageid };
+      return { page: page._id };
     });
 
     const customers = await Customer.find({
