@@ -8,14 +8,7 @@ const { Text } = Typography;
 const FacebookButton = (props) => {
   // const [fbCreds, setFbCreds] = React.useState(null);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
-
-  // React.useEffect(() => {
-  //   window.FB.getLoginStatus(function (response) {
-  //     if (response.authResponse) {
-  //       setFbCreds(response);
-  //     }
-  //   });
-  // }, []);
+  const [loading, setLoading] = React.useState(false);
 
   const handleOk = () => {
     setIsModalVisible(false);
@@ -74,6 +67,7 @@ const FacebookButton = (props) => {
   ];
 
   const login = () => {
+    setLoading(true);
     window.FB.login(
       function (response) {
         if (response.authResponse) {
@@ -83,6 +77,7 @@ const FacebookButton = (props) => {
         } else {
           console.log("User cancelled login or did not fully authorize.");
         }
+        setLoading(false);
       },
       {
         scope: "public_profile,email,pages_messaging,pages_show_list",
@@ -108,7 +103,7 @@ const FacebookButton = (props) => {
           style={{ padding: 10 }}
         />
       </Modal>
-      <Button onClick={login} type="primary">
+      <Button onClick={login} type="primary" loading={loading}>
         Authorize Facebook
       </Button>
     </>

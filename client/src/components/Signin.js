@@ -94,12 +94,7 @@ const Signin = (props) => {
               </Form.Item>
 
               <Form.Item>
-                <Button
-                  type="ghost"
-                  block
-                  htmlType="submit"
-                  disabled={btnState}
-                >
+                <Button type="ghost" block htmlType="submit" loading={btnState}>
                   Submit
                 </Button>
               </Form.Item>

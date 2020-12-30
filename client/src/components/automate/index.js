@@ -8,12 +8,14 @@ import {
   Input,
   Typography,
   Popconfirm,
+  Mentions,
 } from "antd";
 import { connect } from "react-redux";
 import * as automatedActions from "../../actions/automated";
 import IconFont from "../icon";
 
 const { Text } = Typography;
+const { Option } = Mentions;
 
 const AutomatedResponses = (props) => {
   const [visible, setVisible] = useState(false);
@@ -125,7 +127,14 @@ const AutomatedResponses = (props) => {
             name="response"
             rules={[{ required: true, message: "Please input your response!" }]}
           >
-            <Input.TextArea rows={4} placeholder="Response" />
+            <Mentions
+              rows="4"
+              placeholder="You can use {name} to ref customer name."
+              prefix="{"
+            >
+              <Option value="name}">name</Option>
+            </Mentions>
+            {/* <Input.TextArea rows={4} placeholder="Response" /> */}
           </Form.Item>
         </Form>
       </Modal>

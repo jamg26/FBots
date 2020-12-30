@@ -42,6 +42,12 @@ const Products = (props) => {
     });
   };
 
+  const onEnabledChange = (value) => {
+    form.setFieldsValue({
+      enabled: value,
+    });
+  };
+
   const columns = [
     {
       title: "Action",
@@ -64,12 +70,10 @@ const Products = (props) => {
     },
     {
       title: "Name",
-      dataIndex: "name",
-      key: "name",
       render: (text) => (
-        <Text>
-          {text.slice(0, 20)}
-          {text[21] ? "..." : ""}
+        <Text delete={text.enabled === false ? true : false}>
+          {text.name.slice(0, 20)}
+          {text.name[21] ? "..." : ""}
         </Text>
       ),
     },
@@ -189,7 +193,10 @@ const Products = (props) => {
             <InputNumber placeholder="0.00" />
           </Form.Item>
 
-          <Form.Item name="category" rules={[{ required: true }]}>
+          <Form.Item
+            name="category"
+            rules={[{ required: true, message: "Please select category!" }]}
+          >
             <Select placeholder="Select a category" onChange={onCategoryChange}>
               {props.categories?.map((cat) => {
                 return (
@@ -207,7 +214,12 @@ const Products = (props) => {
               { required: true, message: "Please input your description!" },
             ]}
           >
-            <Input.TextArea placeholder="Product Description" rows={4} />
+            <Input.TextArea
+              placeholder="Product Description"
+              rows={4}
+              showCount
+              maxLength={900}
+            />
           </Form.Item>
 
           <Form.Item name="image_url">
@@ -230,6 +242,15 @@ const Products = (props) => {
                 )}
               </div>
             </Upload>
+          </Form.Item>
+          <Form.Item
+            name="enabled"
+            rules={[{ required: true, message: "Please select state!" }]}
+          >
+            <Select style={{ width: 120 }} onChange={onEnabledChange}>
+              <Option value={true}>Enabled</Option>
+              <Option value={false}>Disabled</Option>
+            </Select>
           </Form.Item>
         </Form>
       </Modal>

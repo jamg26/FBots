@@ -15,7 +15,9 @@ exports.addProduct = async (req, res, next) => {
 
 exports.getProducts = async (req, res, next) => {
   try {
-    const products = await Product.find({ author: req.user._id }).cache({
+    const products = await Product.find({
+      author: req.user._id,
+    }).cache({
       key: req.user._id,
     });
     res.send(products);

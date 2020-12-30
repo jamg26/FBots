@@ -13,6 +13,7 @@ import {
   Card,
   Row,
   Col,
+  Image,
 } from "antd";
 import { connect } from "react-redux";
 import * as orderActions from "../../actions/order";
@@ -268,12 +269,8 @@ const OrdersComponent = (props) => {
           <Text>Amount: {info?.price.toFixed(2)}</Text>
           {/* <Text>Shipping Fee: {info?.shipping_fee?.toFixed(2)}</Text> */}
           <Text>Product: {info?.product}</Text>
-          <img
-            src={info?.product_image}
-            alt="product"
-            width="50px"
-            height="50px"
-          />
+          <Image width={70} height={70} src={info?.product_image} />
+
           <Text>
             Contact: <Text type="danger">{info?.contact}</Text>
           </Text>

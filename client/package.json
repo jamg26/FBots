@@ -16,7 +16,7 @@
     "axios": "^0.19.2",
     "craco-less": "^1.17.1",
     "http-proxy-middleware": "^0.21.0",
-    "pdfmake": "^0.1.68",
+    "pdfmake": "^0.1.69",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-redux": "^7.2.2",

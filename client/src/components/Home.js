@@ -40,10 +40,6 @@ const Home = (props) => {
       <div className="logo" />
       <PageHeader
         className="site-page-header"
-        // style={{
-        //   backgroundColor: "rgb(22,27,34)",
-        //  // "rgb(255, 230, 233)"
-        // }}
         title={
           <Text
             style={{
@@ -61,15 +57,6 @@ const Home = (props) => {
           alt: "logo",
           src: props.settings?.logo_url ? props.settings.logo_url : Logo,
         }}
-        // extra={[
-        //   <Button
-        //     key="signout"
-        //     type="primary"
-        //     onClick={() => props.history.push("/signout")}
-        //   >
-        //     Sign Out
-        //   </Button>,
-        // ]}
       />
       <Layout>
         <Sider

@@ -39,6 +39,11 @@ module.exports = async (senderID, payload, pageID) => {
     const productName = payload_data[1];
     const price = payload_data[2];
     const image_url = payload_data[3];
+    const product_id = payload_data[4];
+
+    const product = await Product.findById(product_id);
+    if (product.enabled === false)
+      return send(`Sorry, this product is not available.`);
 
     // removing in array of orders
     db.orders = db.orders

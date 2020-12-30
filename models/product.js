@@ -18,6 +18,7 @@ const productSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "user",
     },
+    enabled: Boolean,
   },
   { timestamps: true }
 );
