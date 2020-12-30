@@ -1,8 +1,22 @@
 const callSendAPI = require("./message/call_send_api");
+const sendMessage = require("../functions/message/send_text");
 const { getProducts, getCategories } = require("../controllers");
+const { db } = require("../temp_db");
+const mongoose = require("mongoose");
+const Customer = mongoose.model("customer");
 
-module.exports = async (recipientId) => {
+module.exports = async (recipientId, pageID) => {
+  function requestName() {
+    send("Hello, please send your name to continue.");
+    db.fullname.add(recipientId);
+  }
+
+  function send(msg) {
+    sendMessage(recipientId, msg);
+  }
+
   const categories = await getCategories();
+
   var messageData = {
     recipient: {
       id: recipientId,
@@ -33,6 +47,9 @@ module.exports = async (recipientId) => {
       },
     },
   };
+
+  const customer = await Customer.find({ pageid: pageID });
+  if (!customer.length) return requestName();
 
   callSendAPI(messageData);
 };

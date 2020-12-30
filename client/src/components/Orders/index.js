@@ -138,9 +138,9 @@ const OrdersComponent = (props) => {
       ),
     },
     {
-      title: "Contact",
-      dataIndex: "contact",
-      key: "contact",
+      title: "Name",
+      dataIndex: "order_by",
+      key: "order_by",
       render: (text) => <Text>{text}</Text>,
     },
     {
@@ -252,9 +252,9 @@ const OrdersComponent = (props) => {
             Order ID: #<Text copyable>{info?._id}</Text>
           </Text>
           <Text>
-            Page ID:{" "}
+            Page:{" "}
             <Text>
-              {info?.pageid} ({info?.page_name})
+              <Text strong>{info?.page_name}</Text>
             </Text>
           </Text>
           <Text>Ordered By: {info?.order_by}</Text>
@@ -274,7 +274,9 @@ const OrdersComponent = (props) => {
             width="50px"
             height="50px"
           />
-          <Text>Contact: {info?.contact}</Text>
+          <Text>
+            Contact: <Text type="danger">{info?.contact}</Text>
+          </Text>
           <Text>Shipping Address: {info?.address}</Text>
         </Space>
       </Modal>

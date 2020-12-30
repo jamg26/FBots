@@ -7,24 +7,24 @@ const { db } = require("../temp_db");
 //const getInfo = require("../functions/get_info");
 const { getCategories, getProducts } = require("../controllers");
 const getAuthor = require("../functions/page_author");
-const getInfo = require("../functions/get_info");
-const genericOauth = require("../functions/generic_login");
+//const getInfo = require("../functions/get_info_");
+//const genericOauth = require("../functions/generic_login");
 
-module.exports = async (senderID, payload) => {
+module.exports = async (senderID, payload, pageID) => {
   const categories = await getCategories();
   const author = await getAuthor();
-  const user = await getInfo(senderID);
+  //const user = await getInfo(senderID);
 
   function send(msg) {
     sendMessage(senderID, msg);
   }
 
   if (payload === "Show Menu") {
-    sendHome(senderID);
+    sendHome(senderID, pageID);
   }
 
   if (payload === "GET_STARTED_PAYLOAD") {
-    sendHome(senderID);
+    sendHome(senderID, pageID);
   }
 
   if (payload === "Search Product") {
@@ -38,10 +38,6 @@ module.exports = async (senderID, payload) => {
   }
 
   if (payload.includes("ORDER")) {
-    if (!user.first_name) {
-      genericOauth(senderID);
-      return send(`Please allow us to get your basic information to proceed.`);
-    }
     const payload_data = payload.split("#");
 
     const productName = payload_data[1];

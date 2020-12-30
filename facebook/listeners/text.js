@@ -3,20 +3,22 @@ const mongoose = require("mongoose");
 const Product = mongoose.model("product");
 const Pages = mongoose.model("pages");
 const Settings = mongoose.model("settings");
+const Customer = mongoose.model("customer");
 const { db, page_id } = require("../temp_db");
 const temp_db = require("../temp_db");
 const genericProducts = require("../functions/generic_products");
 const Automated = require("../../models/automated");
 const Order = require("../../models/orders");
-const getInfo = require("../functions/get_info");
+//const getInfo = require("../functions/get_info");
 const getAuthor = require("../functions/page_author");
 const getToken = require("../functions/page_token");
 const smtpOrder = require("../../services/mailer/order");
 const sendHome = require("../functions/generic_home");
+const checkName = require("../functions/check_name");
 
-module.exports = async (senderID, messageText) => {
+module.exports = async (senderID, messageText, pageID) => {
   const author = await getAuthor();
-  const user = await getInfo(senderID);
+  //const user = await getInfo(senderID);
   //const { first_name, last_name, profile_pic } = user;
 
   function send(msg) {
@@ -44,17 +46,19 @@ module.exports = async (senderID, messageText) => {
 
     db.orders.forEach(async (s) => {
       if (s.sender === senderID) {
+        const customer = await Customer.findOne({ pageid: pageID });
+
         const shippingFee = s.price * 0.07 >= 120 ? s.price * 0.07 : 120;
 
         const order = new Order({
-          order_by: `${user.first_name} ${user.last_name}`,
+          order_by: customer.name,
           order_thread: senderID,
           price: s.price,
           product: s.product,
           product_description: s.description,
           product_image: s.image_url,
           contact: messageText,
-          image_url: user.profile_pic,
+          // image_url: user.profile_pic,
           author: author,
           pageid: temp_db.page_id,
           page_name: page.pagename,
@@ -88,7 +92,22 @@ module.exports = async (senderID, messageText) => {
   }
 
   if (messageText === "menu" || messageText === "show menu") {
-    sendHome(senderID);
+    sendHome(senderID, pageID);
+  }
+
+  if (db.fullname.has(senderID)) {
+    if (checkName(messageText)) {
+      db.fullname.delete(senderID);
+      const customer = new Customer({
+        name: messageText,
+        psid: senderID,
+        pageid: pageID,
+      });
+      send(`Thanks ${messageText}, you can now order.`);
+      await customer.save();
+      return sendHome(senderID, pageID);
+    }
+    send(`I think you sent an invalid name. Please try again.`);
   }
 
   const response = await Automated.find({

@@ -88,7 +88,7 @@ module.exports = async (app) => {
     //console.log(event);
     markSeen(senderID);
     if (messageText) {
-      textHandler(senderID, messageText);
+      textHandler(senderID, messageText, recipientID);
     } else if (messageAttachments) {
       //sendTextMessage(senderID, "Message with attachment received");
     }
@@ -113,6 +113,6 @@ module.exports = async (app) => {
 
     // When a postback is called, we'll send a message back to the sender to
     // let them know it was successful
-    postbackHandler(senderID, payload);
+    postbackHandler(senderID, payload, recipientID);
   }
 };

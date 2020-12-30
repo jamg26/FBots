@@ -13,6 +13,7 @@ require("./models/product");
 require("./models/automated");
 require("./models/settings");
 require("./models/orders");
+require("./models/customer");
 const router = require("./router");
 
 mongoose.connect(process.env.MONGO_URI, {
