@@ -46,7 +46,10 @@ module.exports = async (senderID, messageText, pageID) => {
 
     db.orders.forEach(async (s) => {
       if (s.sender === senderID) {
-        const customer = await Customer.findOne({ pageid: pageID });
+        const customer = await Customer.findOne({
+          pageid: pageID,
+          psid: senderID,
+        });
 
         const shippingFee = s.price * 0.07 >= 120 ? s.price * 0.07 : 120;
 
