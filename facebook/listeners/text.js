@@ -100,13 +100,14 @@ module.exports = async (senderID, messageText, pageID) => {
 
   if (db.fullname.has(senderID)) {
     const isValidName = await checkName(messageText);
+    const page = await Pages.findOne({ pageid: pageID });
 
     if (isValidName) {
       db.fullname.delete(senderID);
       const customer = new Customer({
         name: messageText,
         psid: senderID,
-        pageid: pageID,
+        page: page._id,
       });
       send(`Thanks ${messageText}, you can now order.`);
       await customer.save();

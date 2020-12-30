@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import * as settingsActions from "../actions/settings";
 import Logo from "./logo.png";
 import Signout from "./Signout";
+import Customers from "./Customer";
 
 const { Content, Sider } = Layout;
 const { Text } = Typography;
@@ -101,6 +102,12 @@ const Home = (props) => {
             <Menu.Item key="orders" icon={<IconFont type="icon-Orders" />}>
               Orders
             </Menu.Item>
+            <Menu.Item
+              key="customers"
+              icon={<IconFont type="icon-customer1" />}
+            >
+              Customers
+            </Menu.Item>
             {/* <Menu.Item key="users" icon={<IconFont type="icon-UserSettings" />}>
               Users
             </Menu.Item> */}
@@ -136,6 +143,8 @@ const Home = (props) => {
               <Automate />
             ) : nav === "orders" ? (
               <Orders />
+            ) : nav === "customers" ? (
+              <Customers />
             ) : nav === "users" ? (
               <Users />
             ) : nav === "sign_out" ? (

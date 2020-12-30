@@ -48,7 +48,7 @@ module.exports = async (recipientId, pageID) => {
       },
     },
   };
-
+  requestName();
   const user = await getInfo(recipientId);
   if (!user.first_name) {
     const customer = await Customer.find({ pageid: pageID });

@@ -8,6 +8,7 @@ import orders from "./orders";
 import users from "./users";
 import pages from "./pages";
 import facebook from "./facebook";
+import customers from "./customers";
 
 export default combineReducers({
   auth,
@@ -19,4 +20,5 @@ export default combineReducers({
   users,
   pages,
   facebook,
+  customers,
 });
