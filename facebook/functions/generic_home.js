@@ -4,6 +4,7 @@ const { getProducts, getCategories } = require("../controllers");
 const { db } = require("../temp_db");
 const mongoose = require("mongoose");
 const Customer = mongoose.model("customer");
+const Page = mongoose.model("pages");
 const getInfo = require("../functions/get_info");
 
 module.exports = async (recipientId, pageID) => {
@@ -51,7 +52,8 @@ module.exports = async (recipientId, pageID) => {
 
   const user = await getInfo(recipientId);
   if (!user.first_name) {
-    const customer = await Customer.find({ pageid: pageID });
+    const page = await Page.findOne({ pageid: pageID });
+    const customer = await Customer.find({ page: page._id });
     if (!customer.length) return requestName();
   }
 
