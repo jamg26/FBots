@@ -126,14 +126,18 @@ module.exports = async (senderID, messageText, pageID) => {
     let resp = response[Math.floor(Math.random() * response.length)].response;
 
     if (resp.includes("{name}")) {
-      resp = resp.replace(
-        "{name}",
-        user.first_name
-          ? `${user.first_name} ${user.last_name}`
-          : customer.name
-          ? customer.name
-          : ""
-      );
+      try {
+        resp = resp.replace(
+          "{name}",
+          user.first_name
+            ? `${user.first_name} ${user.last_name}`
+            : customer.name
+            ? customer.name
+            : ""
+        );
+      } catch (error) {
+        resp = resp.replace("{name}", "");
+      }
     }
 
     if (resp.includes("{first_name}")) {
