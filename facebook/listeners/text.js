@@ -52,7 +52,7 @@ module.exports = async (senderID, messageText, pageID) => {
         const shippingFee = s.price * 0.07 >= 120 ? s.price * 0.07 : 120;
 
         const order = new Order({
-          order_by: user?.first_name
+          order_by: user.first_name
             ? `${user.first_name} ${user.last_name}`
             : customer.name,
           order_thread: senderID,
