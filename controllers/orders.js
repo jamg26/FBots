@@ -5,7 +5,6 @@ const sendReceipt = require("../messenger/send_receipt");
 const Pages = mongoose.model("pages");
 
 exports.getOrders = async (req, res, next) => {
-  //const id = req.user._id;
   try {
     const response = await Order.find({
       author: req.user._id,
@@ -63,10 +62,8 @@ exports.getOrders = async (req, res, next) => {
     };
 
     res.send({ stats: orders, data: response });
-    next();
   } catch (error) {
-    console.log(error.message);
-    //res.send(error.message);
+    console.log("ERROR GET_ORDER", error.message);
   }
 };
 
