@@ -7,6 +7,7 @@ const customerSchema = new Schema(
     email: String,
     contact: String,
     psid: String,
+    pageid: String,
     page: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "pages",

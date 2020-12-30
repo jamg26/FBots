@@ -108,6 +108,7 @@ module.exports = async (senderID, messageText, pageID) => {
         name: messageText,
         psid: senderID,
         page: page._id,
+        pageid: pageID,
       });
       send(`Thanks ${messageText}, you can now order.`);
       await customer.save();
