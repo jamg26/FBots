@@ -226,7 +226,7 @@ const OrdersComponent = (props) => {
                     title="You sure you want to mark as cancelled?"
                     onConfirm={() => markAsCancelled(info)}
                   >
-                    <Button danger>Cancel order</Button>
+                    <Button danger>Cancel</Button>
                   </Popconfirm>
                 </>
               ) : info?.status === "PAID" ? (
@@ -243,7 +243,7 @@ const OrdersComponent = (props) => {
             </div>
             <Space>
               <Button onClick={() => addAddress(info)}>Edit Address</Button>
-              <Button onClick={handleOkInfo}>OK</Button>
+              {/* <Button onClick={handleOkInfo}>OK</Button> */}
             </Space>
           </>
         }
