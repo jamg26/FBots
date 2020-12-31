@@ -132,9 +132,8 @@ const AutomatedResponses = (props) => {
               placeholder="You can use {name} to ref customer name."
               prefix="{"
             >
-              <Option value="name}">name</Option>
+              <Option value="name}">{"{name}"} - Fullname</Option>
             </Mentions>
-            {/* <Input.TextArea rows={4} placeholder="Response" /> */}
           </Form.Item>
         </Form>
       </Modal>
