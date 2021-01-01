@@ -24,7 +24,7 @@ const Signin = (props) => {
 
   useEffect(() => {
     if (props.auth) props.history.push("/");
-  });
+  }, [props.auth, props.history]);
 
   const onFinish = async (values) => {
     setBtnState(true);

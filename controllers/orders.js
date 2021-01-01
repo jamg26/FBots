@@ -77,14 +77,14 @@ exports.searchOrder = async (req, res, next) => {
       }).cache({
         key: req.user._id,
       });
-      console.log("=>>", response);
+      //console.log("=>>", response);
       res.send(response);
     } else {
       // SEARCH IF EMPTY
       const response = await Order.find({ author: req.user._id }).cache({
         key: req.user._id,
       });
-      console.log("=>>", response);
+      //console.log("=>>", response);
       res.send(response);
     }
   } catch (error) {
