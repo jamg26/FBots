@@ -166,3 +166,14 @@ exports.removeOrder = async (req, res, next) => {
   await order.save();
   res.send(order);
 };
+
+exports.getOrderRange = async (req, res, next) => {
+  const { from, to } = req.body;
+  const orders = await Order.find({
+    createdAt: {
+      $gte: new Date(from),
+      $lte: new Date(to),
+    },
+  });
+  res.send(orders);
+};

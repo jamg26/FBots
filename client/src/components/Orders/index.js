@@ -14,6 +14,9 @@ import {
   Row,
   Col,
   Image,
+  DatePicker,
+  Popover,
+  Divider,
 } from "antd";
 import { connect } from "react-redux";
 import * as orderActions from "../../actions/order";
@@ -22,6 +25,7 @@ import IconFont from "../icon";
 
 const { Text } = Typography;
 const { TabPane } = Tabs;
+const { RangePicker } = DatePicker;
 
 const OrdersComponent = (props) => {
   const [visible, setVisible] = useState(false);
@@ -182,6 +186,11 @@ const OrdersComponent = (props) => {
     },
   ];
 
+  const dateChangeHandler = (date, dateString) => {
+    if (date) props.getDateRange(date);
+    if (!date) props.getOrders();
+  };
+
   return (
     <>
       <Modal
@@ -288,8 +297,25 @@ const OrdersComponent = (props) => {
                     onChange={(e) => setSearch(e.target.value)}
                     allowClear
                   />
-                  <Button onClick={searchOrder}>Search</Button>
-                  <PrintOrder orders={props.orders} stats={props.stats} />
+                  <Button onClick={searchOrder}>
+                    <IconFont type="icon-search" />
+                  </Button>
+                  <Divider type="vertical" />
+                  <PrintOrder
+                    orders={props.orders}
+                    stats={props.stats}
+                    icon={<IconFont type="icon-print" />}
+                  />
+                  <Popover
+                    content={
+                      <RangePicker size="small" onChange={dateChangeHandler} />
+                    }
+                    title="Select Date Range"
+                  >
+                    <Button>
+                      <IconFont type="icon-ziyuan" />
+                    </Button>
+                  </Popover>
                 </Space>
               </>
             )}

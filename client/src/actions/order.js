@@ -30,6 +30,14 @@ export const removeOrder = (record) => async (dispatch) => {
   message.info("Removed.");
 };
 
+export const getDateRange = (date) => async (dispatch) => {
+  const response = await axios.post("/api/orders/range", {
+    from: date[0],
+    to: date[1],
+  });
+  dispatch({ type: "GET_ORDERS", payload: response.data.reverse() });
+};
+
 // export const updateAutomated = (record, formProps) => async (dispatch) => {
 //   await axios.put("/api/automated", {
 //     ...record,

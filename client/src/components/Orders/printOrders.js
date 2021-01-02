@@ -124,11 +124,7 @@ const PrintOrder = (props) => {
     pdfMake.createPdf(dd).open();
   }
 
-  return (
-    <Button type="primary" onClick={() => printPdf()}>
-      Print
-    </Button>
-  );
+  return <Button onClick={() => printPdf()}>{props.icon}</Button>;
 };
 
 export default PrintOrder;
