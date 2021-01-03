@@ -94,7 +94,10 @@ module.exports = async (senderID, messageText, pageID) => {
     send(`Persistent menu is deleted.`);
   }
 
-  if (messageText === "menu" || messageText === "show menu") {
+  if (
+    messageText.toLowerCase() === "menu" ||
+    messageText.toLowerCase() === "show menu"
+  ) {
     sendHome(senderID, pageID);
   }
 
