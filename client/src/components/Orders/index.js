@@ -1,31 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  Table,
-  Space,
-  Button,
-  Modal,
-  Form,
-  Input,
-  Typography,
-  Popconfirm,
-  Tabs,
-  Statistic,
-  Card,
-  Row,
-  Col,
-  Image,
-  DatePicker,
-  Popover,
-  Divider,
-} from "antd";
+import { Modal, Form, Input, Tabs, Statistic, Card, Row, Col } from "antd";
 import { connect } from "react-redux";
 import * as orderActions from "../../actions/order";
-import PrintOrder from "./printOrders";
-import IconFont from "../icon";
+import OrderTable from "./table";
+import ModalOrderInfo from "./modalInfo";
 
-const { Text } = Typography;
 const { TabPane } = Tabs;
-const { RangePicker } = DatePicker;
 
 const OrdersComponent = (props) => {
   const [visible, setVisible] = useState(false);
@@ -71,6 +51,7 @@ const OrdersComponent = (props) => {
 
   const addAddress = (data) => {
     setId(data);
+    setInfoVisible(false);
     setVisible(true);
   };
 
@@ -95,96 +76,6 @@ const OrdersComponent = (props) => {
     await props.removeOrder(record);
     props.getOrders();
   };
-
-  const columns = [
-    {
-      title: "Action",
-      key: "action",
-      render: (text, record) => (
-        <Space size="middle">
-          <Button
-            size="small"
-            onClick={() => {
-              setInfoVisible(true);
-              setInfo(record);
-            }}
-          >
-            <IconFont type="icon-icon-test" />
-          </Button>
-          <Popconfirm
-            title="You sure you want to remove?"
-            onConfirm={() => removeOrder(record)}
-          >
-            <Button size="small">
-              <IconFont type="icon-delete_database" />
-            </Button>
-          </Popconfirm>
-        </Space>
-      ),
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-      key: "status",
-      render: (text) => (
-        <Text
-          type={
-            text === "NOT_PAID"
-              ? "secondary"
-              : text === "PAID" || text === "SHIPPED"
-              ? "success"
-              : text === "CANCELLED"
-              ? "danger"
-              : ""
-          }
-        >
-          {text}
-        </Text>
-      ),
-    },
-    {
-      title: "Name",
-      dataIndex: "order_by",
-      key: "order_by",
-      render: (text) => <Text>{text}</Text>,
-    },
-    {
-      title: "Amount",
-      dataIndex: "price",
-      key: "price",
-      align: "right",
-      render: (text) => (
-        <Text code type="danger">
-          {text?.toFixed(2)}
-        </Text>
-      ),
-    },
-    {
-      title: "Date",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      align: "right",
-      render: (text) => (
-        <Text>
-          {new Date(text).toLocaleString("en-US", {
-            hour12: true,
-          })}
-        </Text>
-      ),
-      responsive: ["md"],
-    },
-    {
-      title: "Shipping Address",
-      dataIndex: "address",
-      key: "address",
-      render: (text, record) => (
-        <Text type={text ? "default" : "secondary"}>
-          {text ? text : "Please fill shipping address."}
-        </Text>
-      ),
-      responsive: ["md"],
-    },
-  ];
 
   const dateChangeHandler = (date, dateString) => {
     if (date) props.getDateRange(date);
@@ -215,123 +106,27 @@ const OrdersComponent = (props) => {
         </Form>
       </Modal>
 
-      <Modal
-        title="Order Information"
-        visible={infoVisible}
-        onOk={handleOkInfo}
-        onCancel={handleOkInfo}
-        footer={
-          <>
-            <div style={{ float: "left" }}>
-              {info?.status === "NOT_PAID" ? (
-                <>
-                  <Popconfirm
-                    title="You sure you want to mark as paid?"
-                    onConfirm={() => markAsPaid(info)}
-                  >
-                    <Button>Mark as paid</Button>
-                  </Popconfirm>
-                  <Popconfirm
-                    title="You sure you want to mark as cancelled?"
-                    onConfirm={() => markAsCancelled(info)}
-                  >
-                    <Button danger>Cancel</Button>
-                  </Popconfirm>
-                </>
-              ) : info?.status === "PAID" ? (
-                <Popconfirm
-                  title="You sure you want to mark as shipped?"
-                  onConfirm={() => markAsShipped(info)}
-                  disabled={info?.address ? false : true}
-                >
-                  <Button disabled={info?.address ? false : true}>
-                    Mark as shipped
-                  </Button>
-                </Popconfirm>
-              ) : null}
-            </div>
-            <Space>
-              <Button onClick={() => addAddress(info)}>Edit Address</Button>
-              {/* <Button onClick={handleOkInfo}>OK</Button> */}
-            </Space>
-          </>
-        }
-      >
-        <Space direction="vertical">
-          <Text>
-            Order ID: #<Text copyable>{info?._id}</Text>
-          </Text>
-          <Text>
-            Page:{" "}
-            <Text>
-              <Text strong>{info?.page_name}</Text>
-            </Text>
-          </Text>
-          <Text>Ordered By: {info?.order_by}</Text>
-          <Text>
-            Ordered Date:{" "}
-            {new Date(info?.createdAt).toLocaleString("en-US", {
-              hour12: true,
-            })}
-          </Text>
-          <Text>Status: {info?.status}</Text>
-          <Text>Amount: {info?.price.toFixed(2)}</Text>
-          {/* <Text>Shipping Fee: {info?.shipping_fee?.toFixed(2)}</Text> */}
-          <Text>Product: {info?.product}</Text>
-          <Image width={70} height={70} src={info?.product_image} />
+      <ModalOrderInfo
+        infoVisible={infoVisible}
+        handleOkInfo={handleOkInfo}
+        info={info}
+        markAsPaid={markAsPaid}
+        markAsCancelled={markAsCancelled}
+        markAsShipped={markAsShipped}
+        addAddress={addAddress}
+      />
 
-          <Text>
-            Contact: <Text type="danger">{info?.contact}</Text>
-          </Text>
-          <Text>Shipping Address: {info?.address}</Text>
-        </Space>
-      </Modal>
       <Tabs defaultActiveKey="1" type="card">
         <TabPane tab="Order List" key="1">
-          <Table
-            title={() => (
-              <>
-                <Space>
-                  <Input
-                    placeholder="Search"
-                    onChange={(e) => setSearch(e.target.value)}
-                    allowClear
-                  />
-                  <Button onClick={searchOrder}>
-                    <IconFont type="icon-search" />
-                  </Button>
-                  <Divider type="vertical" />
-                  <PrintOrder
-                    orders={props.orders}
-                    stats={props.stats}
-                    icon={<IconFont type="icon-print" />}
-                  />
-                  <Popover
-                    content={
-                      <RangePicker size="small" onChange={dateChangeHandler} />
-                    }
-                    title="Select Date Range"
-                  >
-                    <Button>
-                      <IconFont type="icon-ziyuan" />
-                    </Button>
-                  </Popover>
-                </Space>
-              </>
-            )}
-            columns={columns}
-            dataSource={props.orders}
-            rowKey="_id"
-            size="small"
-            // onRow={(record, rowIndex) => {
-            //   return {
-            //     onClick: (event) => {
-            //       setInfoVisible(true);
-            //       setInfo(record);
-            //     }, // click row
-
-            //   };
-            // }}
+          <OrderTable
+            orders={props.orders}
+            setInfoVisible={setInfoVisible}
+            setInfo={setInfo}
+            removeOrder={removeOrder}
+            setSearch={setSearch}
+            searchOrder={searchOrder}
+            stats={props.stats}
+            dateChangeHandler={dateChangeHandler}
           />
         </TabPane>
         <TabPane tab="Reports" key="2">

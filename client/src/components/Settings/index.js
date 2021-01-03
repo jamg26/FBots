@@ -1,29 +1,15 @@
 import React, { useState, useEffect } from "react";
-import {
-  Input,
-  Row,
-  Col,
-  Button,
-  Space,
-  Popconfirm,
-  Upload,
-  Typography,
-  Collapse,
-  Table,
-  Modal,
-  Form,
-  Divider,
-  Card,
-  Tooltip,
-} from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { Row, Col, Space, Typography, Collapse, Modal, Form, Card } from "antd";
 import * as settingsActions from "../../actions/settings";
 import * as pageActions from "../../actions/pages";
 import * as userActions from "../../actions/user";
 import { connect } from "react-redux";
 import { uploader } from "../uploader";
-import IconFont from "../icon";
 import FacebookButton from "./fb";
+import FacebookTable from "./fbTable";
+import FacebookForm from "./fbForm";
+import BasicPanel from "./basicPanel";
+import StripePanel from "./stripePanel";
 
 const { Text } = Typography;
 const { Panel } = Collapse;
@@ -34,8 +20,6 @@ const Settings = (props) => {
   const [publicKey, setPublicKey] = useState(null);
   const [secretKey, setSecretKey] = useState(null);
   const [emails, setEmails] = useState(null);
-  // const [pageId, setPageId] = useState(null);
-  // const [pageToken, setPageToken] = useState(null);
   const [image, setImage] = useState(null);
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
@@ -60,53 +44,6 @@ const Settings = (props) => {
     setWidth(window.innerWidth);
     // setHeight(window.innerHeight);
   };
-
-  const columns = [
-    {
-      title: "Action",
-      key: "action",
-      render: (text, record) => (
-        <Space size="middle">
-          <Button size="small" onClick={() => editPage(record)}>
-            <IconFont type="icon-EditDocument" />
-          </Button>
-
-          <Popconfirm
-            title="You sure you want to delete?"
-            onConfirm={() => deletePage(record)}
-          >
-            <Button size="small">
-              <IconFont type="icon-delete_database" />
-            </Button>
-          </Popconfirm>
-        </Space>
-      ),
-    },
-    {
-      title: "Page ID",
-      dataIndex: "pageid",
-      key: "pageid",
-      render: (text) => <Text copyable>{text}</Text>,
-    },
-    {
-      title: "Page Name",
-      dataIndex: "pagename",
-      key: "pagename",
-      responsive: ["md"],
-      render: (text) => <Text>{text}</Text>,
-    },
-    {
-      title: "Page Token",
-      dataIndex: "pagetoken",
-      key: "pagetoken",
-      responsive: ["md"],
-      render: (text) => (
-        <Tooltip title={text}>
-          <Text>...{text.slice(-10)}</Text>
-        </Tooltip>
-      ),
-    },
-  ];
 
   const handleOk = (e) => {
     form.submit();
@@ -214,12 +151,6 @@ const Settings = (props) => {
     return width > 991 ? "50%" : "100%";
   };
 
-  // const changeCover = async (image) => {
-  //   const url = await uploader(image.file);
-  //   await props.changeCover(url.location);
-  //   props.getSettings();
-  // };
-
   return (
     <>
       <Modal
@@ -228,189 +159,52 @@ const Settings = (props) => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <Form
-          name="basic"
+        <FacebookForm
           onFinish={onFinish}
           form={form}
-          size="large"
           onFinishFailed={onFinishFailed}
-        >
-          <Form.Item
-            name="pagename"
-            rules={[{ required: true, message: "Please input Page Name!" }]}
-          >
-            <Input placeholder="Page Name" />
-          </Form.Item>
-          <Form.Item
-            name="pageid"
-            rules={[{ required: true, message: "Please input Page ID!" }]}
-          >
-            <Input placeholder="Page ID" />
-          </Form.Item>
-          <Form.Item
-            name="pagetoken"
-            rules={[{ required: true, message: "Please input Page Token!" }]}
-          >
-            <Input.TextArea rows={4} placeholder="Page Token" />
-          </Form.Item>
-        </Form>
+        />
       </Modal>
       <Row>
         <Col xs={24} md={24} lg={15}>
           {/* <div style={{ padding: 10 }}> */}
           <Collapse defaultActiveKey={["0", "1", "2"]}>
             <Panel header="Basic" key="0">
-              <Space direction="vertical" style={{ width: "100%" }}>
-                <Text>Page Name</Text>
-
-                <Input
-                  placeholder="Page Name"
-                  defaultValue={props.settings?.pageName}
-                  onChange={handleChangePageName}
-                  style={{ width: textInputWidth() }}
-                />
-
-                <Popconfirm
-                  title="You sure you want to change Page Name?"
-                  onConfirm={changePageName}
-                >
-                  <Button>Save</Button>
-                </Popconfirm>
-              </Space>
-
-              <Divider />
-
-              <Space direction="vertical" style={{ width: "100%" }}>
-                <Text>Email</Text>
-                <Text strong>{props.profile?.email}</Text>
-
-                <Text>Password</Text>
-                <Input
-                  placeholder="New Password"
-                  onChange={handleChange}
-                  style={{ width: textInputWidth() }}
-                />
-                <Popconfirm
-                  title="You sure you want to change password?"
-                  onConfirm={changePassword}
-                >
-                  <Button>Save</Button>
-                </Popconfirm>
-              </Space>
-
-              <Divider />
-
-              <Space direction="vertical" style={{ width: "100%" }}>
-                <Text>Notification emails are separated by comma (,)</Text>
-
-                <Input.TextArea
-                  placeholder="Notification Emails"
-                  onChange={handleChangeEmails}
-                  rows={4}
-                  defaultValue={
-                    props.settings?.emails ? props.settings.emails : null
-                  }
-                  style={{ width: textInputWidth() }}
-                />
-
-                <Popconfirm
-                  title="You sure you want to change?"
-                  onConfirm={changeEmails}
-                >
-                  <Button>Save</Button>
-                </Popconfirm>
-              </Space>
-
-              <Divider />
-
-              <Space direction="vertical" style={{ width: "100%" }}>
-                <Text>Change Logo (Ratio 1:1)</Text>
-                <Upload
-                  fileList=""
-                  name="image"
-                  listType="picture-card"
-                  className="avatar-uploader"
-                  showUploadList={false}
-                  beforeUpload={() => false}
-                  onChange={changeLogo}
-                >
-                  <div>
-                    {image ? (
-                      <img
-                        src={image.logo_url}
-                        alt="avatar"
-                        style={{ width: "100%" }}
-                      />
-                    ) : (
-                      <>
-                        <PlusOutlined />{" "}
-                        <div style={{ marginTop: 8 }}>Upload</div>
-                      </>
-                    )}
-                  </div>
-                </Upload>
-              </Space>
+              <BasicPanel
+                settings={props.settings}
+                changePageName={changePageName}
+                handleChangePageName={handleChangePageName}
+                textInputWidth={textInputWidth}
+                profile={props.profile}
+                handleChange={handleChange}
+                changePassword={changePassword}
+                handleChangeEmails={handleChangeEmails}
+                changeEmails={changeEmails}
+                changeLogo={changeLogo}
+                image={image}
+              />
             </Panel>
             <Panel header="Facebook Panel" key="1">
               <FacebookButton
                 addPage={props.addPage}
                 getPages={props.getPages}
               />
-              <Table
-                title={() => (
-                  <Space>
-                    <Button onClick={addPage}>
-                      <IconFont type="icon-add_database" />
-                    </Button>
-                  </Space>
-                )}
-                columns={columns}
-                dataSource={props.pages}
-                rowKey="_id"
-                size="small"
-                style={{ padding: 10 }}
+              <FacebookTable
+                addPage={addPage}
+                editPage={editPage}
+                deletePage={deletePage}
+                pages={props.pages}
               />
             </Panel>
             <Panel header="Stripes Panel" key="2">
-              <Space direction="vertical" style={{ width: "100%" }}>
-                <Text>Stripe Public Key</Text>
-                <Input
-                  placeholder={
-                    props.settings?.stripe_public
-                      ? props.settings.stripe_public
-                      : "Public Key"
-                  }
-                  onChange={handleChangeStripePublicKey}
-                  style={{ width: textInputWidth() }}
-                />
-                <Popconfirm
-                  title="You sure you want to Public Key?"
-                  onConfirm={changeStripePublicKey}
-                >
-                  <Button>Save</Button>
-                </Popconfirm>
-              </Space>
-
-              <Divider />
-
-              <Space direction="vertical" style={{ width: "100%" }}>
-                <Text>Stripe Secret Key</Text>
-                <Input
-                  placeholder={
-                    props.settings?.stripe_secret
-                      ? props.settings.stripe_secret
-                      : "Secret Key"
-                  }
-                  onChange={handleChangeStripeSecretKey}
-                  style={{ width: textInputWidth() }}
-                />
-                <Popconfirm
-                  title="You sure you want to change Secret Key?"
-                  onConfirm={changeStripeSecretKey}
-                >
-                  <Button>Save</Button>
-                </Popconfirm>
-              </Space>
+              <StripePanel
+                settings={props.settings}
+                handleChangeStripePublicKey={handleChangeStripePublicKey}
+                changeStripePublicKey={changeStripePublicKey}
+                changeStripeSecretKey={changeStripeSecretKey}
+                handleChangeStripeSecretKey={handleChangeStripeSecretKey}
+                textInputWidth={textInputWidth}
+              />
             </Panel>
           </Collapse>
           {/* </div> */}
@@ -430,32 +224,6 @@ const Settings = (props) => {
             </Card>
           </Col>
         ) : null}
-
-        {/* <Text>Change Cover</Text>
-
-            <Upload
-              fileList=""
-              name="image"
-              listType="picture-card"
-              className="avatar-uploader"
-              showUploadList={false}
-              beforeUpload={() => false}
-              onChange={changeCover}
-            >
-              <div>
-                {image ? (
-                  <img
-                    src={image.cover_url}
-                    alt="avatar"
-                    style={{ width: "100%" }}
-                  />
-                ) : (
-                  <>
-                    <PlusOutlined /> <div style={{ marginTop: 8 }}>Upload</div>
-                  </>
-                )}
-              </div>
-            </Upload> */}
       </Row>
     </>
   );

@@ -20,7 +20,6 @@ exports.getCustomers = async (req, res, next) => {
 };
 
 exports.removeCustomer = async (req, res, next) => {
-  console.log(req.body);
   const customer = await Customer.findByIdAndDelete(req.body._id);
   console.log(customer);
   res.send(customer);

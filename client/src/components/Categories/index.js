@@ -1,22 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  Table,
-  Space,
-  Button,
-  Modal,
-  Form,
-  Input,
-  Typography,
-  Popconfirm,
-  Upload,
-} from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import { Modal, Form } from "antd";
 import { connect } from "react-redux";
 import * as categoryActions from "../../actions/category";
 import { uploader } from "../uploader";
-import IconFont from "../icon";
-
-const { Text } = Typography;
+import CategoriesTable from "./table";
+import CategoriesForm from "./form";
 
 const Categories = (props) => {
   const [visible, setVisible] = useState(false);
@@ -27,34 +15,6 @@ const Categories = (props) => {
   useEffect(() => {
     props.getCategory();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const columns = [
-    {
-      title: "Action",
-      key: "action",
-      render: (text, record) => (
-        <Space size="middle">
-          <Button size="small" onClick={() => editCategory(record)}>
-            <IconFont type="icon-EditDocument" />
-          </Button>
-          <Popconfirm
-            title="You sure you want to delete?"
-            onConfirm={() => deleteCategory(record)}
-          >
-            <Button size="small">
-              <IconFont type="icon-delete_database" />
-            </Button>
-          </Popconfirm>
-        </Space>
-      ),
-    },
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      render: (text) => <Text>{text}</Text>,
-    },
-  ];
 
   const deleteCategory = async (record) => {
     await props.deleteCategory(record);
@@ -114,54 +74,19 @@ const Categories = (props) => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <Form
-          name="basic"
-          onFinish={onFinish}
+        <CategoriesForm
           form={form}
-          size="large"
+          onFinish={onFinish}
           onFinishFailed={onFinishFailed}
-        >
-          <Form.Item
-            name="name"
-            rules={[
-              { required: true, message: "Please input your category name!" },
-            ]}
-          >
-            <Input placeholder="Category Name" />
-          </Form.Item>
-          <Form.Item name="image_url">
-            <Upload
-              fileList=""
-              name="image"
-              listType="picture-card"
-              className="avatar-uploader"
-              showUploadList={false}
-              beforeUpload={() => false}
-              onChange={uploadImage}
-            >
-              <div>
-                {image ? (
-                  <img src={image} alt="avatar" style={{ width: "100%" }} />
-                ) : (
-                  <>
-                    <PlusOutlined /> <div style={{ marginTop: 8 }}>Upload</div>
-                  </>
-                )}
-              </div>
-            </Upload>
-          </Form.Item>
-        </Form>
+          uploadImage={uploadImage}
+          image={image}
+        />
       </Modal>
-      <Table
-        title={() => (
-          <Button onClick={addCategory}>
-            <IconFont type="icon-add_database" />
-          </Button>
-        )}
-        columns={columns}
-        dataSource={props.categories}
-        rowKey="_id"
-        size="small"
+      <CategoriesTable
+        addCategory={addCategory}
+        editCategory={editCategory}
+        deleteCategory={deleteCategory}
+        categories={props.categories}
       />
     </>
   );
