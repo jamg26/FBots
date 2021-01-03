@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Space, Typography, Collapse, Modal, Form, Card } from "antd";
+import { Row, Col, Collapse, Modal, Form } from "antd";
 import * as settingsActions from "../../actions/settings";
 import * as pageActions from "../../actions/pages";
 import * as userActions from "../../actions/user";
@@ -10,8 +10,9 @@ import FacebookTable from "./fbTable";
 import FacebookForm from "./fbForm";
 import BasicPanel from "./basicPanel";
 import StripePanel from "./stripePanel";
+import Slide from "react-reveal/Slide";
+import TipsComponent from "./tips";
 
-const { Text } = Typography;
 const { Panel } = Collapse;
 
 const Settings = (props) => {
@@ -166,10 +167,18 @@ const Settings = (props) => {
         />
       </Modal>
       <Row>
-        <Col xs={24} md={24} lg={15}>
+        {width < 991 ? (
+          <Col md={24} lg={9} xs={24} sm={24}>
+            <Slide top>
+              <TipsComponent />
+            </Slide>
+          </Col>
+        ) : null}
+
+        <Col xs={24} md={24} lg={15} sm={24}>
           {/* <div style={{ padding: 10 }}> */}
-          <Collapse defaultActiveKey={["0", "1", "2"]}>
-            <Panel header="Basic" key="0">
+          <Collapse defaultActiveKey={[]}>
+            <Panel header="Basic Settings" key="0">
               <BasicPanel
                 settings={props.settings}
                 changePageName={changePageName}
@@ -212,16 +221,9 @@ const Settings = (props) => {
 
         {width > 991 ? (
           <Col md={18} lg={9}>
-            <Card>
-              <Space direction="vertical">
-                <Text type="danger">DANGER ZONE!</Text>
-                <Text>
-                  Do not change any of the configurations unless you know what
-                  you're doing. Misconfiguration might cause Messenger Bot
-                  malfunctioning.
-                </Text>
-              </Space>
-            </Card>
+            <Slide right>
+              <TipsComponent />
+            </Slide>
           </Col>
         ) : null}
       </Row>

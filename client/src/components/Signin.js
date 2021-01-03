@@ -6,6 +6,7 @@ import { Form, Input, Button, Row, Col, Card, Typography } from "antd";
 import { UserOutlined, KeyOutlined } from "@ant-design/icons";
 import bg from "./signin_background.jpg";
 import cover from "./cover.png";
+import Fade from "react-reveal/Fade";
 
 const { Text } = Typography;
 
@@ -55,51 +56,58 @@ const Signin = (props) => {
     >
       <Row justify="space-around" align="middle" style={{ height: "100vh" }}>
         <Col xs={24} sm={18} md={14} lg={8}>
-          <Card
-            bordered
-            size="small"
-            title=" "
-            cover={<img src={cover} alt="cover" />}
-            actions={[<Text>Your ip is {ip}</Text>]}
-          >
-            <Form
-              name="basic"
-              size="large"
-              onFinish={onFinish}
-              onFinishFailed={onFinishFailed}
+          <Fade top>
+            <Card
+              bordered
+              size="small"
+              title=" "
+              cover={<img src={cover} alt="cover" />}
+              actions={[<Text>Your ip is {ip}</Text>]}
             >
-              <Form.Item
-                name="email"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your email!",
-                  },
-                ]}
+              <Form
+                name="basic"
+                size="large"
+                onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
               >
-                <Input placeholder="Email" prefix={<UserOutlined />} />
-              </Form.Item>
+                <Form.Item
+                  name="email"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input your email!",
+                    },
+                  ]}
+                >
+                  <Input placeholder="Email" prefix={<UserOutlined />} />
+                </Form.Item>
 
-              <Form.Item
-                name="password"
-                autoComplete="chrome-off"
-                rules={[
-                  { required: true, message: "Please input your password!" },
-                ]}
-              >
-                <Input.Password
-                  placeholder="Password"
-                  prefix={<KeyOutlined />}
-                />
-              </Form.Item>
+                <Form.Item
+                  name="password"
+                  autoComplete="chrome-off"
+                  rules={[
+                    { required: true, message: "Please input your password!" },
+                  ]}
+                >
+                  <Input.Password
+                    placeholder="Password"
+                    prefix={<KeyOutlined />}
+                  />
+                </Form.Item>
 
-              <Form.Item>
-                <Button type="ghost" block htmlType="submit" loading={btnState}>
-                  Submit
-                </Button>
-              </Form.Item>
-            </Form>
-          </Card>
+                <Form.Item>
+                  <Button
+                    type="ghost"
+                    block
+                    htmlType="submit"
+                    loading={btnState}
+                  >
+                    Submit
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Card>
+          </Fade>
         </Col>
       </Row>
     </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "antd";
+import { Button, Popconfirm } from "antd";
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 
@@ -124,7 +124,11 @@ const PrintOrder = (props) => {
     pdfMake.createPdf(dd).open();
   }
 
-  return <Button onClick={() => printPdf()}>{props.icon}</Button>;
+  return (
+    <Popconfirm title="Generate report?" onConfirm={() => printPdf()}>
+      <Button>{props.icon}</Button>
+    </Popconfirm>
+  );
 };
 
 export default PrintOrder;
