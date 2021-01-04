@@ -7,7 +7,7 @@ import Signin from "./components/Signin";
 import Signout from "./components/Signout";
 import Users from "./components/Users";
 import StripeComponent from "./components/Payments/stripe";
-import FBOauthPage from "./components/Settings/FbOauthPage";
+import FBOauthPage from "./components/Settings/Facebook/FbOauthPage";
 import "./App.less";
 
 function App() {

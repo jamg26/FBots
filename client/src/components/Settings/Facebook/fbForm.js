@@ -4,7 +4,6 @@ import { Form, Input } from "antd";
 const FacebookForm = (props) => {
   return (
     <>
-      {" "}
       <Form
         name="basic"
         onFinish={props.onFinish}

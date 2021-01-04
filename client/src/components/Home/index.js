@@ -10,7 +10,6 @@ import {
 } from "antd";
 import Products from "../Products/";
 import Categories from "../Categories/";
-import Settings from "../Settings/";
 import Automate from "../automate/";
 import Users from "../Users";
 import Orders from "../Orders/";
@@ -21,6 +20,9 @@ import Logo from "../logo.png";
 import Signout from "../Signout";
 import Customers from "../Customer";
 import SiderComponent from "./sider";
+import BasicPanel from "../Settings/Basic";
+import FacebookPanel from "../Settings/Facebook";
+import StripePanel from "../Settings/Stripe";
 
 const { Content } = Layout;
 const { Text } = Typography;
@@ -115,8 +117,6 @@ const Home = (props) => {
                 <Products />
               ) : nav === "categories" ? (
                 <Categories />
-              ) : nav === "settings" ? (
-                <Settings />
               ) : nav === "automate" ? (
                 <Automate />
               ) : nav === "orders" ? (
@@ -127,6 +127,12 @@ const Home = (props) => {
                 <Users />
               ) : nav === "sign_out" ? (
                 <Signout />
+              ) : nav === "basic" ? (
+                <BasicPanel />
+              ) : nav === "facebook" ? (
+                <FacebookPanel />
+              ) : nav === "stripe" ? (
+                <StripePanel />
               ) : null}
             </Content>
           </Layout>

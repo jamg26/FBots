@@ -27,6 +27,6 @@ module.exports = async (token) => {
       //console.log(JSON.stringify(response.data));
     })
     .catch(function (error) {
-      console.log(error);
+      console.log("ERROR: ADD_PERSISTENT_MENU");
     });
 };

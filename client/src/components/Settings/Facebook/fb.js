@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Modal, Table, Space, Typography, Tooltip } from "antd";
 import { connect } from "react-redux";
-import * as fbActions from "../../actions/facebook";
+import * as fbActions from "../../../actions/facebook";
 
 const { Text } = Typography;
 

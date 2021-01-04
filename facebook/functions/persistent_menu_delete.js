@@ -17,6 +17,6 @@ module.exports = (token) => {
       //console.log(JSON.stringify(response.data));
     })
     .catch(function (error) {
-      console.log(error);
+      console.log("ERROR: DELETE_PERSISTENT_MENU");
     });
 };
