@@ -65,6 +65,7 @@ const FacebookTable = (props) => {
         )}
         columns={columns}
         dataSource={props.pages}
+        loading={props.pages ? false : true}
         rowKey="_id"
         size="small"
         style={{ padding: 10 }}

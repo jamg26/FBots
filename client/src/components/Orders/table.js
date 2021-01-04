@@ -141,6 +141,7 @@ const OrderTable = (props) => {
       )}
       columns={columns}
       dataSource={props.orders}
+      loading={props.orders ? false : true}
       rowKey="_id"
       size="small"
     />

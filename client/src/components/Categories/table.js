@@ -43,6 +43,7 @@ const CategoriesTable = (props) => {
         )}
         columns={columns}
         dataSource={props.categories}
+        loading={props.categories ? false : true}
         rowKey="_id"
         size="small"
       />

@@ -49,6 +49,7 @@ const AutomateTable = (props) => {
         )}
         columns={columns}
         dataSource={props.automated}
+        loading={props.automated ? false : true}
         rowKey="_id"
         size="small"
       />

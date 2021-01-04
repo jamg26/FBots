@@ -53,6 +53,7 @@ const CustomerTable = (props) => {
       <Table
         columns={columns}
         dataSource={props.customers}
+        loading={props.customers ? false : true}
         rowKey="_id"
         size="small"
       />

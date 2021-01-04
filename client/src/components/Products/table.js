@@ -80,6 +80,7 @@ const ProductTable = (props) => {
         )}
         columns={columns}
         dataSource={props.products}
+        loading={props.products ? false : true}
         rowKey="_id"
         scroll={{ x: "100%" }}
         size="small"
