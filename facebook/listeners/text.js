@@ -47,6 +47,9 @@ module.exports = async (senderID, messageText, pageID) => {
         `Thanks ${messageText}, your info has been saved. Please place an order again.`
       );
       await customer.save();
+      db.orders = db.orders
+        .map((d, i) => (d.sender !== senderID ? d : null))
+        .filter((o) => o);
       return sendHome(senderID, pageID);
     }
     return send(`I think you sent an invalid name. Please try again.`);
