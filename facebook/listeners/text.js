@@ -21,7 +21,9 @@ module.exports = async (senderID, messageText, pageID) => {
   const user = await getInfo(senderID);
 
   function requestName() {
-    send("Hello, please send your name to continue.");
+    send(
+      "You cannot place an order without your info. Please enter your name."
+    );
     db.fullname.add(senderID);
   }
 
@@ -41,7 +43,7 @@ module.exports = async (senderID, messageText, pageID) => {
         page: page._id,
         pageid: pageID,
       });
-      send(`Thanks ${messageText}, please order again.`);
+      send(`Thanks ${messageText}, you may now place an order.`);
       await customer.save();
       return sendHome(senderID, pageID);
     }
@@ -67,14 +69,11 @@ module.exports = async (senderID, messageText, pageID) => {
     const page = await Pages.findOne({ pageid: temp_db.page_id });
     const settings = await Settings.findOne({ author: page.author });
 
-    console.log("finding customer with", pageID, senderID);
     const customer = await Customer.findOne({
       pageid: pageID,
       psid: senderID,
     });
 
-    console.log("==>", customer);
-    console.log("==>", typeof customer);
     try {
       if (!customer.name) return requestName();
     } catch (error) {
