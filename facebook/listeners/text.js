@@ -29,6 +29,25 @@ module.exports = async (senderID, messageText, pageID) => {
     sendMessage(senderID, msg);
   }
 
+  if (db.fullname.has(senderID)) {
+    const isValidName = await checkName(messageText);
+    const page = await Pages.findOne({ pageid: pageID });
+
+    if (isValidName) {
+      db.fullname.delete(senderID);
+      const customer = new Customer({
+        name: messageText,
+        psid: senderID,
+        page: page._id,
+        pageid: pageID,
+      });
+      send(`Thanks ${messageText}, please order again.`);
+      await customer.save();
+      return sendHome(senderID, pageID);
+    }
+    send(`I think you sent an invalid name. Please try again.`);
+  }
+
   if (db.search.has(senderID)) {
     db.search.delete(senderID);
     // send("Please wait while im searching for " + messageText);
@@ -114,25 +133,6 @@ module.exports = async (senderID, messageText, pageID) => {
     messageText.toLowerCase() === "show menu"
   ) {
     sendHome(senderID, pageID);
-  }
-
-  if (db.fullname.has(senderID)) {
-    const isValidName = await checkName(messageText);
-    const page = await Pages.findOne({ pageid: pageID });
-
-    if (isValidName) {
-      db.fullname.delete(senderID);
-      const customer = new Customer({
-        name: messageText,
-        psid: senderID,
-        page: page._id,
-        pageid: pageID,
-      });
-      send(`Thanks ${messageText}, you can now order.`);
-      await customer.save();
-      return sendHome(senderID, pageID);
-    }
-    send(`I think you sent an invalid name. Please try again.`);
   }
 
   const response = await Automated.find({
