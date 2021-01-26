@@ -26,7 +26,7 @@ module.exports = async (senderID, messageText, pageID) => {
 
   function requestName() {
     send("Hello, please send your name to continue.");
-    db.fullname.add(recipientId);
+    db.fullname.add(senderID);
   }
 
   function send(msg) {
