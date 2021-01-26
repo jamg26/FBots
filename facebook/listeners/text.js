@@ -43,7 +43,9 @@ module.exports = async (senderID, messageText, pageID) => {
         page: page._id,
         pageid: pageID,
       });
-      send(`Thanks ${messageText}, you may now place an order.`);
+      send(
+        `Thanks ${messageText}, your info has been saved. Please place an order again.`
+      );
       await customer.save();
       return sendHome(senderID, pageID);
     }
