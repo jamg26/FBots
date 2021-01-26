@@ -19,10 +19,12 @@ const checkName = require("../functions/check_name");
 module.exports = async (senderID, messageText, pageID) => {
   const author = await getAuthor();
   const user = await getInfo(senderID);
+
   const customer = await Customer.findOne({
     pageid: pageID,
     psid: senderID,
   });
+  console.log(customer);
 
   function requestName() {
     send("Hello, please send your name to continue.");
