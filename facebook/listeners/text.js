@@ -24,7 +24,6 @@ module.exports = async (senderID, messageText, pageID) => {
     pageid: pageID,
     psid: senderID,
   });
-  console.log(customer);
 
   function requestName() {
     send("Hello, please send your name to continue.");
@@ -56,7 +55,11 @@ module.exports = async (senderID, messageText, pageID) => {
 
     console.log("==>", customer);
     console.log("==>", typeof customer);
-    if (customer == null) return requestName();
+    try {
+      if (!customer.name) return requestName();
+    } catch (error) {
+      return requestName();
+    }
 
     db.orders.forEach(async (s) => {
       if (s.sender === senderID) {
