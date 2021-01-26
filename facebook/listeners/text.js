@@ -20,11 +20,6 @@ module.exports = async (senderID, messageText, pageID) => {
   const author = await getAuthor();
   const user = await getInfo(senderID);
 
-  const customer = await Customer.findOne({
-    pageid: pageID,
-    psid: senderID,
-  });
-
   function requestName() {
     send("Hello, please send your name to continue.");
     db.fullname.add(senderID);
@@ -52,6 +47,12 @@ module.exports = async (senderID, messageText, pageID) => {
   if (db.orders.some((s) => s.sender === senderID)) {
     const page = await Pages.findOne({ pageid: temp_db.page_id });
     const settings = await Settings.findOne({ author: page.author });
+
+    console.log("finding customer with", pageID, senderID);
+    const customer = await Customer.findOne({
+      pageid: pageID,
+      psid: senderID,
+    });
 
     console.log("==>", customer);
     console.log("==>", typeof customer);
@@ -141,6 +142,11 @@ module.exports = async (senderID, messageText, pageID) => {
 
   if (response.length !== 0) {
     let resp = response[Math.floor(Math.random() * response.length)].response;
+
+    const customer = await Customer.findOne({
+      pageid: pageID,
+      psid: senderID,
+    });
 
     if (resp.includes("{name}")) {
       try {
