@@ -52,9 +52,9 @@ module.exports = async (senderID, messageText, pageID) => {
     const page = await Pages.findOne({ pageid: temp_db.page_id });
     const settings = await Settings.findOne({ author: page.author });
 
-    console.log(customer);
-    if (Object.keys(customer).length === 0 && customer.constructor === Object)
-      return requestName();
+    console.log("==>", customer);
+    console.log("==>", typeof customer);
+    if (customer == null) return requestName();
 
     db.orders.forEach(async (s) => {
       if (s.sender === senderID) {
