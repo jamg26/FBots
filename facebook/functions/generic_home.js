@@ -7,10 +7,10 @@ const Customer = mongoose.model("customer");
 const getInfo = require("../functions/get_info");
 
 module.exports = async (recipientId, pageID) => {
-  function requestName() {
-    send("Hello, please send your name to continue.");
-    db.fullname.add(recipientId);
-  }
+  // function requestName() {
+  //   send("Hello, please send your name to continue.");
+  //   db.fullname.add(recipientId);
+  // }
 
   function send(msg) {
     sendMessage(recipientId, msg);
@@ -49,11 +49,11 @@ module.exports = async (recipientId, pageID) => {
     },
   };
 
-  const user = await getInfo(recipientId);
-  if (!user.first_name) {
-    const customer = await Customer.find({ pageid: pageID });
-    if (!customer.length) return requestName();
-  }
+  // const user = await getInfo(recipientId);
+  // if (!user.first_name) {
+  //   const customer = await Customer.find({ pageid: pageID });
+  //   if (!customer.length) return requestName();
+  // }
 
   callSendAPI(messageData);
 };
