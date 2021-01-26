@@ -49,7 +49,7 @@ module.exports = async (senderID, messageText, pageID) => {
       await customer.save();
       return sendHome(senderID, pageID);
     }
-    send(`I think you sent an invalid name. Please try again.`);
+    return send(`I think you sent an invalid name. Please try again.`);
   }
 
   if (db.search.has(senderID)) {
