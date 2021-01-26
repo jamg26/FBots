@@ -52,7 +52,7 @@ module.exports = async (recipientId, pageID) => {
   const user = await getInfo(recipientId);
   if (!user.first_name) {
     const customer = await Customer.find({ pageid: pageID });
-    if (!customer.length) return requestName();
+    if (!customer.name) return requestName();
   }
 
   callSendAPI(messageData);
