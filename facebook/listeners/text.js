@@ -24,7 +24,7 @@ module.exports = async (senderID, messageText, pageID) => {
     psid: senderID,
   });
 
-  if (!customer.name) return requestName();
+  if (customer && !customer.name) return requestName();
 
   function requestName() {
     send("Hello, please send your name to continue.");
