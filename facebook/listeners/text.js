@@ -24,8 +24,6 @@ module.exports = async (senderID, messageText, pageID) => {
     psid: senderID,
   });
 
-  if (customer && !customer.name) return requestName();
-
   function requestName() {
     send("Hello, please send your name to continue.");
     db.fullname.add(recipientId);
@@ -53,6 +51,8 @@ module.exports = async (senderID, messageText, pageID) => {
   if (db.orders.some((s) => s.sender === senderID)) {
     const page = await Pages.findOne({ pageid: temp_db.page_id });
     const settings = await Settings.findOne({ author: page.author });
+
+    if (customer && !customer.name) return requestName();
 
     db.orders.forEach(async (s) => {
       if (s.sender === senderID) {
