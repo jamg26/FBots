@@ -72,7 +72,7 @@ const Home = (props) => {
             <Text
               style={{
                 color: "rgb(238, 14, 81)",
-                fontSize: props.settings?.pageName.length >= 11 ? 14 : 20,
+                fontSize: props.settings?.pageName?.length >= 11 ? 14 : 20,
               }}
             >
               {props.settings?.pageName ? props.settings?.pageName : ""} Control
