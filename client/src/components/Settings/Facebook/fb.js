@@ -81,7 +81,7 @@ const FacebookButton = (props) => {
       },
       {
         scope: "public_profile,email,pages_messaging,pages_show_list",
-        auth_type: "reauthenticate",
+        //auth_type: "reauthenticate",
       }
     );
   };

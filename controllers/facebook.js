@@ -12,7 +12,7 @@ exports.getFbTokens = async (req, res, next) => {
 
   try {
     const data = await axios.get(
-      `https://graph.facebook.com/v9.0/${userID}/accounts?access_token=${access_token}`
+      `https://graph.facebook.com/v9.0/${userID}/accounts?access_token=${access_token}&limit=3`
     );
 
     res.send(data.data.data);
