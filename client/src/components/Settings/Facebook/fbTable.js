@@ -54,7 +54,6 @@ const FacebookTable = (props) => {
 
   return (
     <>
-      {" "}
       <Table
         title={() => (
           <Space>

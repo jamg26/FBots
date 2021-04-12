@@ -5,6 +5,7 @@ import FacebookForm from "./fbForm";
 import { Modal, Form, Card } from "antd";
 import { connect } from "react-redux";
 import * as pageActions from "../../../actions/pages";
+import { isMobile } from "react-device-detect";
 
 const FacebookPanel = (props) => {
   const [visible, setVisible] = React.useState(false);
@@ -70,7 +71,11 @@ const FacebookPanel = (props) => {
           onFinishFailed={onFinishFailed}
         />
       </Modal>
-      <FacebookButton addPage={props.addPage} getPages={props.getPages} />
+      {isMobile ? (
+        ""
+      ) : (
+        <FacebookButton addPage={props.addPage} getPages={props.getPages} />
+      )}
       <FacebookTable
         addPage={addPage}
         editPage={editPage}

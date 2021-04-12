@@ -35,7 +35,7 @@ const FacebookButton = (props) => {
               props.getPages();
             }}
           >
-            ADD
+            ATTACH
           </Button>
         </Space>
       ),
