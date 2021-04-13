@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 const Product = mongoose.model("product");
 exports.addProduct = async (req, res, next) => {
+  const { role } = req.user;
+  if (role === "test")
+    return res
+      .status(400)
+      .send("Saving changes is not permitted with the test user.");
   try {
     const product = await new Product({
       ...req.body,
@@ -27,6 +32,11 @@ exports.getProducts = async (req, res, next) => {
 };
 
 exports.updateProduct = async (req, res, next) => {
+  const { role } = req.user;
+  if (role === "test")
+    return res
+      .status(400)
+      .send("Saving changes is not permitted with the test user.");
   try {
     const product = await Product.findByIdAndUpdate(req.body._id, req.body);
     res.send(product);
@@ -37,6 +47,11 @@ exports.updateProduct = async (req, res, next) => {
 };
 
 exports.deleteProduct = async (req, res, next) => {
+  const { role } = req.user;
+  if (role === "test")
+    return res
+      .status(400)
+      .send("Saving changes is not permitted with the test user.");
   try {
     const product = await Product.findByIdAndDelete(req.body._id);
     res.send(product);

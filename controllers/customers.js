@@ -20,6 +20,11 @@ exports.getCustomers = async (req, res, next) => {
 };
 
 exports.removeCustomer = async (req, res, next) => {
+  const { role } = req.user;
+  if (role === "test")
+    return res
+      .status(400)
+      .send("Saving changes is not permitted with the test user.");
   const customer = await Customer.findByIdAndDelete(req.body._id);
   console.log(customer);
   res.send(customer);

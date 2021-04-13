@@ -36,6 +36,11 @@ exports.addPage = async (req, res, next) => {
 };
 
 exports.deletePage = async (req, res, next) => {
+  const { role } = req.user;
+  if (role === "test")
+    return res
+      .status(400)
+      .send("Saving changes is not permitted with the test user.");
   try {
     const page = await Pages.findById(req.body._id);
     removePersistentMenu(page.pagetoken);

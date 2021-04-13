@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const Category = mongoose.model("category");
 
 exports.addCategory = async (req, res, next) => {
+  const { role } = req.user;
+  if (role === "test")
+    return res
+      .status(400)
+      .send("Saving changes is not permitted with the test user.");
   try {
     const category = await new Category({
       ...req.body,
@@ -26,6 +31,11 @@ exports.getCategory = async (req, res, next) => {
 };
 
 exports.updateCategory = async (req, res, next) => {
+  const { role } = req.user;
+  if (role === "test")
+    return res
+      .status(400)
+      .send("Saving changes is not permitted with the test user.");
   try {
     const category = await Category.findByIdAndUpdate(req.body._id, req.body);
     res.send(category);
@@ -36,6 +46,11 @@ exports.updateCategory = async (req, res, next) => {
 };
 
 exports.deleteCategory = async (req, res, next) => {
+  const { role } = req.user;
+  if (role === "test")
+    return res
+      .status(400)
+      .send("Saving changes is not permitted with the test user.");
   try {
     const category = await Category.findByIdAndDelete(req.body._id);
     res.send(category);

@@ -3,6 +3,11 @@ const User = mongoose.model("user");
 const Settings = mongoose.model("settings");
 
 exports.changePassword = async (req, res, next) => {
+  const { role } = req.user;
+  if (role === "test")
+    return res
+      .status(400)
+      .send("Saving changes is not permitted with the test user.");
   if (req.user._id.toString() === "5f816be093acdc2baf5e149e")
     return res.status(401).send("You can't change pass the test user.");
   const user = await User.findById(req.user._id);

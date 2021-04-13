@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 const Automated = mongoose.model("automated");
 
 exports.addAutomated = async (req, res, next) => {
+  const { role } = req.user;
+  if (role === "test")
+    return res
+      .status(400)
+      .send("Saving changes is not permitted with the test user.");
   try {
     const response = await new Automated({
       ...req.body,
@@ -26,6 +31,11 @@ exports.getAutomated = async (req, res, next) => {
 };
 
 exports.updateAutomated = async (req, res, next) => {
+  const { role } = req.user;
+  if (role === "test")
+    return res
+      .status(400)
+      .send("Saving changes is not permitted with the test user.");
   try {
     const response = await Automated.findByIdAndUpdate(req.body._id, req.body);
     res.send(response);
@@ -36,6 +46,11 @@ exports.updateAutomated = async (req, res, next) => {
 };
 
 exports.deleteAutomated = async (req, res, next) => {
+  const { role } = req.user;
+  if (role === "test")
+    return res
+      .status(400)
+      .send("Saving changes is not permitted with the test user.");
   try {
     const response = await Automated.findByIdAndDelete(req.body._id);
     res.send(response);

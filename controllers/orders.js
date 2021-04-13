@@ -160,6 +160,11 @@ exports.updateOrder = async (req, res, next) => {
 };
 
 exports.removeOrder = async (req, res, next) => {
+  const { role } = req.user;
+  if (role === "test")
+    return res
+      .status(400)
+      .send("Saving changes is not permitted with the test user.");
   const { _id } = req.body;
   const order = await Order.findById(_id);
   order.removed = true;
