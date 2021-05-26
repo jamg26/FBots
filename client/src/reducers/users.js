@@ -3,7 +3,7 @@ const INITIAL_STATE = {
   get: null,
 };
 
-export default function (state = INITIAL_STATE, action) {
+export default function users(state = INITIAL_STATE, action) {
   switch (action.type) {
     case "GET_USERS":
       return { ...state, get_all: action.payload };

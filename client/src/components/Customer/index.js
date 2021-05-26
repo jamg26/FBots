@@ -1,10 +1,10 @@
-import React from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import * as customerActions from "../../actions/customer";
 import CustomerTable from "./table";
 
 const Customers = (props) => {
-  React.useEffect(() => {
+  useEffect(() => {
     props.getCustomers();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

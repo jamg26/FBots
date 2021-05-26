@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Modal, Form, Input, Tabs, Statistic, Card, Row, Col } from "antd";
 import { connect } from "react-redux";
 import * as orderActions from "../../actions/order";

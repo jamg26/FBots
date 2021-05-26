@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Modal, Form } from "antd";
 import * as categoryActions from "../../actions/category";
 import * as productActions from "../../actions/product";

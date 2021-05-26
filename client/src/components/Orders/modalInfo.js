@@ -1,4 +1,3 @@
-import React from "react";
 import { Modal, Popconfirm, Button, Space, Typography, Image } from "antd";
 
 const { Text } = Typography;

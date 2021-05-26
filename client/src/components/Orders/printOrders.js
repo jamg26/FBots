@@ -1,10 +1,10 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { Button, Popconfirm } from "antd";
 import * as pdfMake from "pdfmake/build/pdfmake";
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
 
 const PrintOrder = (props) => {
-  const [data, setData] = React.useState(null);
+  const [data, setData] = useState(null);
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
   const orderStatusColor = (status) => {
@@ -17,7 +17,7 @@ const PrintOrder = (props) => {
       : "#000000";
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     let total = 0;
     let orders = props.orders?.map((order) => {
       total += order.price;

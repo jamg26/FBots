@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import * as settingsActions from "../../../actions/settings";
 import { connect } from "react-redux";
 import {
@@ -14,11 +14,11 @@ import {
 const { Text } = Typography;
 
 const StripePanel = (props) => {
-  const [width, setWidth] = React.useState(window.innerWidth);
-  const [publicKey, setPublicKey] = React.useState(null);
-  const [secretKey, setSecretKey] = React.useState(null);
+  const [width, setWidth] = useState(window.innerWidth);
+  const [publicKey, setPublicKey] = useState(null);
+  const [secretKey, setSecretKey] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     props.getSettings();
     window.addEventListener("resize", updateDimensions);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

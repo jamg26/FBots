@@ -1,4 +1,3 @@
-import React from "react";
 import { Layout, Menu } from "antd";
 import IconFont from "../icon";
 

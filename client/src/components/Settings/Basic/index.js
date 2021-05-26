@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import {
   Input,
   Button,
@@ -18,20 +18,20 @@ import { connect } from "react-redux";
 const { Text } = Typography;
 
 const BasicPanel = (props) => {
-  const [width, setWidth] = React.useState(window.innerWidth);
+  const [width, setWidth] = useState(window.innerWidth);
 
-  const [pass, setPass] = React.useState(null);
-  const [pageName, setPageName] = React.useState(null);
-  const [emails, setEmails] = React.useState(null);
-  const [image, setImage] = React.useState(null);
+  const [pass, setPass] = useState(null);
+  const [pageName, setPageName] = useState(null);
+  const [emails, setEmails] = useState(null);
+  const [image, setImage] = useState(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     props.getSettings();
     props.getCurrentUser();
     window.addEventListener("resize", updateDimensions);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  React.useEffect(() => {
+  useEffect(() => {
     setImage(props.settings);
   }, [props.settings]);
 

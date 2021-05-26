@@ -1,8 +1,8 @@
-import React from "react";
+import { useState, useEffect } from "react";
 
 const FBOauthPage = (props) => {
-  const [status, setStatus] = React.useState("Please allow popup if blocked.");
-  React.useEffect(() => {
+  const [status, setStatus] = useState("Please allow popup if blocked.");
+  useEffect(() => {
     window.FB && login();
   }, []);
 

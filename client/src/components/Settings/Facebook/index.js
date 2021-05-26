@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import FacebookButton from "./fb";
 import FacebookTable from "./fbTable";
 import FacebookForm from "./fbForm";
@@ -8,11 +8,11 @@ import * as pageActions from "../../../actions/pages";
 import { isMobile } from "react-device-detect";
 
 const FacebookPanel = (props) => {
-  const [visible, setVisible] = React.useState(false);
-  const [id, setId] = React.useState(null);
+  const [visible, setVisible] = useState(false);
+  const [id, setId] = useState(null);
   const [form] = Form.useForm();
 
-  React.useEffect(() => {
+  useEffect(() => {
     props.getPages();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

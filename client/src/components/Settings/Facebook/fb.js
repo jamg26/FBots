@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { Button, Modal, Table, Space, Typography, Tooltip } from "antd";
 import { connect } from "react-redux";
 import * as fbActions from "../../../actions/facebook";
@@ -7,8 +7,8 @@ const { Text } = Typography;
 
 const FacebookButton = (props) => {
   // const [fbCreds, setFbCreds] = React.useState(null);
-  const [isModalVisible, setIsModalVisible] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleOk = () => {
     setIsModalVisible(false);

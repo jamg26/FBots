@@ -1,4 +1,3 @@
-import React from "react";
 import { Form, Input, Select, InputNumber, Upload } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 

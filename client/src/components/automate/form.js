@@ -1,4 +1,3 @@
-import React from "react";
 import { Form, Input, Mentions } from "antd";
 
 const { Option } = Mentions;

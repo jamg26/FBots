@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import { Component } from "react";
 import { connect } from "react-redux";
-export default (ChildComponent) => {
+const requireAuth = (ChildComponent) => {
   class ComposedComponent extends Component {
     // Our component just got rendered
     componentDidMount() {
@@ -24,3 +24,4 @@ export default (ChildComponent) => {
   }
   return connect(mapStateToProps)(ComposedComponent);
 };
+export default requireAuth;

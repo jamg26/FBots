@@ -1,4 +1,3 @@
-import React from "react";
 import IconFont from "../../icon";
 import { Button, Space, Popconfirm, Typography, Table, Tooltip } from "antd";
 

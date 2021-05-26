@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import * as actions from "../actions";
 import * as settingsActions from "../actions/settings";
@@ -11,8 +11,8 @@ import Fade from "react-reveal/Fade";
 const { Text } = Typography;
 
 const Signin = (props) => {
-  const [ip, setIP] = React.useState(null);
-  const [btnState, setBtnState] = React.useState(false);
+  const [ip, setIP] = useState(null);
+  const [btnState, setBtnState] = useState(false);
 
   useEffect(() => {
     //props.getSettings();

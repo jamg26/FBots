@@ -3,7 +3,7 @@ const INITIAL_STATE = {
   stats: null,
 };
 
-export default function (state = INITIAL_STATE, action) {
+export default function pages(state = INITIAL_STATE, action) {
   switch (action.type) {
     case "GET_PAGES":
       return { ...state, get_all: action.payload };
