@@ -111,12 +111,22 @@ module.exports = async (senderID, messageText, pageID) => {
         send(
           `Thank you! Your order has been listed, please wait for our call.`
         );
-        if (settings.stripe_public) {
-          send(
-            `If you wish to pay immediately for faster transaction.\n\nProceed to payment page: ${process.env.BASE_URL}/stripe/${temp_db.page_id}/${order._id}/${settings.stripe_public}`
-          );
+
+        try {
+            if (settings.stripe_public) {
+                send(
+                    `If you wish to pay immediately for faster transaction.\n\nProceed to payment page: ${process.env.BASE_URL}/stripe/${temp_db.page_id}/${order._id}/${settings.stripe_public}`
+                );
+            }
+        } catch (error) {
+            console.log('Skipping stripe payment.');
         }
-        if (settings.emails) smtpOrder(settings.emails, order);
+
+        try {
+            if (settings.emails) smtpOrder(settings.emails, order);
+        } catch (error) {
+            console.log('Skipping emails notification');
+        }
       }
 
       // removing in array of orders
