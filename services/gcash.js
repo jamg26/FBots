@@ -12,7 +12,7 @@ exports.gcashRequestPayment = async (amt, desc, send, order) => {
         'x-public-key': 'pk_117093e1b8b1471882d2aeb29e39256b',
         'amount': amt,
         'description': desc,
-        'webhooksuccessurl': 'https://b05f-180-191-147-44.ngrok.io/payments/gcash/success'
+        'webhooksuccessurl': process.env.REMOTE_URL
     }
     };
     request(options, async function (error, response) {
