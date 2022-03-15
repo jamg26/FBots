@@ -6,7 +6,7 @@ module.exports = async (messageData) => {
     const token = await getToken();
     request(
       {
-        uri: "https://graph.facebook.com/v9.0/me/messages",
+        uri: "https://graph.facebook.com/v13.0/me/messages",
         qs: { access_token: token },
         method: "POST",
         json: messageData,
