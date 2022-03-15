@@ -20,6 +20,7 @@ const settingsSchema = new Schema(
     },
     stripe_public: String,
     stripe_secret: String,
+    gcash_key: String,
     emails: String,
   },
   { timestamps: true }

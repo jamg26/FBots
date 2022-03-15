@@ -15,6 +15,7 @@ const getToken = require("../functions/page_token");
 const smtpOrder = require("../../services/mailer/order");
 const sendHome = require("../functions/generic_home");
 const checkName = require("../functions/check_name");
+const { gcashRequestPayment } = require("../../services/gcash");
 
 module.exports = async (senderID, messageText, pageID) => {
   const author = await getAuthor();
@@ -111,15 +112,17 @@ module.exports = async (senderID, messageText, pageID) => {
         send(
           `Thank you! Your order has been listed, please wait for our call.`
         );
-
+        
         try {
-            if (settings.stripe_public) {
+            if (settings.gcash_key) {
+               gcashRequestPayment(s.price, s.product || s.description || "", send, order)
+            } else if (settings.stripe_public) {
                 send(
                     `If you wish to pay immediately for faster transaction.\n\nProceed to payment page: ${process.env.BASE_URL}/stripe/${temp_db.page_id}/${order._id}/${settings.stripe_public}`
                 );
             }
         } catch (error) {
-            console.log('Skipping stripe payment.');
+            console.log('Skipping payment.', error);
         }
 
         try {

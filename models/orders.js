@@ -26,6 +26,7 @@ const orderSchema = new Schema(
     address: String,
     contact: String,
     stripe_session: String,
+    gcash_ref: String,
     removed: Boolean,
   },
   { timestamps: true }

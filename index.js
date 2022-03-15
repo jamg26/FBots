@@ -1,6 +1,5 @@
 const express = require("express");
 const http = require("http");
-const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const app = express();
 const mongoose = require("mongoose");
@@ -25,7 +24,10 @@ mongoose.connect(process.env.MONGO_URI, {
 
 // App Setup
 app.use(morgan("tiny"));
-app.use(bodyParser.json({ type: "*/*" }));
+app.use(express.json());
+app.use(express.urlencoded({
+    extended: true
+  }));
 router(app);
 require("./facebook")(app);
 //
