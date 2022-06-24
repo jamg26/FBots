@@ -48,6 +48,9 @@ module.exports = async (senderID, payload, pageID) => {
     if(product.quantity <= 0) {
         return send(`Sorry, this product is out of stock.`);
     }
+    if(price !== product.price.toString()) {
+        return send(`Sorry, this product price is out of sync.`);
+    }
 
     // removing in array of orders
     db.orders = db.orders
