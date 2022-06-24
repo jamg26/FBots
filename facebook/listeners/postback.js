@@ -42,8 +42,12 @@ module.exports = async (senderID, payload, pageID) => {
     const product_id = payload_data[4];
 
     const product = await Product.findById(product_id);
-    if (product.enabled === false)
-      return send(`Sorry, this product is not available.`);
+    if (product.enabled === false) {
+        return send(`Sorry, this product is not available.`);
+    }
+    if(product.quantity <= 0) {
+        return send(`Sorry, this product is out of stock.`);
+    }
 
     // removing in array of orders
     db.orders = db.orders
@@ -54,10 +58,11 @@ module.exports = async (senderID, payload, pageID) => {
       product: productName,
       price: price,
       image_url: image_url,
+      _id: product._id
     });
 
     send(
-      `You are about to order ${productName}.\n\nPlease send your phone so we can contact you.`
+      `You are about to order ${productName}.\n\nType confirm or put your username to verify the order.`
     );
   }
 

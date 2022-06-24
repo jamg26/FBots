@@ -96,6 +96,7 @@ module.exports = async (senderID, messageText, pageID) => {
             : customer.name,
           order_thread: senderID,
           price: s.price,
+          product_id: s._id,
           product: s.product,
           product_description: s.description,
           product_image: s.image_url,
@@ -106,7 +107,7 @@ module.exports = async (senderID, messageText, pageID) => {
           page_name: page.pagename,
           shipping_fee: shippingFee.toFixed(2),
         });
-
+        
         await order.save();
 
         send(

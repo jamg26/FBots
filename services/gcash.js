@@ -12,16 +12,18 @@ exports.gcashRequestPayment = async (amt, desc, send, order) => {
         'x-public-key': 'pk_117093e1b8b1471882d2aeb29e39256b',
         'amount': amt,
         'description': desc,
-        'webhooksuccessurl': process.env.REMOTE_URL
+        'webhooksuccessurl': process.env.REMOTE_URL,
+        'expiry': 1
     }
     };
     request(options, async function (error, response) {
     if (error) throw new Error(error);
     const result = await JSON.parse(response.body)
+    
     order.gcash_ref = result.data.request_id
     if(result.success === 1) {
         send(
-            `If you wish to pay immediately for faster transaction.\n\nProceed to payment page: ${result.data.checkouturl}`
+            `If you wish to pay immediately for faster transaction.\n\nProceed to payment page: ${result.data.checkouturl}\n\nThis payment link will be valid for 1 hour.`
             );
         }
         await order.save()

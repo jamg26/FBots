@@ -45,6 +45,17 @@ const ProductTable = (props) => {
       ),
     },
     {
+      title: "Quantity",
+      dataIndex: "quantity",
+      key: "quantity",
+      align: "right",
+      render: (text) => (
+        <Text code type="danger">
+          {text}
+        </Text>
+      ),
+    },
+    {
       title: "Category",
       dataIndex: "category",
       key: "category",

@@ -14,6 +14,7 @@ const productSchema = new Schema(
     },
     category: String,
     image_url: String,
+    quantity: Number,
     author: {
       type: Schema.Types.ObjectId,
       ref: "user",

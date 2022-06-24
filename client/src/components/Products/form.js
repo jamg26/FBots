@@ -92,6 +92,13 @@ const ProductForm = (props) => {
             <Option value={false}>Disabled</Option>
           </Select>
         </Form.Item>
+
+        <Form.Item
+          name="quantity"
+          rules={[{ required: true, message: "Please input quantity!" }]}
+        >
+          <InputNumber placeholder="0" />
+        </Form.Item>
       </Form>
     </>
   );

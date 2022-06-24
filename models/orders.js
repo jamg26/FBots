@@ -6,6 +6,7 @@ const orderSchema = new Schema(
     order_by: String,
     order_thread: String,
     price: Number,
+    product_id: String,
     product: String,
     product_description: String,
     product_image: String,
